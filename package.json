@@ -8,14 +8,23 @@
   "license": "ISC",
   "scripts": {
     "clean": "rm dist/bundle.js",
-    "start": "parcel src/index.html",
+    "start": "parcel src/index.html --log-level verbose ",
     "build-prod": "parcel build src/index.html"
   },
-  "dependencies": {},
   "devDependencies": {
-    "parcel-bundler": "^1.12.5",
     "@babel/core": "^7.18.2",
     "@babel/preset-env": "^7.18.2",
-    "prettier": "^2.6.2"
+    "@types/leaflet": "^1.7.10",
+    "parcel-bundler": "^1.12.5",
+    "prettier": "^2.6.2",
+    "sass": "^1.52.3",
+    "typescript": "^4.7.3"
+  },
+  "dependencies": {
+    "assemble": "^0.3.83",
+    "exif-js": "^2.3.0",
+    "grunt": "^0.4.5",
+    "leaflet": "^1.8.0",
+    "styles": "^0.2.1"
   }
 }
