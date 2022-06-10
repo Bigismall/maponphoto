@@ -7,24 +7,23 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.1e0171f0.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.700a4c8e.png">
   <link rel="manifest" href="/site.webmanifest">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="">
   <script src="/app.f6201a1a.js"></script>
 
 <link rel="stylesheet" href="/app.f6201a1a.css"></head>
 <body class="d-flex flex-column h-100 justify-content-center">
 
-<main class="container">
+<main class="container-fluid">
   <div class="row">
-    <div class="col" id="js-photo-preview-container">
+    <div class="col">
+      <a href="" download="" id="js-download">Download image</a>
+      <canvas id="js-main-canvas" class="main-canvas" width="1200" height="900"></canvas>
     </div>
     <div class="col">
+      <div class=" photo-preview-container" id="js-photo-preview-container"></div>
+      <input class="form-control form-control-lg" id="js-photo-source" name="photo-source" type="file" accept="image/*" autofocus="">
       <div id="js-photo-map" class="photo-map"></div>
     </div>
   </div>
-
-  <form class="row">
-    <input class="form-control form-control-lg" id="js-photo-source" name="photo-source" type="file" accept="image/*" autofocus="">
-  </form>
 
 </main>
 

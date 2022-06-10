@@ -8,6 +8,19 @@ main > .container {
 }
 
 .photo-map,
-.photo-preview {
+.photo-preview-container {
   height: 50vh;
+}
+
+.photo-preview {
+  width: auto;
+  max-height: 100%;
+}
+.main-canvas {
+
+  min-width: 100%;
+  width: auto;
+  height: auto;
+  max-width: 1200px;
+  border: 1px solid #c00;
 }
