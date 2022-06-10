@@ -1,31 +1,18 @@
 import "../styles/styles.scss";
 
-import * as EXIF from "exif-js";
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import leafletImage from "leaflet-image";
+import CanvasManager from "./CanvasManager";
+import { ExifManager } from "./ExifManager";
+import ImageManager from "./ImageManager";
+import PhotoBrowser from "./PhotoBrowser";
 
 let map: L.Map;
-let reader = new FileReader();
-
-const numeratorToLatLng = (numerator: [Number, Number, Number]): number =>
-  numerator[0].valueOf() +
-  numerator[1].valueOf() / 60 +
-  numerator[2].valueOf() / 3600;
-
-const drawCanvasImage = (img: HTMLImageElement) => {
-  console.log("drawing canvas image");
-  const $canvas = document.getElementById(
-    "js-main-canvas"
-  ) as HTMLCanvasElement;
-  if (!$canvas) {
-    console.warn("Canvas not found");
-    return;
-  }
-  const $canvasContext = $canvas.getContext("2d");
-
-  $canvasContext.drawImage(img, 0, 0);
-};
+let browser: PhotoBrowser;
+let imageManager: ImageManager;
+let canvasManager: CanvasManager;
+let exifManager: ExifManager;
 
 const prepareDownload = () => {
   const $downloadLink = document.getElementById("js-download");
@@ -65,27 +52,7 @@ const drawCanvasMap = () => {
   });
 };
 
-const processExif = (img) => {
-  EXIF.getData(img, function () {
-    const altitude = EXIF.getTag(this, "GPSAltitude").valueOf();
-    const direction = EXIF.getTag(this, "GPSImgDirection").valueOf();
-    const latitude = numeratorToLatLng(EXIF.getTag(this, "GPSLatitude"));
-    const longitude = numeratorToLatLng(EXIF.getTag(this, "GPSLongitude"));
-
-    if (map) {
-      console.log("Setting map to ", {
-        altitude,
-        direction,
-        latitude,
-        longitude,
-      });
-      map.setView(L.latLng(latitude, longitude), 14);
-    } else {
-      console.warn("Map not initialized");
-    }
-  });
-};
-
+/*
 const handleFile = (e?: Event) => {
   if (!e) {
     return;
@@ -97,16 +64,18 @@ const handleFile = (e?: Event) => {
   }
 
   const img = document.createElement("img");
-  img.classList.add("img-fluid", "photo-preview", "js-photo-preview-image");
-  img.file = file;
+  // img.classList.add("img-fluid", "photo-preview", "js-photo-preview-image");
+  // img.file = file;
   // $previewElement.replaceChildren(img);
 
   reader.onload = ((preview) => (e) => {
     preview.src = e?.target?.result ?? "";
 
     setTimeout(() => {
-      processExif(img);
-      drawCanvasImage(img);
+      clearCanvas();
+      drawCanvasImage(img); //what if image is smaller than a canvas?
+
+      processExif(img); //TODO return value
       drawCanvasMap();
     }, 100);
 
@@ -117,24 +86,32 @@ const handleFile = (e?: Event) => {
 
   reader.readAsDataURL(file);
 };
-
+*/
 window.addEventListener("load", function () {
-  const $photoInput = document.getElementById("js-photo-source");
-  const $preview = document.getElementById("js-photo-preview-container");
+  const $browserElement = document.getElementById("js-browser-input");
   const $photoData = document.getElementById("js-photo-map");
+  const $canvas = document.getElementById("js-main-canvas");
 
-  if (!$photoData || !$photoInput || !$preview) {
+  if (!$browserElement || !$photoData || !$canvas) {
     console.warn("Missing elements");
     return;
   }
 
-  $photoInput.addEventListener("change", handleFile, false);
+  browser = new PhotoBrowser($browserElement as HTMLInputElement);
+  canvasManager = new CanvasManager($canvas as HTMLCanvasElement);
+  imageManager = new ImageManager();
+  exifManager = new ExifManager();
+
+  browser.subscribe(imageManager); //we want to Image Manager to receive updates from the file browser
+
+  imageManager.subscribe(canvasManager); //we want to Canvas Manager to receive updates from the image manager
+  imageManager.subscribe(exifManager); //we want to Exif Manager to receive updates from the image manager
+
+  // $photoInput.addEventListener("change", handleFile, false);
 
   map = L.map($photoData).setView([54.37933333, 18.40696389], 14);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
     attribution: "© OpenStreetMap",
   }).addTo(map);
-
-  // console.log("Map initialized", leafletImage);
 });

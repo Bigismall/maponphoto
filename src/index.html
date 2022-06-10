@@ -10,22 +10,19 @@
   <script src="scripts/app.ts"></script>
 
 </head>
-<body class="d-flex flex-column h-100 justify-content-center">
+<body>
+<main class="container">
+  <canvas width="1280" height="960" id="js-main-canvas" class="canvas"></canvas>
 
-<main class="container-fluid">
-  <div class="row">
-    <div class="col">
-      <a href="" download id="js-download">Download image</a>
-      <canvas id="js-main-canvas" class="main-canvas" width="1200" height="900"></canvas>
-    </div>
-    <div class="col">
-      <div class=" photo-preview-container" id="js-photo-preview-container"></div>
-      <input class="form-control form-control-lg" id="js-photo-source" name="photo-source" type="file" accept="image/*" autofocus />
-      <div id="js-photo-map" class="photo-map"></div>
-    </div>
-  </div>
-
+  <aside class="browser">
+  <input id="js-browser-input" class="browser__input" name="photo-source" type="file" accept="image/*" />
+  <label for="js-browser-input">Select image</label>
+  </aside>
+  <aside class="download">
+    <a href="" download id="js-download" class="download__input">Download image</a>
+    <button class="download__input">Try another image</button>
+  </aside>
+  <div id="js-photo-map" class="map"></div>
 </main>
-
 </body>
 </html>
