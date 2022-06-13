@@ -3,11 +3,7 @@ import ObserverPublisher from "./ObserverPublisher";
 import Publisher from "./Publisher.class";
 
 export default class ImageManager extends ObserverPublisher(Publisher) {
-  private image: HTMLImageElement;
-
-  // constructor(e?: Event) {
-  //   super();
-  // }
+  private image: HTMLImageElement = document.createElement("img");
 
   update(publication: Message) {
     if (publication.state === MessageState.FileChange) {
@@ -17,6 +13,7 @@ export default class ImageManager extends ObserverPublisher(Publisher) {
       if (!event) {
         return;
       }
+      // @ts-ignore
       const file = event?.target?.files?.[0] ?? null;
 
       if (!file) {
@@ -24,14 +21,14 @@ export default class ImageManager extends ObserverPublisher(Publisher) {
       }
 
       this.image = document.createElement("img");
-      this.image.file = file;
+      // this.image.file = file;
 
       this.image.onload = () => {
         this.publish({ state: MessageState.FileReady, data: this.image });
       };
 
       reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.image.src = e?.target?.result ?? "";
+        this.image.src = (e?.target?.result ?? "") as string;
       };
 
       reader.onerror = (e) => {

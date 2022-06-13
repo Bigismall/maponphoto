@@ -29,5 +29,9 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
       this.clear();
       this.draw(publication.data as CanvasImageSource);
     }
+
+    if (publication.state === MessageState.MapImageReady) {
+      this.draw(publication.data as CanvasImageSource);
+    }
   }
 }

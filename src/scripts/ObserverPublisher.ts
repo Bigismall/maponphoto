@@ -5,7 +5,6 @@ const ObserverPublisher = (superclass: typeof Publisher) =>
   class extends superclass {
     constructor() {
       super();
-      // this.name = name;
     }
 
     update(publication: Message) {

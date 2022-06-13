@@ -3,37 +3,7 @@ import ObserverPublisher from "./ObserverPublisher";
 import Publisher from "./Publisher.class";
 import * as EXIF from "exif-js";
 
-/*
-const processExif = (img) => {
-  EXIF.getData(img, function () {
-    // const altitude = EXIF.getTag(this, "GPSAltitude").valueOf();
-    // const direction = EXIF.getTag(this, "GPSImgDirection").valueOf();
-
-    const latitude = EXIF.getTag(this, "GPSLatitude");
-    const longitude = EXIF.getTag(this, "GPSLongitude");
-
-    if (!latitude || !longitude) {
-      console.warn("No GPS data found");
-      return;
-    }
-
-    const numericLatitude = numeratorToLatLng(latitude);
-    const numericLongitude = numeratorToLatLng(longitude);
-
-    if (map) {
-      console.log("Setting map to ", {
-        numericLatitude,
-        numericLongitude,
-      });
-      map.setView(L.latLng(numericLatitude, numericLongitude), 14);
-    } else {
-      console.warn("Map not initialized");
-    }
-  });
-};
- */
-
-export class ExifManager extends ObserverPublisher(Publisher) {
+export default class ExifManager extends ObserverPublisher(Publisher) {
   public static numeratorToLatLng = (
     numerator: [Number, Number, Number]
   ): number =>
@@ -43,22 +13,31 @@ export class ExifManager extends ObserverPublisher(Publisher) {
 
   update(publication: Message) {
     if (publication.state === MessageState.FileReady) {
+      const self = this;
       console.log("We can now deal with Exif data");
 
-      EXIF.getData(publication.data, function () {
+      EXIF.getData(publication.data as string, function () {
+        // @ts-ignore
         const latitude = EXIF.getTag(this, "GPSLatitude");
+        // @ts-ignore
         const longitude = EXIF.getTag(this, "GPSLongitude");
+        // @ts-ignore
+        const direction = EXIF.getTag(this, "GPSImgDirection");
 
         if (!latitude || !longitude) {
           console.warn("No GPS data found");
+          self.publish({ state: MessageState.ExifMissing, data: null });
           return;
         }
 
-        const numericLatitude = ExifManager.numeratorToLatLng(latitude);
-        const numericLongitude = ExifManager.numeratorToLatLng(longitude);
+        const lat = ExifManager.numeratorToLatLng(latitude);
+        const lng = ExifManager.numeratorToLatLng(longitude);
+        const dir = direction ? parseInt(direction.valueOf()) : 0;
 
-        console.log(numericLatitude, numericLongitude);
-        //depend on result return 2 different messages
+        self.publish({
+          state: MessageState.ExifReady,
+          data: { lat, lng, dir },
+        });
       });
     }
   }

@@ -4,6 +4,9 @@ export enum MessageState {
   Hide = "Hide",
   FileChange = "FileChange",
   FileReady = "FileReady",
+  ExifReady = "ExifReady",
+  ExifMissing = "ExifMissing",
+  MapImageReady = "MapImageReady",
 }
 
 export type Message = {
