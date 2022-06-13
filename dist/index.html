@@ -13,7 +13,6 @@
 <body>
 <main class="container">
   <canvas width="1280" height="960" id="js-main-canvas" class="canvas"></canvas>
-
   <aside class="browser">
     <input id="js-browser-input" class="browser__input" name="photo-source" type="file" accept="image/*">
     <label for="js-browser-input">Select image</label>
@@ -22,7 +21,10 @@
     <a href="#" download="" id="js-download" class="download__input">Download image</a>
     <button id="js-reset" class="download__input">Try another image</button>
   </aside>
-  <div id="js-photo-map" class="map map--hidden"></div>
+  <aside class="map map--hidden">
+    <div id="js-photo-map" class="map__canvas"></div>
+    <div class="map__options"></div>
+  </aside>
 </main>
 </body>
 </html>

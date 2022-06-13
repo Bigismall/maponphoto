@@ -22,8 +22,8 @@ body {
   margin: 0;
   padding: 2rem 0 0 0;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji",
+  "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -32,15 +32,15 @@ body {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   background-image: linear-gradient(
-    to bottom,
-    #2c3e50,
-    #38495a,
-    #445464,
-    #505f6e,
-    #5c6a79
+                  to bottom,
+                  #2c3e50,
+                  #38495a,
+                  #445464,
+                  #505f6e,
+                  #5c6a79
   );
 }
 
@@ -48,6 +48,7 @@ body {
   display: block;
   width: auto;
   max-width: 1280px;
+  min-height: 100vh;
   height: auto;
   margin: 0 auto;
   position: relative;
@@ -61,27 +62,47 @@ body {
   max-height: 960px;
   box-shadow: 0 0 0.5rem 0 #333333;
   background-color: rgba(255, 255, 255, 0.5);
-  margin: 0px auto;
+  margin: 0 auto;
 }
 
 .map {
   position: absolute;
-  top: auto;
-  left: auto;
-  bottom: 0;
-  right: 0;
-  z-index: 20;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
+  z-index: 20;
   display: block;
-  width: 320px;
-  height: 240px;
+  width: auto;
+  height: auto;
   margin: 0;
   padding: 0;
+  background-color: #000000;
 
   @include m(hidden) {
     visibility: hidden;
     pointer-events: none;
   }
+
+
+  //map sizes
+
+  @include e(canvas) {
+    display: block;
+    width: 800px;
+    height: 600px;
+  }
+
+
+  @include e(options) {
+    display: block;
+    width: 100%;
+    height: 100px;
+    background-color: #cccccc;
+
+  }
+
+
 }
 
 .browser {
@@ -112,8 +133,8 @@ body {
       background-color: #92a0b3;
       box-shadow: rgba(1, 1, 0, 1) 0 2px 8px;
       background-image: linear-gradient(
-        rgba(70, 77, 85, 0.7),
-        rgba(37, 41, 46, 0.8)
+                      rgba(70, 77, 85, 0.7),
+                      rgba(37, 41, 46, 0.8)
       );
     }
   }
@@ -140,8 +161,8 @@ body {
       background-color: #92a0b3;
       box-shadow: rgba(0, 1, 0, 0.2) 0 2px 8px;
       background-image: linear-gradient(
-        rgba(70, 77, 85, 0.7),
-        rgba(37, 41, 46, 0.8)
+                      rgba(70, 77, 85, 0.7),
+                      rgba(37, 41, 46, 0.8)
       );
     }
   }

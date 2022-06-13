@@ -8,25 +8,29 @@ import leafletImage from "leaflet-image";
 
 export default class MapManager extends ObserverPublisher(Publisher) {
   private selector: HTMLDivElement;
+  private container: HTMLElement | null;
   protected map: Map;
 
   constructor($selector: HTMLDivElement) {
     super();
 
     this.selector = $selector;
+    this.container = $selector.parentElement;
+
     this.map = L.map($selector).setView([54.37933333, 18.40696389], 14);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
       attribution: "© OpenStreetMap",
     }).addTo(this.map);
+
+    console.log("dimensions", this.map.getSize());
   }
 
   update(publication: Message) {
     if (publication.state === MessageState.ExifMissing) {
       // console.warn("No EXIF GPS  data found");
       alert("No EXIF GPS  data found");
-      //cover photo with map
-      //add pointer
+      //cover photo with map  - big map with drag pointer and zoom and SAVE button
       this.show();
     }
 
@@ -62,10 +66,10 @@ export default class MapManager extends ObserverPublisher(Publisher) {
   }
 
   hide() {
-    this.selector?.classList.add("map--hidden");
+    this.container?.classList.add("map--hidden");
   }
 
   show() {
-    this.selector?.classList.remove("map--hidden");
+    this.container?.classList.remove("map--hidden");
   }
 }
