@@ -2,6 +2,9 @@ import { Message, MessageState } from "./Message.type";
 import ObserverPublisher from "./ObserverPublisher";
 import Publisher from "./Publisher.class";
 
+const MIN_WIDTH = 640;
+const MIN_HEIGHT = 400;
+
 export default class ImageManager extends ObserverPublisher(Publisher) {
   private image: HTMLImageElement = document.createElement("img");
 
@@ -21,23 +24,30 @@ export default class ImageManager extends ObserverPublisher(Publisher) {
       }
 
       this.image = document.createElement("img");
-      // this.image.file = file;
-
       this.image.onload = () => {
+        if (this.image.width < MIN_WIDTH || this.image.height < MIN_HEIGHT) {
+          this.publish({
+            state: MessageState.FileError,
+            data: `Image is to small. Min dimension is: ${MIN_WIDTH}x${MIN_HEIGHT}`,
+          });
+          return;
+        }
         this.publish({ state: MessageState.FileReady, data: this.image });
       };
 
       reader.onload = (e: ProgressEvent<FileReader>) => {
+        console.log("File reader onload");
+
         this.image.src = (e?.target?.result ?? "") as string;
       };
 
       reader.onerror = (e) => {
+        this.publish({ state: MessageState.FileError, data: reader.error });
+        console.error(reader.error);
         console.error(e);
       };
 
       reader.readAsDataURL(file);
     }
-
-    console.log("ImageManager", publication.state, publication.data);
   }
 }

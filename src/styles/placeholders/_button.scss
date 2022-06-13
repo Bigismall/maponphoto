@@ -1,14 +1,32 @@
 %button {
-  margin: 0;
-  padding: 1.5rem;
-  border: none;
-
+  align-items: center;
+  background-color: #25292e;
+  background-image: linear-gradient(#464d55, #25292e);
   border-radius: 0.5rem;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
-  background-color: green;
-  display: inline-block;
-  cursor: pointer; /* "hand" cursor */
-  transition: background-color 250ms ease-in-out 0s;
+  border-width: 0;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, .1),0 3px 6px rgba(0, 0, 0, .05);
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: column;
+  font-family: inherit;
+  font-size: 1.25rem;
+  height: 4rem;
+  justify-content: center;
+  line-height: 1;
+  margin: 0;
+  outline: none;
+  overflow: hidden;
+  padding: 0 2rem;
+  text-align: center;
+  text-decoration: none;
+  transform: translate3d(0, 0, 0);
+
+  vertical-align: baseline;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+
 }

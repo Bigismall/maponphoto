@@ -48,4 +48,9 @@ window.addEventListener("load", function () {
   imageManager.subscribe(exifManager); //we want to Exif Manager to receive updates from the image manager
   exifManager.subscribe(mapManager); //we want to Map Manager to receive updates from the exif manager
   mapManager.subscribe(canvasManager); //we want to Canvas Manager to receive updates from the map manager
+  canvasManager.subscribe(downloadManager); //we want to Download Manager to receive updates from the canvas manager
+  downloadManager.subscribe(browser); //we want to Browser to receive updates from the download manager
+  downloadManager.subscribe(canvasManager); //we want to Canvas Manager to receive updates from the download manager
+
+  //TODO add Message.FileError  support
 });

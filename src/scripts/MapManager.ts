@@ -23,8 +23,11 @@ export default class MapManager extends ObserverPublisher(Publisher) {
 
   update(publication: Message) {
     if (publication.state === MessageState.ExifMissing) {
-      console.warn("No EXIF GPS  data found");
-      //TODO - display map with pointer
+      // console.warn("No EXIF GPS  data found");
+      alert("No EXIF GPS  data found");
+      //cover photo with map
+      //add pointer
+      this.show();
     }
 
     if (publication.state === MessageState.ExifReady) {
@@ -56,5 +59,13 @@ export default class MapManager extends ObserverPublisher(Publisher) {
         self.publish({ state: MessageState.MapImageReady, data: img });
       };
     });
+  }
+
+  hide() {
+    this.selector?.classList.add("map--hidden");
+  }
+
+  show() {
+    this.selector?.classList.remove("map--hidden");
   }
 }

@@ -1,18 +1,31 @@
+import { Message, MessageState } from "./Message.type";
 import ObserverPublisher from "./ObserverPublisher";
 import Publisher from "./Publisher.class";
 
 export default class DownloadManager extends ObserverPublisher(Publisher) {
   private downloadSelector: HTMLLinkElement;
   private resetSelector: HTMLButtonElement;
-
+  private container: HTMLElement | null;
   constructor(
-    $downloadDelector: HTMLLinkElement,
+    $downloadElement: HTMLLinkElement,
     $resetElement: HTMLButtonElement
   ) {
     super();
-    this.downloadSelector = $downloadDelector;
+    this.downloadSelector = $downloadElement;
     this.resetSelector = $resetElement;
-    this.prepareDownload();
+    this.container = $downloadElement.parentElement;
+
+    this.resetSelector.addEventListener("click", (e: Event) => {
+      this.hide();
+      this.publish({ state: MessageState.Reset, data: null });
+    });
+  }
+
+  update(publication: Message) {
+    if (publication.state === MessageState.CanvasWithMapReady) {
+      this.show();
+      this.prepareDownload();
+    }
   }
 
   generateFilename() {
@@ -32,9 +45,16 @@ export default class DownloadManager extends ObserverPublisher(Publisher) {
       return;
     }
 
-    console.log("preparing download");
     const dataURL = $canvas.toDataURL("image/jpeg", 0.8);
     this.downloadSelector.setAttribute("download", this.generateFilename());
     this.downloadSelector.setAttribute("href", dataURL);
+  }
+
+  hide() {
+    this.container?.classList.add("download--hidden");
+  }
+
+  show() {
+    this.container?.classList.remove("download--hidden");
   }
 }
