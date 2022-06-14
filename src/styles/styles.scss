@@ -6,6 +6,7 @@ $light-blue: #5c6a79;
 $white: #fff;
 $black: #000;
 $text: #212529;
+$yellow: #ffcc00;
 
 *,
 *::before,
@@ -54,7 +55,7 @@ body {
   display: block;
   width: auto;
   max-width: 1280px;
-  min-height: 100vh;
+  //min-height: 100vh;
   height: auto;
   margin: 0 auto;
   position: relative;
@@ -84,19 +85,57 @@ body {
   margin: 0;
   padding: 0;
   background-color: $light-blue;
+  box-shadow: 0 0 0.5rem 0 #333333;
+
+  @include m(center) {}
+
+  @include m(topleft) {
+    top: 0;
+    left: 0;
+    right: auto;
+    bottom: auto;
+    transform: none;
+  }
+
+  @include m(topright) {
+    top: 0;
+    left: auto;
+    right: 0;
+    bottom: auto;
+    transform: none;
+  }
+
+  @include m(bottomleft) {
+    top: auto;
+    left: 0;
+    right: auto;
+    bottom: 0;
+    transform: none;
+  }
+
+  @include m(bottomright) {
+    top: auto;
+    left: auto;
+    right: 0;
+    bottom: 0;
+    transform: none;
+  }
+
 
   @include m(hidden) {
     visibility: hidden;
     pointer-events: none;
   }
 
-  //map sizes
 
   @include e(canvas) {
+    position: static;
     display: block;
     width: 800px;
     height: 600px;
+    margin: 0 auto;
     background-color: $black;
+
 
     @include m(small) {
       width: 320px;
@@ -109,17 +148,16 @@ body {
     @include m(large) {
       width: 640px;
       height: 480px;
-
     }
   }
 
   @include e(title) {
     margin: 0;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    font-weight: normal;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: bold;
     text-align: center;
-    color: $white;
+    color: $yellow;
 
     @include m(hidden) {
       display: none;
@@ -133,7 +171,7 @@ body {
     flex-wrap: nowrap;
     justify-content: center;
     align-items: stretch;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem;
   }
 
 

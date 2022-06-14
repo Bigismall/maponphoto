@@ -17,12 +17,23 @@ import leafletImage from "leaflet-image";
 const DEFAULT_CENTER: [number, number] = [54.403397, 18.570665];
 const DEFAULT_ZOOM: number = 14;
 
+
+export enum MapPosition {
+    TOP_LEFT = "topleft",
+    TOP_RIGHT = "topright",
+    BOTTOM_LEFT = "bottomleft",
+    BOTTOM_RIGHT = "bottomright",
+    CENTER = "center"
+}
+
+
 export default class MapManager extends ObserverPublisher(Publisher) {
     private selector: HTMLDivElement;
     private container: HTMLElement | null;
     protected title: HTMLDivElement | null;
     protected map: Map;
     protected marker: Marker;
+    protected position: MapPosition
 
     constructor($selector: HTMLDivElement) {
         super();
@@ -30,6 +41,7 @@ export default class MapManager extends ObserverPublisher(Publisher) {
         this.selector = $selector;
         this.container = $selector.parentElement ?? $selector;  // FIXME
         this.title = this.container.querySelector(".map__title");
+        this.position = MapPosition.CENTER; //by default
 
         this.map = L.map($selector, {
             preferCanvas: true,
@@ -87,13 +99,18 @@ export default class MapManager extends ObserverPublisher(Publisher) {
 
         if (publication.state === MessageState.ResizeMap) {
             console.log(publication.data)
-            // this.map.setSize(publication.data as [number, number]);
             this.selector.classList.remove('map__canvas--small', 'map__canvas--medium', 'map__canvas--large');
             this.selector.classList.add(publication.data as string) //FIXME in the future
         }
 
+        if (publication.state === MessageState.MoveMap) {
+            const position: MapPosition = publication.data as MapPosition;
+            this.position = position;
+            this.container?.classList.remove('map--topleft', 'map--topright', 'map--bottomleft', 'map--bottomright');
+            this.container?.classList.add(`map--${position}`) //FIXME in the future
+        }
+
         if (publication.state === MessageState.MapSetupReady) {
-            // TODO get data
             this.drawCanvasMap()
         }
     }
@@ -112,7 +129,7 @@ export default class MapManager extends ObserverPublisher(Publisher) {
             img.src = canvas.toDataURL();
             img.onload = function () {
                 console.log("image is now ready");
-                self.publish({state: MessageState.MapImageReady, data: img});
+                self.publish({state: MessageState.MapImageReady, data: {image:img, position: self.position}});
                 self.hide()
 
             };

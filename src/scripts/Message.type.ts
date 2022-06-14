@@ -12,7 +12,7 @@ export enum MessageState {
     ResizeMap = "ResizeMap",
     CanvasWithMapReady = "CanvasWithMapReady",
     FileError = "FileError",
-
+    MoveMap = "MoveMap"
 }
 
 export type Message = {

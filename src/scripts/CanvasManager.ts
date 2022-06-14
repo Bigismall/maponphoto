@@ -1,6 +1,7 @@
 import {Message, MessageState} from "./Message.type";
 import ObserverPublisher from "./ObserverPublisher";
 import Publisher from "./Publisher.class";
+import {MapPosition} from "./MapManager";
 
 // 4/3
 const MAX_WIDTH = 1280;
@@ -61,8 +62,36 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
         this.context?.drawImage(image, 0, 0, this.width, this.height);
     }
 
-    protected drawMap(image: CanvasImageSource) {
-        this.context?.drawImage(image, 0, 0);
+    protected drawMap(image: HTMLImageElement, position: MapPosition) {
+        let x = 0;
+        let y = 0;
+
+        //Fixme - extract this
+        switch (position) {
+            case MapPosition.TOP_LEFT:
+                x = 0;
+                y = 0;
+                break;
+            case MapPosition.TOP_RIGHT:
+                x = this.width - image.width;
+                y = 0;
+                break;
+            case MapPosition.BOTTOM_LEFT:
+                x = 0;
+                y = this.height - image.height;
+                break;
+            case MapPosition.BOTTOM_RIGHT:
+                x = this.width - image.width;
+                y = this.height - image.height;
+                break;
+            case MapPosition.CENTER:
+                x = (this.width - image.width) / 2;
+                y = (this.height - image.height) / 2;
+                break;
+        }
+
+
+        this.context?.drawImage(image, x, y);
     }
 
     update(publication: Message) {
@@ -76,7 +105,9 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
         }
 
         if (publication.state === MessageState.MapImageReady) {
-            this.drawMap(publication.data as CanvasImageSource);
+
+            // @ts-ignore
+            this.drawMap(publication.data.image as HTMLImageElement, publication.data.position);
             this.publish({
                 state: MessageState.CanvasWithMapReady,
                 data: this.selector,

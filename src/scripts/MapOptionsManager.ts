@@ -1,5 +1,6 @@
 import Publisher from "./Publisher.class";
 import {MessageState} from "./Message.type";
+import {MapPosition} from "./MapManager";
 
 export default class MapOptionsManager extends Publisher {
     private selector: HTMLDivElement;
@@ -32,21 +33,16 @@ export default class MapOptionsManager extends Publisher {
                 })
             })
         })
+
+        this.positionControls.forEach(($button) => {
+            $button.addEventListener('click', () => {
+                this.publish({
+                    state: MessageState.MoveMap,
+                    data: $button.dataset.position as MapPosition
+                })
+            })
+        })
     }
 
-    sizeToDimensions(size: string): [number, number] {
-
-        switch (size) {
-            case "L":
-                return [640, 480]
-            case "M":
-                return [480, 360];
-
-            case 'S':
-            default:
-                return [320, 240]
-        }
-
-    }
 
 }
