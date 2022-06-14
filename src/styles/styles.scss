@@ -83,7 +83,7 @@ body {
   height: auto;
   margin: 0;
   padding: 0;
-  background-color: #cccccc;
+  background-color: $light-blue;
 
   @include m(hidden) {
     visibility: hidden;
@@ -103,14 +103,23 @@ body {
     margin: 0;
     padding: 0.5rem 1rem;
     font-size: 1rem;
-    font-weight: bold;
+    font-weight: normal;
+    text-align: center;
+    color: $white;
+
+    @include m(hidden) {
+      display: none;
+    }
 
   }
 
   @include e(options) {
-    display: block;
-    width: 100%;
-    height: 100px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: stretch;
+    padding: 0.5rem 1rem;
   }
 
 
@@ -165,16 +174,12 @@ body {
   @include e(input) {
     @extend %button;
     text-decoration: none;
+    height: 4rem;
 
     &:hover,
     &:active,
     &:active {
-      background-color: #92a0b3;
-      box-shadow: rgba(0, 1, 0, 0.2) 0 2px 8px;
-      background-image: linear-gradient(
-                      rgba(70, 77, 85, 0.7),
-                      rgba(37, 41, 46, 0.8)
-      );
+      @extend %button-hover;
     }
   }
 
@@ -182,32 +187,44 @@ body {
     display: none;
   }
 }
-/*
-.pin {
-  position: relative;
-  width: 48px;
-  height: 80px;
-}
 
-.pin__icon {
-  position: absolute;
-  top: 0;
-  left: 0;
+.btn {
 
-  border-radius: 50%;
-  border: 10px solid $blue;
-  width: 48px;
-  height: 48px;
+  @extend %button;
+  text-decoration: none;
 
-  &:after {
-    position: absolute;
-    content: '';
-    width: 0;
-    height: 0;
-    bottom: -60px;
-    left: -6px;
-    border: 20px solid transparent;
-    border-top: 40px solid $blue;
+
+  &:hover,
+  &:active,
+  &:active {
+    @extend %button-hover;
   }
+
 }
-*/
+
+fieldset {
+  border: 1px solid $blue;
+  display: block;
+  border-radius: 0.25rem;
+
+}
+legend {
+  font-size: 0.75rem;
+  color: $white;
+  padding: 0.25rem 0.5rem;
+
+}
+fieldset button {
+
+  @extend %button;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 1rem;
+
+  &:hover,
+  &:active,
+  &:active {
+    @extend %button-hover;
+  }
+
+}

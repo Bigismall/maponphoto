@@ -12,21 +12,30 @@
   flex-direction: column;
   font-family: inherit;
   font-size: 1.25rem;
-  height: 4rem;
+  height: auto;
   justify-content: center;
   line-height: 1;
   margin: 0;
   outline: none;
   overflow: hidden;
-  padding: 0 2rem;
+  padding: 1rem 2rem;
   text-align: center;
   text-decoration: none;
   transform: translate3d(0, 0, 0);
 
-  vertical-align: baseline;
+  vertical-align: center;
   white-space: nowrap;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
 
+}
+
+%button-hover {
+    background-color: #92a0b3;
+    box-shadow: rgba(0, 1, 0, 0.2) 0 2px 8px;
+    background-image: linear-gradient(
+                    rgba(70, 77, 85, 0.7),
+                    rgba(37, 41, 46, 0.8)
+    );
 }
