@@ -97,6 +97,20 @@ body {
     width: 800px;
     height: 600px;
     background-color: $black;
+
+    @include m(small) {
+      width: 320px;
+      height: 240px;
+    }
+    @include m(medium) {
+      width: 480px;
+      height: 360px;
+    }
+    @include m(large) {
+      width: 640px;
+      height: 480px;
+
+    }
   }
 
   @include e(title) {
@@ -208,12 +222,14 @@ fieldset {
   border-radius: 0.25rem;
 
 }
+
 legend {
   font-size: 0.75rem;
   color: $white;
   padding: 0.25rem 0.5rem;
 
 }
+
 fieldset button {
 
   @extend %button;

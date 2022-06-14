@@ -58,6 +58,12 @@ export default class MapManager extends ObserverPublisher(Publisher) {
             this.map.panTo(this.marker.getLatLng());
         })
 
+        const resizeObserver = new ResizeObserver(() => {
+            this.map.invalidateSize();
+        });
+
+        resizeObserver.observe(this.selector);
+
     }
 
     update(publication: Message) {
@@ -77,10 +83,13 @@ export default class MapManager extends ObserverPublisher(Publisher) {
             console.log("Sett ing map to ", {lat, lng, dir});
             this.map.setView(L.latLng(lat, lng), 14);
             this.marker.setLatLng(L.latLng(lat, lng));
+        }
 
-
-            // TODO Only call that when user submit the from
-            //this.drawCanvasMap();
+        if (publication.state === MessageState.ResizeMap) {
+            console.log(publication.data)
+            // this.map.setSize(publication.data as [number, number]);
+            this.selector.classList.remove('map__canvas--small', 'map__canvas--medium', 'map__canvas--large');
+            this.selector.classList.add(publication.data as string) //FIXME in the future
         }
 
         if (publication.state === MessageState.MapSetupReady) {

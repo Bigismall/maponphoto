@@ -9,8 +9,10 @@ export enum MessageState {
     ExifMissing = "ExifMissing",
     MapImageReady = "MapImageReady",
     MapSetupReady = "MapSetupReady",
+    ResizeMap = "ResizeMap",
     CanvasWithMapReady = "CanvasWithMapReady",
     FileError = "FileError",
+
 }
 
 export type Message = {
