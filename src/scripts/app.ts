@@ -17,7 +17,7 @@ let downloadManager: DownloadManager;
 
 window.addEventListener("load", function () {
   const $browserElement = document.getElementById("js-browser-input");
-  const $photoElement = document.getElementById("js-photo-map");
+  const $photoElement = document.getElementById("js-map");
   const $canvasElement = document.getElementById("js-main-canvas");
   const $downloadElement = document.getElementById("js-download");
   const $resetElement = document.getElementById("js-reset");
