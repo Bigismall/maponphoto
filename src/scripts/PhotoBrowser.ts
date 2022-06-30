@@ -1,37 +1,37 @@
-import {Message, MessageState} from "./Message.type";
+import { Message, MessageState } from "./Message.type";
 import ObserverPublisher from "./ObserverPublisher";
 import Publisher from "./Publisher.class";
 
 export default class PhotoBrowser extends ObserverPublisher(Publisher) {
-    private selector: HTMLInputElement;
-    private container: HTMLElement | null;
+  private selector: HTMLInputElement;
+  private container: HTMLElement | null;
 
-    constructor($selector: HTMLInputElement) {
-        super();
-        this.selector = $selector;
-        this.container = $selector.parentElement;
+  constructor($selector: HTMLInputElement) {
+    super();
+    this.selector = $selector;
+    this.container = $selector.parentElement;
 
-        this.selector.addEventListener(
-            "change",
-            (e: Event) => {
-                this.publish({state: MessageState.FileChange, data: e});
-                this.hide();
-            },
-            false
-        );
+    this.selector.addEventListener(
+      "change",
+      (e: Event) => {
+        this.publish({ state: MessageState.FileChange, data: e });
+        this.hide();
+      },
+      false
+    );
+  }
+
+  update(publication: Message) {
+    if (publication.state === MessageState.Reset) {
+      this.show();
     }
+  }
 
-    update(publication: Message) {
-        if (publication.state === MessageState.Reset) {
-            this.show();
-        }
-    }
+  hide() {
+    this.container?.classList.add("browser--hidden");
+  }
 
-    hide() {
-        this.container?.classList.add("browser--hidden");
-    }
-
-    show() {
-        this.container?.classList.remove("browser--hidden");
-    }
+  show() {
+    this.container?.classList.remove("browser--hidden");
+  }
 }

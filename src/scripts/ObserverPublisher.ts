@@ -1,15 +1,15 @@
-import {Message} from "./Message.type";
+import { Message } from "./Message.type";
 import Publisher from "./Publisher.class";
 
 const ObserverPublisher = (superclass: typeof Publisher) =>
-    class extends superclass {
-        constructor() {
-            super();
-        }
+  class extends superclass {
+    constructor() {
+      super();
+    }
 
-        update(publication: Message) {
-            console.log(`Publication: ${publication}`);
-        }
-    };
+    update(publication: Message) {
+      console.log(`Publication: ${publication}`);
+    }
+  };
 
 export default ObserverPublisher;

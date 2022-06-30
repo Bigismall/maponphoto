@@ -12,14 +12,15 @@
     "start": "parcel src/index.html",
     "build": "rm -rf dist && parcel build --public-url /maponphoto src/index.html",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist -b master"
+    "deploy": "gh-pages -d dist -b master",
+    "check:prettier": "prettier --check 'src/**/*{ts,js,scss}'"
   },
   "devDependencies": {
     "@babel/core": "^7.18.2",
     "@babel/preset-env": "^7.18.2",
     "@types/leaflet": "^1.7.10",
     "parcel-bundler": "^1.12.5",
-    "prettier": "^2.6.2",
+    "prettier": "^2.7.1",
     "sass": "^1.52.3",
     "typescript": "^4.7.3"
   },
