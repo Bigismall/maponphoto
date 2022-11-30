@@ -28,7 +28,7 @@
     "assemble": "^0.3.83",
     "exif-js": "^2.3.0",
     "gh-pages": "^4.0.0",
-    "grunt": "^0.4.5",
+    "grunt": "^1.5.3",
     "leaflet": "^1.8.0",
     "leaflet-image": "^0.4.0",
     "styles": "^0.2.1"
