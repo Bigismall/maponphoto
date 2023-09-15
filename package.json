@@ -1,36 +1,30 @@
 {
   "name": "maponphoto",
-  "version": "1.0.0",
-  "description": "",
-  "homepage": "https://bigismall.github.io/maponphoto/",
-  "main": "index.js",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "clean": "rm dist/bundle.js",
-    "start": "parcel src/index.html",
-    "build": "rm -rf dist && parcel build --public-url /maponphoto src/index.html",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist -b master",
-    "check:prettier": "prettier --check 'src/**/*{ts,js,scss}'"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.2",
-    "@babel/preset-env": "^7.18.2",
-    "@types/leaflet": "^1.7.10",
-    "parcel-bundler": "^1.12.5",
-    "prettier": "^2.7.1",
-    "sass": "^1.52.3",
-    "typescript": "^4.7.3"
+    "@types/leaflet": "^1.9.4",
+    "@typescript-eslint/eslint-plugin": "^5.60.0",
+    "eslint": "^8.43.0",
+    "eslint-config-standard-with-typescript": "^35.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "sass": "^1.67.0",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5",
+    "vite-plugin-eslint": "^1.8.1"
   },
   "dependencies": {
-    "assemble": "^0.3.83",
     "exif-js": "^2.3.0",
-    "gh-pages": "^4.0.0",
-    "grunt": "^1.5.3",
-    "leaflet": "^1.8.0",
-    "leaflet-image": "^0.4.0",
-    "styles": "^0.2.1"
+    "gh-pages": "^6.0.0",
+    "leaflet": "^1.9.4",
+    "leaflet-image": "^0.4.0"
   }
 }

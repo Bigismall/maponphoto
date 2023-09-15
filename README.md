@@ -1,4 +1,4 @@
-# maponphoto
+# Map on photo
 
 Empty project.
 
@@ -7,19 +7,19 @@ Empty project.
 First install dependencies:
 
 ```sh
-npm install
+pnpm install
 ```
 
 To run in hot module reloading mode:
 
 ```sh
-npm start
+pnpm dev
 ```
 
 To create a production build:
 
 ```sh
-npm run build-prod
+pnpm build
 ```
 
 ## Running
@@ -30,5 +30,5 @@ node dist/bundle.js
 
 ## Credits
 
-Made with [createapp.dev](https://createapp.dev/)
+Made with [Vite](https://vitejs.dev/)
 
