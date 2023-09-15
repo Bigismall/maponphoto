@@ -1,49 +1,49 @@
-import Publisher from "./Publisher.class";
-import { MessageState } from "./Message.type";
-import { MapPosition } from "./MapManager";
+import Publisher from './Publisher.class'
+import { MessageState } from './Message.type'
+import { type MapPosition } from './MapManager'
 
 export default class MapOptionsManager extends Publisher {
-  private selector: HTMLDivElement;
-  private submit: HTMLButtonElement;
-  private positionControls: NodeListOf<HTMLButtonElement>;
-  private sizeControls: NodeListOf<HTMLButtonElement>;
+  private readonly selector: HTMLDivElement
+  private readonly submit: HTMLButtonElement
+  private readonly positionControls: NodeListOf<HTMLButtonElement>
+  private readonly sizeControls: NodeListOf<HTMLButtonElement>
 
-  constructor($selector: HTMLDivElement) {
-    super();
+  constructor ($selector: HTMLDivElement) {
+    super()
 
-    this.selector = $selector;
+    this.selector = $selector
     this.submit = this.selector.querySelector(
-      "button#js-map-options-submit"
-    ) as HTMLButtonElement;
+      'button#js-map-options-submit'
+    ) as HTMLButtonElement
     this.positionControls = this.selector.querySelectorAll<HTMLButtonElement>(
-      "button[data-position]"
-    );
+      'button[data-position]'
+    )
     this.sizeControls =
-      this.selector.querySelectorAll<HTMLButtonElement>("button[data-size]");
+      this.selector.querySelectorAll<HTMLButtonElement>('button[data-size]')
 
-    this.submit.addEventListener("click", () => {
+    this.submit.addEventListener('click', () => {
       this.publish({
         state: MessageState.MapSetupReady,
-        data: {},
-      });
-    });
+        data: {}
+      })
+    })
 
     this.sizeControls.forEach(($button) => {
-      $button.addEventListener("click", () => {
+      $button.addEventListener('click', () => {
         this.publish({
           state: MessageState.ResizeMap,
-          data: $button.dataset.size,
-        });
-      });
-    });
+          data: $button.dataset.size
+        })
+      })
+    })
 
     this.positionControls.forEach(($button) => {
-      $button.addEventListener("click", () => {
+      $button.addEventListener('click', () => {
         this.publish({
           state: MessageState.MoveMap,
-          data: $button.dataset.position as MapPosition,
-        });
-      });
-    });
+          data: $button.dataset.position as MapPosition
+        })
+      })
+    })
   }
 }

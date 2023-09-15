@@ -1,9 +1,9 @@
-import { Message } from "./Message.type";
+import { type Message } from './Message.type'
 
 export default abstract class Observer {
-  protected constructor() {}
+  protected constructor () {}
 
-  update(publication: Message) {
-    console.log(`Publication [Observer] ${publication}`);
+  update (publication: Message) {
+    console.log('Publication [Observer]', publication)
   }
 }
