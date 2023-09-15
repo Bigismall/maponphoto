@@ -36,7 +36,7 @@ export default class MapManager extends ObserverPublisher(Publisher) {
     super()
 
     this.selector = $selector
-    this.container = $selector.parentElement ?? $selector // FIXME
+    this.container = $selector.parentElement ?? $selector
     this.title = this.container.querySelector('.map__title')
     this.position = MapPosition.CENTER // by default
 
@@ -100,7 +100,7 @@ export default class MapManager extends ObserverPublisher(Publisher) {
         'map__canvas--medium',
         'map__canvas--large'
       )
-      this.selector.classList.add(publication.data) // FIXME in the future
+      this.selector.classList.add(publication.data)
     }
 
     if (publication.state === MessageState.MoveMap) {
@@ -112,7 +112,7 @@ export default class MapManager extends ObserverPublisher(Publisher) {
         'map--bottomleft',
         'map--bottomright'
       )
-      this.container?.classList.add(`map--${position}`) // FIXME in the future
+      this.container?.classList.add(`map--${position}`)
     }
 
     if (publication.state === MessageState.MapSetupReady) {
