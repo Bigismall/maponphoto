@@ -1,0 +1,308 @@
+@import "mixins/bem";
+@import "placeholders/button";
+
+$blue: #2c3e50;
+$light-blue: #5c6a79;
+$white: #fff;
+$black: #000;
+$text: #212529;
+$yellow: #ffcc00;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 2rem 0 3rem 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: $text;
+  background-color: $blue;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  min-height: 100vh;
+  width: 100%;
+  background-image: linear-gradient(
+    to bottom,
+    $blue,
+    #38495a,
+    #445464,
+    #505f6e,
+    $light-blue
+  );
+}
+
+.container {
+  display: block;
+  width: auto;
+  max-width: 1280px;
+  height: auto;
+  margin: 0 auto;
+  position: relative;
+}
+
+.canvas {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 1280px;
+  max-height: 960px;
+  box-shadow: 0 0 0.5rem 0 $text;
+  background-color: rgba(255, 255, 255, 0.5);
+  margin: 0 auto;
+}
+
+.map {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  z-index: 20;
+  display: block;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  background-color: $light-blue;
+  box-shadow: 0 0 0.5rem 0 $text;
+
+  @include m(center) {
+  }
+
+  @include m(topleft) {
+    top: 0;
+    left: 0;
+    right: auto;
+    bottom: auto;
+    transform: none;
+  }
+
+  @include m(topright) {
+    top: 0;
+    left: auto;
+    right: 0;
+    bottom: auto;
+    transform: none;
+  }
+
+  @include m(bottomleft) {
+    top: auto;
+    left: 0;
+    right: auto;
+    bottom: 0;
+    transform: none;
+  }
+
+  @include m(bottomright) {
+    top: auto;
+    left: auto;
+    right: 0;
+    bottom: 0;
+    transform: none;
+  }
+
+  @include m(hidden) {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  @include e(canvas) {
+    position: static;
+    display: block;
+    width: 800px;
+    height: 600px;
+    margin: 0 auto;
+    background-color: $black;
+
+    @include m(small) {
+      width: 320px;
+      height: 240px;
+    }
+    @include m(medium) {
+      width: 480px;
+      height: 360px;
+    }
+    @include m(large) {
+      width: 640px;
+      height: 480px;
+    }
+  }
+
+  @include e(title) {
+    margin: 0;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-align: center;
+    color: $yellow;
+
+    @include m(hidden) {
+      display: none;
+    }
+  }
+
+  @include e(options) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: stretch;
+    padding: 0.5rem;
+  }
+}
+
+.browser {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+
+  @include e(input) {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+
+    & + label {
+      @extend %button;
+
+      & * {
+        pointer-events: none;
+      }
+    }
+
+    &:focus + label,
+    & + label:hover {
+      background-color: #92a0b3;
+      box-shadow: rgba(1, 1, 0, 1) 0 2px 8px;
+      background-image: linear-gradient(
+        rgba(70, 77, 85, 0.7),
+        rgba(37, 41, 46, 0.8)
+      );
+    }
+  }
+
+  @include m(hidden) {
+    display: none;
+  }
+}
+
+.download {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+
+  @include e(input) {
+    @extend %button;
+    text-decoration: none;
+    height: 4rem;
+
+    &:hover,
+    &:active,
+    &:active {
+      @extend %button-hover;
+    }
+  }
+
+  @include m(hidden) {
+    display: none;
+  }
+}
+
+.btn {
+  @extend %button;
+  text-decoration: none;
+
+  &:hover,
+  &:active,
+  &:active {
+    @extend %button-hover;
+  }
+}
+
+fieldset {
+  border: 1px solid $blue;
+  display: block;
+  border-radius: 0.25rem;
+}
+
+legend {
+  font-size: 0.75rem;
+  color: $white;
+  padding: 0.25rem 0.5rem;
+}
+
+fieldset button {
+  @extend %button;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 1rem;
+
+  &:hover,
+  &:active,
+  &:active {
+    @extend %button-hover;
+  }
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: auto;
+  height: 2rem;
+  margin: 0;
+  padding: 0 1rem;
+  background-color: $blue;
+  color: $white;
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    color: $white;
+  }
+  ul {
+    display: inline-block;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0 0.5rem;
+
+    li {
+      display: inline-block;
+      margin: 0 0.25rem 0 0;
+      &:after {
+        margin-left: 0.25rem;
+        content: "|"
+
+      }
+    }
+  }
+}
