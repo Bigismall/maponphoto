@@ -1,7 +1,7 @@
 import { type Message, MessageState } from './Message.type'
 import ObserverPublisher from './ObserverPublisher'
 import Publisher from './Publisher.class'
-import * as EXIF from 'exif-js'
+import exifr from 'exifr'
 
 export type Numerator = [number, number, number]
 
@@ -19,14 +19,17 @@ export default class ExifManager extends ObserverPublisher(Publisher) {
       const self = this
       console.log('We can now deal with Exif data')
 
-      // @ts-expect-error  Wrong typing in EXIF package
-      EXIF.getData(publication.data, function () {
-        // @ts-expect-error due EXIF typings
-        const latitude = EXIF.getTag(this, 'GPSLatitude') as Numerator | undefined
-        // @ts-expect-error due EXIF typings
-        const longitude = EXIF.getTag(this, 'GPSLongitude') as Numerator | undefined
-        // @ts-expect-error due EXIF typings
-        const direction = EXIF.getTag(this, 'GPSImgDirection') as string | undefined
+      exifr.parse(publication.data, [
+        'GPSLatitude',
+        'GPSLongitude',
+        'GPSImgDirection'
+      ]).then((output) => {
+        if (output == null) {
+          console.warn('No GPS data found')
+          self.publish({ state: MessageState.ExifMissing })
+          return
+        }
+        const { latitude, longitude, GPSImgDirection: direction } = output
 
         if ((latitude == null) || (longitude == null)) {
           console.warn('No GPS data found')
@@ -34,14 +37,14 @@ export default class ExifManager extends ObserverPublisher(Publisher) {
           return
         }
 
-        const lat = ExifManager.numeratorToLatLng(latitude)
-        const lng = ExifManager.numeratorToLatLng(longitude)
-        const dir = (direction != null) ? parseInt(direction.valueOf()) : 0
-
+        console.log({ latitude, longitude, direction })
         self.publish({
           state: MessageState.ExifReady,
-          data: { lat, lng, dir }
+          data: { lat: latitude, lng: longitude, dir: direction }
         })
+      }).catch((error) => {
+        console.warn(error)
+        self.publish({ state: MessageState.ExifMissing })
       })
     }
   }

@@ -5,9 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  exif-js:
-    specifier: ^2.3.0
-    version: 2.3.0
+  exifr:
+    specifier: ^7.1.3
+    version: 7.1.3
   gh-pages:
     specifier: ^6.0.0
     version: 6.0.0
@@ -1202,8 +1202,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /exif-js@2.3.0:
-    resolution: {integrity: sha512-1Og9pAzG2FZRVlaavH8bB8BTeHcjMdJhKmeQITkX+uLRCD0xPtKAdZ2clZmQdJ56p9adXtJ8+jwrGp/4505lYg==}
+  /exifr@7.1.3:
+    resolution: {integrity: sha512-g/aje2noHivrRSLbAUtBPWFbxKdKhgj/xr1vATDdUXPOFYJlQ62Ft0oy+72V6XLIpDJfHs6gXLbBLAolqOXYRw==}
     dev: false
 
   /fast-deep-equal@3.1.3:
