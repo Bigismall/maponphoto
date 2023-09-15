@@ -6,7 +6,12 @@ const MIN_WIDTH = 640
 const MIN_HEIGHT = 400
 
 export default class ImageManager extends ObserverPublisher(Publisher) {
-  private image: HTMLImageElement = document.createElement('img')
+  private image: HTMLImageElement
+
+  constructor () {
+    super()
+    this.image = document.createElement('img')
+  }
 
   update (publication: Message) {
     if (publication.state === MessageState.FileChange) {

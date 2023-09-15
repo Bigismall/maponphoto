@@ -23,8 +23,7 @@ export default class MapOptionsManager extends Publisher {
 
     this.submit.addEventListener('click', () => {
       this.publish({
-        state: MessageState.MapSetupReady,
-        data: {}
+        state: MessageState.MapSetupReady
       })
     })
 
@@ -32,7 +31,7 @@ export default class MapOptionsManager extends Publisher {
       $button.addEventListener('click', () => {
         this.publish({
           state: MessageState.ResizeMap,
-          data: $button.dataset.size
+          data: $button?.dataset?.size ?? ''
         })
       })
     })

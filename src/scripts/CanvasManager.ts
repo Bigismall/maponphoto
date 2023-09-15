@@ -9,6 +9,11 @@ const MAX_HEIGHT = 960
 // const MIN_WIDTH = 640
 // const MIN_HEIGHT = 480
 
+export interface Point {
+  x: number
+  y: number
+}
+
 export default class CanvasManager extends ObserverPublisher(Publisher) {
   private readonly selector: HTMLCanvasElement
   private readonly context: CanvasRenderingContext2D | null
@@ -62,33 +67,26 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
     this.context?.drawImage(image, 0, 0, this.width, this.height)
   }
 
-  protected drawMap (image: HTMLImageElement, position: MapPosition) {
-    let x = 0
-    let y = 0
-
-    // Fixme - extract this
+  protected getMapPosition (position: MapPosition, image: HTMLImageElement): Point {
     switch (position) {
       case MapPosition.TOP_LEFT:
-        x = 0
-        y = 0
-        break
+        return { x: 0, y: 0 }
       case MapPosition.TOP_RIGHT:
-        x = this.width - image.width
-        y = 0
-        break
+        return { x: this.width - image.width, y: 0 }
       case MapPosition.BOTTOM_LEFT:
-        x = 0
-        y = this.height - image.height
-        break
+        return { x: 0, y: this.height - image.height }
       case MapPosition.BOTTOM_RIGHT:
-        x = this.width - image.width
-        y = this.height - image.height
-        break
+        return { x: this.width - image.width, y: this.height - image.height }
       case MapPosition.CENTER:
-        x = (this.width - image.width) / 2
-        y = (this.height - image.height) / 2
-        break
+        return {
+          x: (this.width - image.width) / 2,
+          y: (this.height - image.height) / 2
+        }
     }
+  }
+
+  protected drawMap (image: HTMLImageElement, position: MapPosition) {
+    const { x, y } = this.getMapPosition(position, image)
 
     this.context?.drawImage(image, x, y)
   }

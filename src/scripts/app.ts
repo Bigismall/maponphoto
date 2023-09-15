@@ -58,6 +58,4 @@ window.addEventListener('load', function () {
   canvasManager.subscribe(downloadManager) // we want to Download Manager to receive updates from the canvas manager
   downloadManager.subscribe(browser) // we want to Browser to receive updates from the download manager
   downloadManager.subscribe(canvasManager) // we want to Canvas Manager to receive updates from the download manager
-
-  // TODO add Message.FileError  support
 })

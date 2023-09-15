@@ -3,15 +3,11 @@ import ObserverPublisher from './ObserverPublisher'
 import Publisher from './Publisher.class'
 import exifr from 'exifr'
 
-export type Numerator = [number, number, number]
-
 export default class ExifManager extends ObserverPublisher(Publisher) {
-  public static numeratorToLatLng = (
-    numerator: Numerator
-  ): number =>
-    numerator[0].valueOf() +
-    numerator[1].valueOf() / 60 +
-    numerator[2].valueOf() / 3600
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
+  constructor () {
+    super()
+  }
 
   update (publication: Message) {
     if (publication.state === MessageState.FileReady) {
