@@ -1,40 +1,19 @@
 @import "mixins/bem";
 @import "placeholders/button";
+@import "placeholders/center";
+@import "reset";
+@import "variables";
 
-$blue: #2c3e50;
-$light-blue: #5c6a79;
-$white: #fff;
-$black: #000;
-$text: #212529;
-$yellow: #ffcc00;
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  margin: 0;
-  padding: 0;
-}
 
 body {
-  margin: 0;
+  width: 100%;
   padding: 2rem 0 3rem 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: $font-family;
   font-size: 1rem;
   font-weight: 400;
-  line-height: 1.5;
   color: $text;
-  background-color: $blue;
-  -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
-  min-height: 100vh;
-  width: 100%;
+  background-color: $blue;
   background-image: linear-gradient(
     to bottom,
     $blue,
@@ -43,6 +22,9 @@ body {
     #505f6e,
     $light-blue
   );
+
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: $transparent;
 }
 
 .container {
@@ -61,14 +43,12 @@ body {
   max-width: 1280px;
   max-height: 960px;
   box-shadow: 0 0 0.5rem 0 $text;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: $half-white;
   margin: 0 auto;
 }
 
 .map {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  @extend %center;
   transform: translate(-50%, -50%);
 
   z-index: 20;
