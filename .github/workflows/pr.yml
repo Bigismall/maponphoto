@@ -24,11 +24,10 @@ jobs:
     name: ChatGPT Code Review
     runs-on: ubuntu-latest
     needs: verify-chat-gpt-review
+    if: ${{ needs.verify-deploy-comment.outputs.RUN_CHAT_GPT == 'true' }}
     steps:
       - uses: anc95/ChatGPT-CodeReview@main
         name: ChatGPT-CodeReview
-        with:
-          RUN_CHAT_GPT: ${{ needs.verify-chat-gpt-review.outputs.RUN_CHAT_GPT == 'true' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.GITHUBPR_MAP_ON_PHOTO }}
