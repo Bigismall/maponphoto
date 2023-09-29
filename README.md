@@ -1,6 +1,6 @@
 # Map on photo
 
-Empty project.
+Allow to add map thumbnail on photo, based on EXIF data or user input.
 
 ## Building and running on localhost
 
@@ -22,11 +22,6 @@ To create a production build:
 pnpm build
 ```
 
-## Running
-
-```sh
-node dist/bundle.js
-```
 
 ## Credits
 
