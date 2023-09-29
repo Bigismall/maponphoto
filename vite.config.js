@@ -4,5 +4,5 @@ export default defineConfig({
   plugins: [eslint({
     exclude: ['node_modules/**', 'dist/**']
   })],
-  base: '/maponphoto/'
+  base: '/'
 })
