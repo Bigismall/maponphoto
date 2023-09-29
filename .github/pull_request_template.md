@@ -1,6 +1,6 @@
 Please select workflows you want to use:
 
-* [ ] Chat GPT Review
-* [ ] Publis new release
+* [ ] ChatGPT Review
+* [ ] Deploy to GitHub Pages
 
 Thanks!
