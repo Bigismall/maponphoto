@@ -19,12 +19,10 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     needs: verify-deploy-comment
-
+    if: inputs.DEPLOY_GHP
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-        with:
-          DEPLOY_GHP: ${{ needs.verify-deploy-comment.outputs.DEPLOY_GHP == 'true' }}
 
       - name: Setup Node
         uses: actions/setup-node@v3
