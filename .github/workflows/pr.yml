@@ -31,4 +31,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.GITHUBPR_MAP_ON_PHOTO }}
+          LANGUAGE: English
 
