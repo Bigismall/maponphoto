@@ -1,15 +1,15 @@
-import type Observer from './Observer.class'
-import { type Message } from './Message.type'
+import type Observer from './Observer.class';
+import { type Message } from './Message.type';
 
 export default abstract class Publisher {
-  protected subscribers: Observer[] = []
+  protected subscribers: Observer[] = [];
 
   protected constructor () {
-    this.subscribers = []
+    this.subscribers = [];
   }
 
   subscribe (callback: Observer) {
-    this.subscribers.push(callback)
+    this.subscribers.push(callback);
   }
 
   // unsubscribe (callback: Observer) {
@@ -17,6 +17,6 @@ export default abstract class Publisher {
   // }
 
   publish (publication: Message) {
-    this.subscribers.forEach((s) => { s.update(publication) })
+    this.subscribers.forEach((s) => { s.update(publication); });
   }
 }

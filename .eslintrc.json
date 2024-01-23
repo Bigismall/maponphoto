@@ -13,6 +13,15 @@
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/triple-slash-reference": "off",
-    "no-new": "off"
-  }
+    "no-new": "off",
+    "semi": [2, "always"],
+    "@typescript-eslint/semi": [2,"always"]
+  },
+  "plugins": [
+    "@typescript-eslint"
+  ],
+    "ignorePatterns": [
+        "dist",
+        "node_modules"
+    ]
 }

@@ -1,4 +1,4 @@
-import { type MapPosition } from './MapManager'
+import { type MapPosition } from './MapManager';
 
 export enum MessageState {
   CanvasWithMapReady = 'CanvasWithMapReady',
@@ -72,4 +72,4 @@ export type Message =
   {
     state: MessageState.ResizeMap
     data: string
-  }
+  };
