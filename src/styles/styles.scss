@@ -128,10 +128,16 @@ body {
     font-size: 0.75rem;
     font-weight: bold;
     text-align: center;
-    color: $yellow;
+    background-color: $yellow;
+    color: $black;
 
     @include m(hidden) {
       display: none;
+    }
+
+    & a {
+        color: $black;
+        text-decoration: underline;
     }
   }
 
@@ -242,6 +248,10 @@ fieldset button {
   &:active {
     @extend %button-hover;
   }
+
+    &.action {
+      background-image: linear-gradient(#65a200, #4f8000);
+    }
 }
 
 footer {

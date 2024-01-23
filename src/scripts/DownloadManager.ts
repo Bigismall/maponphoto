@@ -4,21 +4,24 @@ import Publisher from './Publisher.class';
 
 export default class DownloadManager extends ObserverPublisher(Publisher) {
   private readonly downloadSelector: HTMLLinkElement;
-  private readonly resetSelector: HTMLButtonElement;
+  private readonly resetSelector: NodeListOf<HTMLElement>;
   private readonly container: HTMLElement | null;
 
   constructor (
     $downloadElement: HTMLLinkElement,
-    $resetElement: HTMLButtonElement
+    $resetElement: NodeListOf<HTMLElement>
   ) {
     super();
     this.downloadSelector = $downloadElement;
     this.resetSelector = $resetElement;
     this.container = $downloadElement.parentElement;
 
-    this.resetSelector.addEventListener('click', () => {
-      this.hide();
-      this.publish({ state: MessageState.Reset });
+    Array.from(this.resetSelector).map((element) => {
+      element.addEventListener('click', () => {
+        this.hide();
+        this.publish({ state: MessageState.Reset });
+      });
+      return element;
     });
   }
 

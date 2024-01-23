@@ -128,6 +128,10 @@ export default class MapManager extends ObserverPublisher(Publisher) {
     if (publication.state === MessageState.MapSetupReady) {
       this.drawCanvasMap();
     }
+
+    if (publication.state === MessageState.Reset) {
+      this.hide();
+    }
   }
 
   drawCanvasMap () {

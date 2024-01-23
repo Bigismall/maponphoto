@@ -8,7 +8,7 @@ import ImageManager from './ImageManager';
 import MapManager from './MapManager';
 import PhotoBrowser from './PhotoBrowser';
 import MapOptionsManager from './MapOptionsManager';
-import { $ } from './dom.ts';
+import { $, $$ } from './dom.ts';
 
 let browser: PhotoBrowser;
 let imageManager: ImageManager;
@@ -19,12 +19,12 @@ let mapOptionsManager: MapOptionsManager;
 let downloadManager: DownloadManager;
 
 window.addEventListener('load', function () {
-  const $elements = new Map<string, HTMLElement | null>([
+  const $elements = new Map<string, Element | NodeListOf<HTMLElement> | null>([
     ['browser', $('#js-browser-input')],
     ['photo', $('#js-map')],
     ['canvas', $('#js-main-canvas')],
     ['download', $('#js-download')],
-    ['reset', $('#js-reset')],
+    ['reset', $$('.js-reset')], // At least 2 elements have this class
     ['mapOptions', $('#js-map-options')]
   ]);
 
@@ -35,10 +35,12 @@ window.addEventListener('load', function () {
     }
   });
 
+  console.log($elements.get('reset'));
+
   browser = new PhotoBrowser($elements.get('browser') as HTMLInputElement);
   downloadManager = new DownloadManager(
     $elements.get('download') as HTMLLinkElement,
-    $elements.get('reset') as HTMLButtonElement
+    $elements.get('reset') as NodeListOf<HTMLElement>
   );
 
   canvasManager = new CanvasManager($elements.get('canvas') as HTMLCanvasElement);
@@ -58,4 +60,5 @@ window.addEventListener('load', function () {
   canvasManager.subscribe(downloadManager); // we want to Download Manager to receive updates from the canvas manager
   downloadManager.subscribe(browser); // we want to Browser to receive updates from the download manager
   downloadManager.subscribe(canvasManager); // we want to Canvas Manager to receive updates from the download manager
+  downloadManager.subscribe(mapManager);// we want to Map Manager to receive updates from the download manager
 });

@@ -21,7 +21,7 @@ Your photo does not have a GPS position? No problem, you can set it manually!  E
     </aside>
     <aside class="download download--hidden">
       <a class="download__input" download href="#" id="js-download">Download image</a>
-      <button class="download__input" id="js-reset">Try another image</button>
+      <button class="download__input js-reset">Try another image</button>
     </aside>
     <aside class="map map--hidden">
       <div class="map__canvas" id="js-map"></div>
@@ -29,7 +29,7 @@ Your photo does not have a GPS position? No problem, you can set it manually!  E
         Unable to read
         <abbr title="Exchangeable Image File Format">EXIF</abbr> data from the
         photo. Drag the marker to set
-        <abbr title="Global Positioning System">GPS</abbr> position manually
+        <abbr title="Global Positioning System">GPS</abbr> position manually, or <a href="" class="js-reset">load another photo</a>.
       </div>
       <div class="map__options map__options--hidden" id="js-map-options">
         <fieldset>
@@ -47,7 +47,8 @@ Your photo does not have a GPS position? No problem, you can set it manually!  E
         </fieldset>
         <fieldset>
           <legend>Actions</legend>
-          <button id="js-map-options-submit">Add map</button>
+          <button class="js-reset">Reset</button>
+          <button id="js-map-options-submit" class="action">Add map</button>
         </fieldset>
       </div>
     </aside>
