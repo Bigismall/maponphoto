@@ -18,11 +18,11 @@ const DEFAULT_CENTER: [number, number] = [54.403397, 18.570665];
 // const DEFAULT_ZOOM: number = 14
 
 export enum MapPosition {
-  TOP_LEFT = 'topleft',
-  TOP_RIGHT = 'topright',
-  BOTTOM_LEFT = 'bottomleft',
-  BOTTOM_RIGHT = 'bottomright',
-  CENTER = 'center',
+  TOP_LEFT = 'map--topleft',
+  TOP_RIGHT = 'map--topright',
+  BOTTOM_LEFT = 'map--bottomleft',
+  BOTTOM_RIGHT = 'map--bottomright',
+  CENTER = 'map--center',
 }
 
 export default class MapManager extends ObserverPublisher(Publisher) {
@@ -117,12 +117,13 @@ export default class MapManager extends ObserverPublisher(Publisher) {
       const position: MapPosition = publication.data;
       this.position = position;
       this.container?.classList.remove(
-        'map--topleft',
-        'map--topright',
-        'map--bottomleft',
-        'map--bottomright'
+        MapPosition.TOP_LEFT,
+        MapPosition.TOP_RIGHT,
+        MapPosition.BOTTOM_LEFT,
+        MapPosition.BOTTOM_RIGHT,
+        MapPosition.CENTER
       );
-      this.container?.classList.add(`map--${position}`);
+      this.container?.classList.add(position);
     }
 
     if (publication.state === MessageState.MapSetupReady) {
