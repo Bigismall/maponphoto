@@ -1,8 +1,8 @@
+import * as L from 'leaflet';
 import { type Map, type Marker } from 'leaflet';
 import { type Message, MessageState } from './Message.type';
 import ObserverPublisher from './ObserverPublisher';
 import Publisher from './Publisher.class';
-import * as L from 'leaflet';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import leafletImage from 'leaflet-image';
@@ -90,6 +90,7 @@ export default class MapManager extends ObserverPublisher(Publisher) {
       };
       console.log('Sett ing map to ', { lat, lng, dir });
       this.map.setView(L.latLng(lat, lng), 14);
+      // TODO change icon direction
       this.marker.setLatLng(L.latLng(lat, lng));
     }
 

@@ -15,7 +15,9 @@
     "@typescript-eslint/triple-slash-reference": "off",
     "no-new": "off",
     "semi": [2, "always"],
-    "@typescript-eslint/semi": [2,"always"]
+    "quotes": [2, "single"],
+    "@typescript-eslint/semi": [2,"always"],
+    "@typescript-eslint/quotes": [2,"single"]
   },
   "plugins": [
     "@typescript-eslint"

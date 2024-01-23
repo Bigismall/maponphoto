@@ -20,7 +20,7 @@ export default class ImageManager extends ObserverPublisher(Publisher) {
 
       const file = (event?.target as HTMLInputElement)?.files?.[0] ?? null;
 
-      if (file == null) {
+      if (file === null) {
         return;
       }
 
