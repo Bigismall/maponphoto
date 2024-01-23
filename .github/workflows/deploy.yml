@@ -9,7 +9,6 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    if: ${{ needs.verify-deploy-comment.outputs.DEPLOY_GHP == 'true' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
