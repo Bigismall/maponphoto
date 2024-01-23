@@ -9,19 +9,19 @@ Visit https://bigismall.github.io/maponphoto/ to see it in action!
 First install dependencies:
 
 ```sh
-pnpm install
+npm install
 ```
 
 To run in hot module reloading mode:
 
 ```sh
-pnpm dev
+npm dev
 ```
 
 To create a production build:
 
 ```sh
-pnpm build
+npm build
 ```
 
 

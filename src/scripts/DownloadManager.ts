@@ -29,11 +29,13 @@ export default class DownloadManager extends ObserverPublisher(Publisher) {
     }
   }
 
+  protected numberWithPadding (number: number) {
+    return number.toString().padStart(2, '0');
+  }
+
   generateFilename () {
     const today = new Date();
-    return `mtp-${today.getFullYear()}-${
-      today.getMonth() + 1
-    }-${today.getDate()}-${today.getHours()}-${today.getMinutes()}-${today.getSeconds()}.jpg`;
+    return `map-on-photo-${today.getFullYear()}-${this.numberWithPadding(today.getMonth() + 1)}-${this.numberWithPadding(today.getDate())}-${this.numberWithPadding(today.getHours())}-${this.numberWithPadding(today.getMinutes())}-${this.numberWithPadding(today.getSeconds())}.jpg`;
   }
 
   prepareDownload () {
