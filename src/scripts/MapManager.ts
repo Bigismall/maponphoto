@@ -126,6 +126,7 @@ export default class MapManager extends ObserverPublisher(Publisher) {
     }
 
     if (publication.state === MessageState.MapSetupReady) {
+      this.map.setView(this.marker.getLatLng());
       this.drawCanvasMap();
     }
 
