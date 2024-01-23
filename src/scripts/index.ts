@@ -20,12 +20,12 @@ let downloadManager: DownloadManager;
 
 window.addEventListener('load', function () {
   const $elements = new Map<string, HTMLElement | null>([
-    ['browser', $('js-browser-input')],
-    ['photo', $('js-map')],
-    ['canvas', $('js-main-canvas')],
-    ['download', $('js-download')],
-    ['reset', $('js-reset')],
-    ['mapOptions', $('js-map-options')]
+    ['browser', $('#js-browser-input')],
+    ['photo', $('#js-map')],
+    ['canvas', $('#js-main-canvas')],
+    ['download', $('#js-download')],
+    ['reset', $('#js-reset')],
+    ['mapOptions', $('#js-map-options')]
   ]);
 
   // Check if all elements are different from null
