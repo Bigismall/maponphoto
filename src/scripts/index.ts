@@ -35,8 +35,6 @@ window.addEventListener('load', function () {
     }
   });
 
-  console.log($elements.get('reset'));
-
   browser = new PhotoBrowser($elements.get('browser') as HTMLInputElement);
   downloadManager = new DownloadManager(
     $elements.get('download') as HTMLLinkElement,
