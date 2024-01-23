@@ -72,6 +72,14 @@ export default class MapManager extends ObserverPublisher(Publisher) {
     if (publication.state === MessageState.ExifMissing) {
       // console.warn("No EXIF GPS  data found");
       // cover photo with map  - big map with drag pointer and zoom and SAVE button
+      this.marker.setIcon(
+        L.icon({
+          iconUrl: markerIcon(null),
+          iconSize: [80, 80], // size of the icon
+          iconAnchor: [40, 80], // point of the icon which will correspond to marker's location
+          popupAnchor: [40, 0] // point from which the popup should open relative to the iconAnchor
+        })
+      );
       this.show({ title: true });
     }
 
@@ -82,7 +90,7 @@ export default class MapManager extends ObserverPublisher(Publisher) {
         lng: number
         dir: number
       };
-      console.log('Sett ing map to ', { lat, lng, dir });
+      console.log('Sett coordinates map to ', { lat, lng, dir });
       this.map.setView(L.latLng(lat, lng), 14);
       this.marker.setLatLng(L.latLng(lat, lng));
       this.marker.setIcon(
