@@ -2,12 +2,11 @@ import { type Message, MessageState } from './Message.type';
 import ObserverPublisher from './ObserverPublisher';
 import Publisher from './Publisher.class';
 import { MapPosition } from './MapManager';
+import { log } from './console.ts';
 
 // 4/3
 const MAX_WIDTH = 1280;
 const MAX_HEIGHT = 960;
-// const MIN_WIDTH = 640
-// const MIN_HEIGHT = 480
 
 export interface Point {
   x: number
@@ -22,7 +21,7 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
     super();
     this.selector = $selector;
     this.context = this.selector.getContext('2d');
-    console.log('Canvas', this.width, this.height, this.aspectRatio);
+    log('Canvas', this.width, this.height, this.aspectRatio);
   }
 
   get height (): number {
@@ -56,7 +55,7 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
 
     this.selector.width = newWidth;
     this.selector.height = newHeight;
-    console.log('Resized Canvas', this.width, this.height, this.aspectRatio);
+    log('Resized Canvas', this.width, this.height, this.aspectRatio);
   }
 
   protected draw (image: CanvasImageSource) {
@@ -92,6 +91,7 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
 
   update (publication: Message) {
     if (publication.state === MessageState.Reset) {
+      this.resizeFor(MAX_WIDTH, MAX_HEIGHT);
       this.clear();
     }
 

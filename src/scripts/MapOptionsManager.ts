@@ -31,7 +31,7 @@ export default class MapOptionsManager extends Publisher {
       $button.addEventListener('click', () => {
         this.publish({
           state: MessageState.ResizeMap,
-          data: $button?.dataset?.size ?? ''
+          data: $button.dataset.size ?? ''
         });
       });
     });
