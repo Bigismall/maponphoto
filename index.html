@@ -23,14 +23,14 @@ Your photo does not have a GPS position? No problem, you can set it manually!  E
       <a class="download__input download__input--action" download href="#" id="js-download">Download image</a>
       <button class="download__input js-reset">Try another image</button>
     </aside>
-    <aside class="map map--hidden">
+    <aside class="map map--hidden map--center">
+      <div class="map__canvas map__canvas--medium" id="js-map"></div>
       <div class="map__title map__title--hidden">
         Unable to read
         <abbr title="Exchangeable Image File Format">EXIF</abbr> data from the
         photo. Drag the marker to set
         <abbr title="Global Positioning System">GPS</abbr> position manually, or <a href="" class="js-reset">load another photo</a>.
       </div>
-      <div class="map__canvas map__canvas--medium" id="js-map"></div>
       <div class="map__options" id="js-map-options">
         <fieldset>
           <legend>Map position</legend>

@@ -7,7 +7,9 @@
 
 
 body {
-  width: 100%;
+  width: 100vw;
+  min-height: 100vh;
+  height: auto;
   padding: 0.5rem 0 1.5rem 0;
   font-family: $font-family;
   font-size: 1rem;
@@ -41,8 +43,8 @@ body {
   display: block;
   width: auto;
   height: auto;
-  max-width: 1280px;
-  max-height: 960px;
+  max-width: $container-width;
+  max-height: $container-height;
   box-shadow: 0 0 0.5rem 0 $text;
   background-color: $half-white;
   margin: 0 auto;
@@ -127,59 +129,66 @@ body {
   @include e(canvas) {
     position: static;
     display: block;
-    width: 800px;
-    height: 600px;
+    width: $canvas-default-width;
+    height: $canvas-default-height;
     margin: 0 auto;
     background-color: $black;
 
     @include m(small) {
-      width: 320px;
-      height: 240px;
+      width: $canvas-small-width;
+      height: $canvas-small-height;
 
       & ~ .map__options {
         flex-direction: column;
-
         button[data-size="map__canvas--small"] {
           @extend %button-hover;
 
         }
       }
 
-
+      & ~ .map__title {
+        width: $canvas-small-width;
+      }
     }
+
     @include m(medium) {
-      width: 480px;
-      height: 360px;
+      width: $canvas-medium-width;
+      height: $canvas-medium-height;
 
       & ~ .map__options {
         flex-direction: column;
-
         button[data-size="map__canvas--medium"] {
           @extend %button-hover;
         }
       }
 
+      & ~ .map__title {
+        width: $canvas-medium-width;
+      }
+
 
     }
-    @include m(large) {
-      width: 640px;
-      height: 480px;
 
+    @include m(large) {
+      width: $canvas-large-width;
+      height: $canvas-large-height;
       & ~ .map__options button[data-size="map__canvas--large"] {
         @extend %button-hover;
       }
-
     }
   }
 
   @include e(title) {
+    display: block;
+    width: auto;
+
     margin: 0;
     padding: 0.4rem 0.5rem;
     font-size: 0.7rem;
     line-height: 1;
     font-weight: bolder;
     text-align: center;
-    background-color: $yellow;
+    background-color: $yellow-transparent;
     color: $black;
 
     @include m(hidden) {
@@ -203,10 +212,7 @@ body {
 }
 
 .browser {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  @extend %center;
   z-index: $z-index-ui;
 
   @include e(input) {
@@ -227,12 +233,7 @@ body {
 
     &:focus + label,
     & + label:hover {
-      background-color: #92a0b3;
-      box-shadow: rgba(1, 1, 0, 1) 0 2px 8px;
-      background-image: linear-gradient(
-                      rgba(70, 77, 85, 0.7),
-                      rgba(37, 41, 46, 0.8)
-      );
+     @extend %button-hover;
     }
   }
 
@@ -242,15 +243,12 @@ body {
 }
 
 .download {
+  @extend %center;
+  z-index: $z-index-ui;
 
   display: flex;
-   flex-direction: column;
-    justify-content: space-evenly;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: $z-index-ui;
+  flex-direction: column;
+  justify-content: space-evenly;
 
 
   @include e(input) {
@@ -266,10 +264,15 @@ body {
     }
 
     @include m(action) {
-      background-image: linear-gradient(#65a200, #4f8000);
+      background-image: $button-active-bg;
+
+      &:hover,
+      &:active,
+      &:active {
+        background-image: $button-active-hover-bg;
+      }
     }
   }
-
 
 
   @include m(hidden) {
@@ -311,7 +314,13 @@ fieldset button {
   }
 
   &.action {
-    background-image: linear-gradient(#65a200, #4f8000);
+    background-image: $button-active-bg;
+
+    &:hover,
+    &:active,
+    &:active {
+      background-image: $button-active-hover-bg;
+    }
   }
 }
 
@@ -342,6 +351,7 @@ footer {
     margin-top: 0.1rem;
 
   }
+
   p {
     @extend %no-space;
   }
