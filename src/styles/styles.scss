@@ -7,7 +7,7 @@
 
 body {
   width: 100%;
-  padding: 2rem 0 3rem 0;
+  padding: 0.5rem 0 1.5rem 0;
   font-family: $font-family;
   font-size: 1rem;
   font-weight: 400;
@@ -50,17 +50,21 @@ body {
 .map {
   @extend %center;
   transform: translate(-50%, -50%);
-
   z-index: 20;
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: auto;
   height: auto;
   margin: 0;
   padding: 0;
-  background-color: $light-blue;
+  background-color: $light-blue-transparent;
   box-shadow: 0 0 0.5rem 0 $text;
 
   @include m(center) {
+
+    button[data-position="map--center"] {
+      @extend %button-hover;
+    }
   }
 
   @include m(topleft) {
@@ -69,6 +73,10 @@ body {
     right: auto;
     bottom: auto;
     transform: none;
+
+    button[data-position="map--topleft"] {
+      @extend %button-hover;
+    }
   }
 
   @include m(topright) {
@@ -77,6 +85,11 @@ body {
     right: 0;
     bottom: auto;
     transform: none;
+
+    button[data-position="map--topright"] {
+      @extend %button-hover;
+    }
+
   }
 
   @include m(bottomleft) {
@@ -85,6 +98,11 @@ body {
     right: auto;
     bottom: 0;
     transform: none;
+    flex-direction: column-reverse;
+
+    button[data-position="map--bottomleft"] {
+      @extend %button-hover;
+    }
   }
 
   @include m(bottomright) {
@@ -93,6 +111,11 @@ body {
     right: 0;
     bottom: 0;
     transform: none;
+    flex-direction: column-reverse;
+
+    button[data-position="map--bottomright"] {
+      @extend %button-hover;
+    }
   }
 
   @include m(hidden) {
@@ -111,14 +134,40 @@ body {
     @include m(small) {
       width: 320px;
       height: 240px;
+
+      & ~ .map__options {
+        flex-direction: column;
+
+        button[data-size="map__canvas--small"] {
+          @extend %button-hover;
+
+        }
+      }
+
+
     }
     @include m(medium) {
       width: 480px;
       height: 360px;
+
+      & ~ .map__options {
+        flex-direction: column;
+
+        button[data-size="map__canvas--medium"] {
+          @extend %button-hover;
+        }
+      }
+
+
     }
     @include m(large) {
       width: 640px;
       height: 480px;
+
+      & ~ .map__options button[data-size="map__canvas--large"] {
+        @extend %button-hover;
+      }
+
     }
   }
 
@@ -215,17 +264,6 @@ body {
   }
 }
 
-.btn {
-  @extend %button;
-  text-decoration: none;
-
-  &:hover,
-  &:active,
-  &:active {
-    @extend %button-hover;
-  }
-}
-
 fieldset {
   border: 1px solid $blue;
   display: flex;
@@ -270,15 +308,15 @@ footer {
   left: 0;
   right: 0;
   top: auto;
-  height: 2rem;
+  height: 1rem;
   margin: 0;
   padding: 0 1rem;
-  background-color: $blue;
+  background-color: $blue-transparent;
   color: $white;
-  font-size: 0.85rem;
+  font-size: 0.7rem;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: center;
 
   p {
@@ -288,6 +326,7 @@ footer {
 
   a {
     color: $white;
+    display: inline-block;
   }
 
   ul {
@@ -300,10 +339,12 @@ footer {
       display: inline-block;
       margin: 0 0.25rem 0 0;
 
-      &:after {
-        margin-left: 0.25rem;
-        content: "|"
+      &:not(:last-child) {
+        &:after {
+          margin-left: 0.25rem;
+          content: "|"
 
+        }
       }
     }
   }
