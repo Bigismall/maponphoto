@@ -1,6 +1,7 @@
 import { type Message, MessageState } from './Message.type';
 import ObserverPublisher from './ObserverPublisher';
 import Publisher from './Publisher.class';
+import { fault, log } from './console.ts';
 
 const MIN_WIDTH = 640;
 const MIN_HEIGHT = 400;
@@ -18,7 +19,7 @@ export default class ImageManager extends ObserverPublisher(Publisher) {
       const event = publication.data;
       const reader = new FileReader();
 
-      const file = (event?.target as HTMLInputElement)?.files?.[0] ?? null;
+      const file = (event.target as HTMLInputElement).files?.[0] ?? null;
 
       if (file === null) {
         return;
@@ -37,15 +38,15 @@ export default class ImageManager extends ObserverPublisher(Publisher) {
       };
 
       reader.onload = (e: ProgressEvent<FileReader>) => {
-        console.log('File reader onload');
+        log('File reader onload');
 
-        this.image.src = (e?.target?.result ?? '') as string;
+        this.image.src = (e.target?.result ?? '') as string;
       };
 
       reader.onerror = (e) => {
-        this.publish({ state: MessageState.FileError, data: reader?.error?.message ?? '' });
-        console.error(reader.error);
-        console.error(e);
+        this.publish({ state: MessageState.FileError, data: reader.error?.message ?? '' });
+        fault(reader.error);
+        fault(e);
       };
 
       reader.readAsDataURL(file);

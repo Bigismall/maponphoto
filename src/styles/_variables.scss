@@ -8,9 +8,42 @@ $white: #fff;
 $black: #000;
 $text: #212529;
 
-$yellow: #e6bf00;
+$yellow-transparent: #e6bf0080;
 $transparent: transparent;
 
 $font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 $half-white: rgba(255, 255, 255, 0.5);
 
+$z-index-map: 10;
+$z-index-ui: 20;
+$z-index-footer: 30;
+
+
+$button-bg: linear-gradient($semi-blue, #25292e);
+$button-hover-bg: linear-gradient(rgba(63, 73, 84, 0.7), rgba(32, 38, 46, 0.8));
+
+$button-active-bg: linear-gradient(#65a200, #4f8000);
+$button-active-hover-bg: linear-gradient(#7ecc00, #66a600);
+
+$container-width: 1280px;
+$container-height: 960px;
+
+$canvas-default-width: 800px;
+$canvas-default-height: 600px;
+
+$canvas-small-width: 320px;
+$canvas-small-height: 240px;
+
+$canvas-medium-width: 480px;
+$canvas-medium-height: 360px;
+
+$canvas-large-width: 640px;
+$canvas-large-height: 480px;
+
+
+/*
+background-image: linear-gradient(#65a200, #4f8000);
+TODO add active green hover
+
+
+ */

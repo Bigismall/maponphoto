@@ -9,6 +9,7 @@ import MapManager from './MapManager';
 import PhotoBrowser from './PhotoBrowser';
 import MapOptionsManager from './MapOptionsManager';
 import { $, $$ } from './dom.ts';
+import { warn } from './console.ts';
 
 let browser: PhotoBrowser;
 let imageManager: ImageManager;
@@ -31,7 +32,7 @@ window.addEventListener('load', function () {
   // Check if all elements are different from null
   $elements.forEach(($element, key) => {
     if ($element === null) {
-      console.warn(`Missing element ${key}`);
+      warn(`Missing element ${key}`);
     }
   });
 

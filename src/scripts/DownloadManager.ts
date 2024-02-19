@@ -1,6 +1,7 @@
 import { type Message, MessageState } from './Message.type';
 import ObserverPublisher from './ObserverPublisher';
 import Publisher from './Publisher.class';
+import { warn } from './console.ts';
 
 export default class DownloadManager extends ObserverPublisher(Publisher) {
   private readonly downloadSelector: HTMLLinkElement;
@@ -47,11 +48,11 @@ export default class DownloadManager extends ObserverPublisher(Publisher) {
     );
 
     if ($canvas == null) {
-      console.warn('Canvas not found');
+      warn('Canvas not found');
       return;
     }
 
-    const dataURL = ($canvas as HTMLCanvasElement).toDataURL('image/jpeg', 0.8);
+    const dataURL = ($canvas as HTMLCanvasElement).toDataURL('image/jpeg', 0.85);
     this.downloadSelector.setAttribute('download', this.generateFilename());
     this.downloadSelector.setAttribute('href', dataURL);
   }

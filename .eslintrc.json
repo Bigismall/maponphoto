@@ -17,7 +17,8 @@
     "semi": [2, "always"],
     "quotes": [2, "single"],
     "@typescript-eslint/semi": [2,"always"],
-    "@typescript-eslint/quotes": [2,"single"]
+    "@typescript-eslint/quotes": [2,"single"],
+    "@typescript-eslint/no-unnecessary-condition": "error"
   },
   "plugins": [
     "@typescript-eslint"
