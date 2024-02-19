@@ -54,10 +54,9 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
       newWidth = newHeight * ratio;
     }
 
-    console.log('Resize', newWidth, newHeight, newWidth / newHeight);
     this.selector.width = newWidth;
     this.selector.height = newHeight;
-    console.log('Canvas', this.width, this.height, this.aspectRatio);
+    console.log('Resized Canvas', this.width, this.height, this.aspectRatio);
   }
 
   protected draw (image: CanvasImageSource) {
@@ -103,7 +102,6 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
 
     if (publication.state === MessageState.MapImageReady) {
       this.drawMap(
-
         publication.data.image,
         publication.data.position
       );

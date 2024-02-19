@@ -12,11 +12,7 @@ export default abstract class Publisher {
     this.subscribers.push(callback);
   }
 
-  // unsubscribe (callback: Observer) {
-  //   this.subscribers = this.subscribers.filter((s) => s !== callback)
-  // }
-
   publish (publication: Message) {
-    this.subscribers.forEach((s) => { s.update(publication); });
+    this.subscribers.map((s) => { s.update(publication); return s; });
   }
 }

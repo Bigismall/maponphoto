@@ -1,6 +1,7 @@
 @import "mixins/bem";
 @import "placeholders/button";
 @import "placeholders/center";
+@import "placeholders/space";
 @import "reset";
 @import "variables";
 
@@ -29,7 +30,7 @@ body {
 
 .container {
   display: block;
-  width: auto;
+  width: fit-content;
   max-width: 1280px;
   height: auto;
   margin: 0 auto;
@@ -49,14 +50,14 @@ body {
 
 .map {
   @extend %center;
+  @extend %no-space;
+
   transform: translate(-50%, -50%);
-  z-index: 20;
+  z-index: $z-index-map;
   display: flex;
   flex-direction: column;
   width: auto;
   height: auto;
-  margin: 0;
-  padding: 0;
   background-color: $light-blue-transparent;
   box-shadow: 0 0 0.5rem 0 $text;
 
@@ -206,7 +207,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 10;
+  z-index: $z-index-ui;
 
   @include e(input) {
     width: 0.1px;
@@ -241,23 +242,35 @@ body {
 }
 
 .download {
+
+  display: flex;
+   flex-direction: column;
+    justify-content: space-evenly;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 20;
+  z-index: $z-index-ui;
+
 
   @include e(input) {
     @extend %button;
     text-decoration: none;
     height: 4rem;
+    margin-bottom: 1rem;
 
     &:hover,
     &:active,
     &:active {
       @extend %button-hover;
     }
+
+    @include m(action) {
+      background-image: linear-gradient(#65a200, #4f8000);
+    }
   }
+
+
 
   @include m(hidden) {
     display: none;
@@ -304,6 +317,7 @@ fieldset button {
 
 footer {
   position: fixed;
+  z-index: $z-index-footer;
   bottom: 0;
   left: 0;
   right: 0;
@@ -319,9 +333,17 @@ footer {
   justify-content: flex-end;
   align-items: center;
 
+  img {
+    display: block;
+    float: left;
+    width: auto;
+    height: 0.8rem;
+    margin-right: 0.5rem;
+    margin-top: 0.1rem;
+
+  }
   p {
-    margin: 0;
-    padding: 0;
+    @extend %no-space;
   }
 
   a {
