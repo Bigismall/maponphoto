@@ -16,7 +16,7 @@ body {
   font-weight: 400;
   color: $text;
 
-  background-color: $blue;
+  background-color: $light-blue;
   background-image: linear-gradient(
                   to bottom,
                   $blue,
@@ -25,6 +25,7 @@ body {
                   #505f6e,
                   $light-blue
   );
+  background-repeat: repeat-x;
 
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: $transparent;
