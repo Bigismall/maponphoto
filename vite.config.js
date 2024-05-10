@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite'
-import eslint from 'vite-plugin-eslint'
+import eslintPlugin from "@nabla/vite-plugin-eslint";
+
 export default defineConfig({
-  plugins: [eslint({
+  plugins: [eslintPlugin({
     exclude: ['node_modules/**', 'dist/**']
   })],
   base: '/'
