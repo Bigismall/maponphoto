@@ -19,7 +19,7 @@
     "eslint-config-standard-with-typescript": "^43.0.1",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.6.2",
-    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-promise": "^7.0.0",
     "sass": "^1.77.0",
     "typescript": "^5.4.5",
     "vite": "^5.2.11"
