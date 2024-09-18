@@ -1,15 +1,15 @@
-import '../styles/styles.scss';
 import 'leaflet/dist/leaflet.css';
+import '../styles/styles.scss';
 
 import CanvasManager from './CanvasManager';
 import DownloadManager from './DownloadManager';
 import ExifManager from './ExifManager';
 import ImageManager from './ImageManager';
 import MapManager from './MapManager';
-import PhotoBrowser from './PhotoBrowser';
 import MapOptionsManager from './MapOptionsManager';
-import { $, $$ } from './dom.ts';
+import PhotoBrowser from './PhotoBrowser';
 import { warn } from './console.ts';
+import { $, $$ } from './dom.ts';
 
 let browser: PhotoBrowser;
 let imageManager: ImageManager;
@@ -19,7 +19,7 @@ let mapManager: MapManager;
 let mapOptionsManager: MapOptionsManager;
 let downloadManager: DownloadManager;
 
-window.addEventListener('load', function () {
+window.addEventListener('load', () => {
   const $elements = new Map<string, Element | NodeListOf<HTMLElement> | null>([
     ['browser', $('#js-browser-input')],
     ['photo', $('#js-map')],
