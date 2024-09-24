@@ -8,21 +8,16 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "types": "tsc --noEmit",
-    "lint": "eslint --ext .ts,.tsx src",
-    "lint:fix": "eslint --fix --ext .ts,.tsx src"
+    "lint": "biome format --write ./src",
+    "check": "biome check --write ./src"
   },
   "devDependencies": {
-    "@nabla/vite-plugin-eslint": "^2.0.4",
     "@types/leaflet": "^1.9.12",
-    "@typescript-eslint/eslint-plugin": "^7.0.0",
-    "eslint": "^8.57.0",
-    "eslint-config-standard-with-typescript": "^43.0.1",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-n": "^16.6.2",
-    "eslint-plugin-promise": "^6.1.1",
-    "sass": "^1.77.0",
-    "typescript": "^5.4.5",
-    "vite": "^5.2.11"
+    "sass-embedded": "^1.79.3",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.1",
+    "vite-plugin-biome": "^1.0.12",
+    "@biomejs/biome": "^1.9.2"
   },
   "dependencies": {
     "exifr": "^7.1.3",

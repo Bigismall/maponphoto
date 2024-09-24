@@ -1,9 +1,12 @@
-import { defineConfig } from 'vite'
-import eslintPlugin from "@nabla/vite-plugin-eslint";
+import biomePlugin from "vite-plugin-biome";
 
-export default defineConfig({
-  plugins: [eslintPlugin({
-    exclude: ['node_modules/**', 'dist/**']
-  })],
-  base: '/'
-})
+export default {
+	plugins: [
+		biomePlugin({
+			mode: "check",
+			files: "./src/",
+			applyFixes: true,
+		}),
+	],
+	base: "/",
+};
