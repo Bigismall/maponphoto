@@ -1,7 +1,7 @@
-import { type Message, MessageState } from './Message.type';
-import ObserverPublisher from './ObserverPublisher';
-import Publisher from './Publisher.class';
-import { fault, log } from './console.ts';
+import { type Message, MessageState } from "./Message.type";
+import ObserverPublisher from "./ObserverPublisher";
+import Publisher from "./Publisher.class";
+import { fault, log } from "./console.ts";
 
 const MIN_WIDTH = 640;
 const MIN_HEIGHT = 400;
@@ -9,12 +9,12 @@ const MIN_HEIGHT = 400;
 export default class ImageManager extends ObserverPublisher(Publisher) {
   private image: HTMLImageElement;
 
-  constructor () {
+  constructor() {
     super();
-    this.image = document.createElement('img');
+    this.image = document.createElement("img");
   }
 
-  update (publication: Message) {
+  update(publication: Message) {
     if (publication.state === MessageState.FileChange) {
       const event = publication.data;
       const reader = new FileReader();
@@ -25,12 +25,12 @@ export default class ImageManager extends ObserverPublisher(Publisher) {
         return;
       }
 
-      this.image = document.createElement('img');
+      this.image = document.createElement("img");
       this.image.onload = () => {
         if (this.image.width < MIN_WIDTH || this.image.height < MIN_HEIGHT) {
           this.publish({
             state: MessageState.FileError,
-            data: `Image is to small. Min dimension is: ${MIN_WIDTH}x${MIN_HEIGHT}`
+            data: `Image is to small. Min dimension is: ${MIN_WIDTH}x${MIN_HEIGHT}`,
           });
           return;
         }
@@ -38,13 +38,16 @@ export default class ImageManager extends ObserverPublisher(Publisher) {
       };
 
       reader.onload = (e: ProgressEvent<FileReader>) => {
-        log('File reader onload');
+        log("File reader onload");
 
-        this.image.src = (e.target?.result ?? '') as string;
+        this.image.src = (e.target?.result ?? "") as string;
       };
 
       reader.onerror = (e) => {
-        this.publish({ state: MessageState.FileError, data: reader.error?.message ?? '' });
+        this.publish({
+          state: MessageState.FileError,
+          data: reader.error?.message ?? "",
+        });
         fault(reader.error);
         fault(e);
       };

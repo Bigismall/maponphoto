@@ -1,15 +1,15 @@
-import 'leaflet/dist/leaflet.css';
-import '../styles/styles.scss';
+import "leaflet/dist/leaflet.css";
+import "../styles/styles.scss";
 
-import CanvasManager from './CanvasManager';
-import DownloadManager from './DownloadManager';
-import ExifManager from './ExifManager';
-import ImageManager from './ImageManager';
-import MapManager from './MapManager';
-import MapOptionsManager from './MapOptionsManager';
-import PhotoBrowser from './PhotoBrowser';
-import { warn } from './console.ts';
-import { $, $$ } from './dom.ts';
+import CanvasManager from "./CanvasManager";
+import DownloadManager from "./DownloadManager";
+import ExifManager from "./ExifManager";
+import ImageManager from "./ImageManager";
+import MapManager from "./MapManager";
+import MapOptionsManager from "./MapOptionsManager";
+import PhotoBrowser from "./PhotoBrowser";
+import { warn } from "./console.ts";
+import { $, $$ } from "./dom.ts";
 
 let browser: PhotoBrowser;
 let imageManager: ImageManager;
@@ -19,14 +19,14 @@ let mapManager: MapManager;
 let mapOptionsManager: MapOptionsManager;
 let downloadManager: DownloadManager;
 
-window.addEventListener('load', () => {
+window.addEventListener("load", () => {
   const $elements = new Map<string, Element | NodeListOf<HTMLElement> | null>([
-    ['browser', $('#js-browser-input')],
-    ['photo', $('#js-map')],
-    ['canvas', $('#js-main-canvas')],
-    ['download', $('#js-download')],
-    ['reset', $$('.js-reset')], // At least 2 elements have this class
-    ['mapOptions', $('#js-map-options')]
+    ["browser", $("#js-browser-input")],
+    ["photo", $("#js-map")],
+    ["canvas", $("#js-main-canvas")],
+    ["download", $("#js-download")],
+    ["reset", $$(".js-reset")], // At least 2 elements have this class
+    ["mapOptions", $("#js-map-options")],
   ]);
 
   // Check if all elements are different from null
@@ -36,16 +36,18 @@ window.addEventListener('load', () => {
     }
   });
 
-  browser = new PhotoBrowser($elements.get('browser') as HTMLInputElement);
+  browser = new PhotoBrowser($elements.get("browser") as HTMLInputElement);
   downloadManager = new DownloadManager(
-    $elements.get('download') as HTMLLinkElement,
-    $elements.get('reset') as NodeListOf<HTMLElement>
+    $elements.get("download") as HTMLLinkElement,
+    $elements.get("reset") as NodeListOf<HTMLElement>,
   );
 
-  canvasManager = new CanvasManager($elements.get('canvas') as HTMLCanvasElement);
-  mapManager = new MapManager($elements.get('photo') as HTMLDivElement);
+  canvasManager = new CanvasManager(
+    $elements.get("canvas") as HTMLCanvasElement,
+  );
+  mapManager = new MapManager($elements.get("photo") as HTMLDivElement);
   mapOptionsManager = new MapOptionsManager(
-    $elements.get('mapOptions') as HTMLDivElement
+    $elements.get("mapOptions") as HTMLDivElement,
   );
   imageManager = new ImageManager();
   exifManager = new ExifManager();
@@ -59,5 +61,5 @@ window.addEventListener('load', () => {
   canvasManager.subscribe(downloadManager); // we want to Download Manager to receive updates from the canvas manager
   downloadManager.subscribe(browser); // we want to Browser to receive updates from the download manager
   downloadManager.subscribe(canvasManager); // we want to Canvas Manager to receive updates from the download manager
-  downloadManager.subscribe(mapManager);// we want to Map Manager to receive updates from the download manager
+  downloadManager.subscribe(mapManager); // we want to Map Manager to receive updates from the download manager
 });
