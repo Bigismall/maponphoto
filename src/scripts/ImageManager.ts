@@ -7,52 +7,52 @@ const MIN_WIDTH = 640;
 const MIN_HEIGHT = 400;
 
 export default class ImageManager extends ObserverPublisher(Publisher) {
-	private image: HTMLImageElement;
+  private image: HTMLImageElement;
 
-	constructor() {
-		super();
-		this.image = document.createElement("img");
-	}
+  constructor() {
+    super();
+    this.image = document.createElement("img");
+  }
 
-	update(publication: Message) {
-		if (publication.state === MessageState.FileChange) {
-			const event = publication.data;
-			const reader = new FileReader();
+  update(publication: Message) {
+    if (publication.state === MessageState.FileChange) {
+      const event = publication.data;
+      const reader = new FileReader();
 
-			const file = (event.target as HTMLInputElement).files?.[0] ?? null;
+      const file = (event.target as HTMLInputElement).files?.[0] ?? null;
 
-			if (file === null) {
-				return;
-			}
+      if (file === null) {
+        return;
+      }
 
-			this.image = document.createElement("img");
-			this.image.onload = () => {
-				if (this.image.width < MIN_WIDTH || this.image.height < MIN_HEIGHT) {
-					this.publish({
-						state: MessageState.FileError,
-						data: `Image is to small. Min dimension is: ${MIN_WIDTH}x${MIN_HEIGHT}`,
-					});
-					return;
-				}
-				this.publish({ state: MessageState.FileReady, data: this.image });
-			};
+      this.image = document.createElement("img");
+      this.image.onload = () => {
+        if (this.image.width < MIN_WIDTH || this.image.height < MIN_HEIGHT) {
+          this.publish({
+            state: MessageState.FileError,
+            data: `Image is to small. Min dimension is: ${MIN_WIDTH}x${MIN_HEIGHT}`,
+          });
+          return;
+        }
+        this.publish({ state: MessageState.FileReady, data: this.image });
+      };
 
-			reader.onload = (e: ProgressEvent<FileReader>) => {
-				log("File reader onload");
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        log("File reader onload");
 
-				this.image.src = (e.target?.result ?? "") as string;
-			};
+        this.image.src = (e.target?.result ?? "") as string;
+      };
 
-			reader.onerror = (e) => {
-				this.publish({
-					state: MessageState.FileError,
-					data: reader.error?.message ?? "",
-				});
-				fault(reader.error);
-				fault(e);
-			};
+      reader.onerror = (e) => {
+        this.publish({
+          state: MessageState.FileError,
+          data: reader.error?.message ?? "",
+        });
+        fault(reader.error);
+        fault(e);
+      };
 
-			reader.readAsDataURL(file);
-		}
-	}
+      reader.readAsDataURL(file);
+    }
+  }
 }
