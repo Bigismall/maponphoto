@@ -38,7 +38,7 @@ window.addEventListener("load", () => {
   });
 
   if (!navigator.canShare()) {
-    warn("Web Share API not supported :(");
+    console.log("Web Share API not supported :(");
   }
 
   browser = new PhotoBrowser($elements.get("browser") as HTMLInputElement);
