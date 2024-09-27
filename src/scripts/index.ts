@@ -25,6 +25,7 @@ window.addEventListener("load", () => {
     ["photo", $("#js-map")],
     ["canvas", $("#js-main-canvas")],
     ["download", $("#js-download")],
+    ["share", $("#js-share")],
     ["reset", $$(".js-reset")], // At least 2 elements have this class
     ["mapOptions", $("#js-map-options")],
   ]);
@@ -39,6 +40,7 @@ window.addEventListener("load", () => {
   browser = new PhotoBrowser($elements.get("browser") as HTMLInputElement);
   downloadManager = new DownloadManager(
     $elements.get("download") as HTMLLinkElement,
+    $elements.get("share") as HTMLLinkElement,
     $elements.get("reset") as NodeListOf<HTMLElement>,
   );
 
