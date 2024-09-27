@@ -7,11 +7,6 @@ import ObserverPublisher from "./ObserverPublisher";
 import Publisher from "./Publisher.class";
 import { fault, log } from "./console.ts";
 import { markerIcon } from "./marker.ts";
-/*
- * TODO default center map in the center of Europe, save the latest position in local storage and use next time
- *  AND ZOOM LEVEL
- *
- */
 
 const DEFAULT_CENTER: [number, number] = [54.403397, 18.570665];
 const DEFAULT_ZOOM: number = 14;
@@ -96,9 +91,8 @@ export default class MapManager extends ObserverPublisher(Publisher) {
       this.marker.setIcon(
         L.icon({
           iconUrl: markerIcon(null),
-          iconSize: [80, 80], // size of the icon
-          iconAnchor: [40, 80], // point of the icon which will correspond to marker's location
-          popupAnchor: [40, 0], // point from which the popup should open relative to the iconAnchor
+          iconSize: [64, 64], // size of the icon
+          iconAnchor: [32, 16], // point of the icon which will correspond to marker's location
         }),
       );
       this.show({ title: true });
@@ -117,9 +111,8 @@ export default class MapManager extends ObserverPublisher(Publisher) {
       this.marker.setIcon(
         L.icon({
           iconUrl: markerIcon(dir),
-          iconSize: [80, 80], // size of the icon
-          iconAnchor: [40, 80], // point of the icon which will correspond to marker's location
-          popupAnchor: [40, 0], // point from which the popup should open relative to the iconAnchor
+          iconSize: [64, 64], // size of the icon
+          iconAnchor: [32, 32], // point of the icon which will correspond to marker's location
         }),
       );
     }
