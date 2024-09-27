@@ -37,6 +37,10 @@ window.addEventListener("load", () => {
     }
   });
 
+  if (!navigator.canShare()) {
+    warn("Web Share API not supported :(");
+  }
+
   browser = new PhotoBrowser($elements.get("browser") as HTMLInputElement);
   downloadManager = new DownloadManager(
     $elements.get("download") as HTMLLinkElement,
