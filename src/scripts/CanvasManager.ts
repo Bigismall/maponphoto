@@ -3,6 +3,7 @@ import { type Message, MessageState } from "./Message.type";
 import ObserverPublisher from "./ObserverPublisher";
 import Publisher from "./Publisher.class";
 import { log } from "./console.ts";
+import { DOMAIN_LABEL } from "./constans.ts";
 
 // 4/3
 const MAX_WIDTH = 1280;
@@ -92,6 +93,27 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
     this.context?.drawImage(image, x, y);
   }
 
+  protected drawLabel(label: string) {
+    const fontSize = 16;
+    const font = `${fontSize}px sans-serif`;
+    const barHeight = fontSize * 2;
+    const x = 0;
+    const y = this.height - barHeight;
+    const padding = fontSize / 2;
+
+    if (!this.context) {
+      return;
+    }
+
+    // FIXME - in the final solution the label should be drawn under the map
+
+    this.context.fillStyle = "#2c3e50";
+    this.context.fillRect(x, y, this.width, barHeight);
+    this.context.fillStyle = "white";
+    this.context.font = font;
+    this.context.fillText(label, x + padding, y + fontSize * 1.25);
+  }
+
   update(publication: Message) {
     if (publication.state === MessageState.Reset) {
       this.resizeFor(MAX_WIDTH, MAX_HEIGHT);
@@ -105,6 +127,8 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
 
     if (publication.state === MessageState.MapImageReady) {
       this.drawMap(publication.data.image, publication.data.position);
+      this.drawLabel(DOMAIN_LABEL);
+
       this.publish({
         state: MessageState.CanvasWithMapReady,
         data: this.selector,
