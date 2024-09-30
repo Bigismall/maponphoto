@@ -3,6 +3,7 @@ import { type Message, MessageState } from "./Message.type";
 import ObserverPublisher from "./ObserverPublisher";
 import Publisher from "./Publisher.class";
 import { log } from "./console.ts";
+import { DOMAIN_LABEL } from "./constans.ts";
 
 // 4/3
 const MAX_WIDTH = 1280;
@@ -92,6 +93,32 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
     this.context?.drawImage(image, x, y);
   }
 
+  protected drawLabel(
+    label: string,
+    image: HTMLImageElement,
+    position: MapPosition,
+  ) {
+    const { x, y } = this.getMapPosition(position, image);
+    const fontSize = 16;
+    const font = `${fontSize}px sans-serif`;
+    const barHeight = fontSize * 2;
+    const bawWidth = image.width;
+
+    const labelX = x;
+    const labelY = y + image.height - barHeight;
+    const padding = fontSize / 2;
+
+    if (!this.context) {
+      return;
+    }
+
+    this.context.fillStyle = "#2c3e50";
+    this.context.fillRect(labelX, labelY, bawWidth, barHeight);
+    this.context.fillStyle = "white";
+    this.context.font = font;
+    this.context.fillText(label, labelX + padding, labelY + fontSize * 1.25);
+  }
+
   update(publication: Message) {
     if (publication.state === MessageState.Reset) {
       this.resizeFor(MAX_WIDTH, MAX_HEIGHT);
@@ -105,6 +132,12 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
 
     if (publication.state === MessageState.MapImageReady) {
       this.drawMap(publication.data.image, publication.data.position);
+      this.drawLabel(
+        DOMAIN_LABEL,
+        publication.data.image,
+        publication.data.position,
+      );
+
       this.publish({
         state: MessageState.CanvasWithMapReady,
         data: this.selector,
