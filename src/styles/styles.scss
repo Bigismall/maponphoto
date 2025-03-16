@@ -34,7 +34,7 @@ body {
 .container {
   display: block;
   width: fit-content;
-  max-width: 1280px;
+  max-width: $container-width;
   height: auto;
   margin: 0 auto;
   position: relative;

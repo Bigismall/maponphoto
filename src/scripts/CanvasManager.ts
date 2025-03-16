@@ -5,9 +5,9 @@ import Publisher from "./Publisher.class";
 import { log } from "./console.ts";
 import { DOMAIN_LABEL } from "./constans.ts";
 
-// 4/3
-const MAX_WIDTH = 1280;
-const MAX_HEIGHT = 960;
+// 16/9
+const MAX_WIDTH = 1600;
+const MAX_HEIGHT = 1200;
 
 export interface Point {
   x: number;
