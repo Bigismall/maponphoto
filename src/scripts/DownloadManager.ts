@@ -60,7 +60,7 @@ export default class DownloadManager extends ObserverPublisher(Publisher) {
 
     const dataURL = ($canvas as HTMLCanvasElement).toDataURL(
       "image/jpeg",
-      0.85,
+      0.95,
     );
     this.downloadSelector.setAttribute("download", this.generateFilename());
     this.downloadSelector.setAttribute("href", dataURL);
