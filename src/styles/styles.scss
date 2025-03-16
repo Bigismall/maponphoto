@@ -34,7 +34,7 @@ body {
 .container {
   display: block;
   width: fit-content;
-  max-width: $container-width;
+  max-width: 100dvw;
   height: auto;
   margin: 0 auto;
   position: relative;
@@ -44,7 +44,7 @@ body {
   display: block;
   width: auto;
   height: auto;
-  max-width: $container-width;
+  max-width: min($container-width, 100dvw);
   max-height: $container-height;
   box-shadow: 0 0 0.5rem 0 $text;
   background-color: $half-white;
