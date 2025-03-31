@@ -55,7 +55,7 @@ body {
   @extend %center;
   @extend %no-space;
 
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(var(--toolbar-scale));
   z-index: $z-index-map;
   display: flex;
   flex-direction: column;

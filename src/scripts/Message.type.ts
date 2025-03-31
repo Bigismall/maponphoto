@@ -2,6 +2,7 @@ import type { MapPosition } from "./MapManager";
 
 export enum MessageState {
   CanvasWithMapReady = "CanvasWithMapReady",
+  CanvasResizeReady = "CanvasResizeReady",
   ExifMissing = "ExifMissing",
   ExifReady = "ExifReady",
   FileChange = "FileChange",
@@ -72,4 +73,12 @@ export type Message =
   | {
       state: MessageState.ResizeMap;
       data: string;
+    }
+  | {
+      state: MessageState.CanvasResizeReady;
+      data: {
+        width: number;
+        height: number;
+        aspectRatio: number;
+      };
     };

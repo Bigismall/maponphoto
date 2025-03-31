@@ -68,4 +68,16 @@ window.addEventListener("load", () => {
   downloadManager.subscribe(browser); // we want to Browser to receive updates from the download manager
   downloadManager.subscribe(canvasManager); // we want to Canvas Manager to receive updates from the download manager
   downloadManager.subscribe(mapManager); // we want to Map Manager to receive updates from the download manager
+
+  //temporary
+  // TODO - we have to have the canvas size right after the image is loaded
+  // On resize we have to compute how did the canvas scale
+
+  // WE HAVE  MessageState.CanvasResizeReady - which is called when the canvas is resized
+
+  // const canvasResizeObserver = new ResizeObserver((entry) => {
+  //   const { width, height } = entry[0].contentRect;
+  //   log("Canvas resized", width, height);
+  // });
+  // canvasResizeObserver.observe($elements.get("canvas") as HTMLCanvasElement);
 });

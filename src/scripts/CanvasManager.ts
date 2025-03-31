@@ -3,11 +3,7 @@ import { type Message, MessageState } from "./Message.type";
 import ObserverPublisher from "./ObserverPublisher";
 import Publisher from "./Publisher.class";
 import { log } from "./console.ts";
-import { DOMAIN_LABEL } from "./constans.ts";
-
-// 16/9
-const MAX_WIDTH = 1600;
-const MAX_HEIGHT = 1200;
+import { DOMAIN_LABEL, MAX_HEIGHT, MAX_WIDTH } from "./constans.ts";
 
 export interface Point {
   x: number;
@@ -57,6 +53,15 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
     this.selector.width = newWidth;
     this.selector.height = newHeight;
     log("Resized Canvas", this.width, this.height, this.aspectRatio);
+
+    this.publish({
+      state: MessageState.CanvasResizeReady,
+      data: {
+        width: this.width,
+        height: this.height,
+        aspectRatio: this.aspectRatio,
+      },
+    });
   }
 
   protected draw(image: CanvasImageSource) {
