@@ -1,5 +1,7 @@
 name: Release Please
 
+# Workflow odpowiedzialny za automatyczne generowanie PR z dev do main z nowymi wersjami
+
 on:
   push:
     branches:
@@ -11,59 +13,14 @@ permissions:
 
 jobs:
   release-please:
+    name: 📦 Przygotowanie release PR
     runs-on: ubuntu-latest
     steps:
-      - uses: google-github-actions/release-please-action@v4
+      - name: 🔄 Uruchom Release Please
+        uses: google-github-actions/release-please-action@v4
         id: release
         with:
           release-type: node
           package-name: map-on-photo
           token: ${{ secrets.GITHUB_TOKEN }}
-  
-  # build:
-  #   name: Build
-  #   needs: release-please
-  #   if: ${{ needs.release-please.outputs.release_created }}
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout repo
-  #       uses: actions/checkout@v4
-
-  #     - name: Setup Node
-  #       uses: actions/setup-node@v4
-
-  #     - name: Install dependencies
-  #       run: npm install
-
-  #     - name: Build project
-  #       run: npm run build
-
-  #     - name: Upload production-ready build files
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: production-files
-  #         path: ./dist
-
-  # deploy:
-  #   name: Deploy
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   if: ${{ needs.release-please.outputs.release_created }}
-  #   steps:
-  #     - name: Download artifact
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: production-files
-  #         path: ./dist
-
-  #     - name: Display structure of downloaded files
-  #       run: ls -R
-  #       working-directory: ./dist
-
-  #     - name: Deploy to GitHub Pages
-  #       uses: peaceiris/actions-gh-pages@v4
-  #       with:
-  #         github_token: ${{ secrets.GITHUB_TOKEN }}
-  #         publish_dir: ./dist
-  #         cname: maponphoto.eu
-
+          default-branch: main
