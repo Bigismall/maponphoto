@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/Bigismall/maponphoto/compare/v1.2.0...v1.3.0) (2025-05-30)
+
+
+### Features
+
+* Add about page informations ([1a8f691](https://github.com/Bigismall/maponphoto/commit/1a8f6915a477148110872771f1ae2ecd2443b6e4))
+
 ## [1.2.0](https://github.com/Bigismall/maponphoto/compare/v1.1.0...v1.2.0) (2025-05-30)
 
 
