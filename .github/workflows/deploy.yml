@@ -1,12 +1,15 @@
 name: Deploy to GitHub Pages
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
       - main
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    # Uruchom build tylko jeśli PR został zmergowany i zawierał zmiany z release-please
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.title, 'chore(main): release')
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -30,7 +33,8 @@ jobs:
     name: Deploy
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    # Warunek już jest sprawdzony w jobie build, ale dodajemy dodatkowe zabezpieczenie
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.title, 'chore(main): release')
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
