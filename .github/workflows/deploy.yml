@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - dev
+      - release
 jobs:
   build:
     name: Build
@@ -30,7 +30,7 @@ jobs:
     name: Deploy
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/dev'
+    if: github.ref == 'refs/heads/release'
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
