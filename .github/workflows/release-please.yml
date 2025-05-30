@@ -1,11 +1,11 @@
 name: Release Please
 
-# Workflow odpowiedzialny za automatyczne generowanie PR z dev do main z nowymi wersjami
+# Workflow odpowiedzialny za automatyczne generowanie PR do brancha release z nowymi wersjami
 
 on:
   push:
     branches:
-      - dev
+      - main
 
 permissions:
   contents: write
@@ -23,6 +23,6 @@ jobs:
         with:
           release-type: node
           token: ${{ secrets.GITHUB_TOKEN }}
-          target-branch: main
+          target-branch: release
           config-file: .release-please-config.json
   
