@@ -332,7 +332,9 @@ footer {
   left: 0;
   right: 0;
   top: auto;
-  height: 1rem;
+  min-height: 1rem;
+  height: auto;
+  max-height: 2rem;
   margin: 0;
   padding: 0 1rem;
   background-color: $blue-transparent;
