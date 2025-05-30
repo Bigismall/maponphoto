@@ -7,7 +7,7 @@
   <meta name="author" content="Slavo" />
   <meta name="theme-color" content="#2c3e50" />
   <meta name="description"
-    content="Add a map to any photo. Use the GPS position stored in the photo (EXIF data) to apply a thumbnail map image to the photo.
+    content="Add a map thumbnail to any photo. Use the GPS position stored in the photo (EXIF data) to apply a thumbnail map image to the photo.
 Your photo does not have a GPS position? No problem, you can set it manually!  Everything is happen directly in browser and no data is stored on page" />
   <meta name="google-site-verification" content="gnuvMvoXU14y3JU8P2d5-2-lDvhffeRayCGOaHY6p9g" />
   <link href="assets/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
@@ -19,14 +19,11 @@ Your photo does not have a GPS position? No problem, you can set it manually!  E
 <body>
   <main class="container">
     <canvas class="canvas" height="1200" id="js-main-canvas" width="1600"></canvas>
-    <dialog open>
-      <h1 class="title">Map on photo</h1>
-      <p class="description">
-        Add a map to any photo. Use the GPS position stored in the photo (EXIF data) to apply a thumbnail map image to
-        the
-        photo.
-        Your photo does not have a GPS position? No problem, you can set it manually! Everything is happen directly in
-        browser and no data is stored on page.
+    <dialog open closedby="any">
+      <p>
+        Add a map thumbnail to any photo. Use the <abbr title="Global Positioning System">GPS</abbr> position stored in the photo (<abbr title="Exchangeable Image File Format">EXIF</abbr> data) to apply a thumbnail map image to
+        the photo.</p>
+      <p>Your photo does not have a GPS position? No problem, you can set it manually! Everything is happen directly in browser and <strong>no data is stored</strong> on page.
       </p>
     </dialog>
     <aside class="browser">
@@ -71,8 +68,8 @@ Your photo does not have a GPS position? No problem, you can set it manually!  E
     </aside>
   </main>
   <footer>
-    <p><img src="assets/favicon-32x32.png" alt="Map on photo icon" /> Map on photo - supported by:</p>
     <ul>
+      <li><img src="assets/favicon-32x32.png" alt="Map on photo icon" /> Map on photo - supported by:</li>
       <li>
         <a href="https://schibstedforbusiness.com" title="Schibsted for business">Schibsted SMB</a>
       </li>
@@ -97,6 +94,10 @@ Your photo does not have a GPS position? No problem, you can set it manually!  E
       </li>
       <li>
         <a href="https://github.com" title="Where the world builds software">GitHub</a>
+      </li>
+      <li>
+        See also <a href="https://dualmaps.eu/" title="Dual maps allows you to synchronize views of different map types side by side.
+Compare satellite views with 3D buildings layer, railroads with Bing maps, typography and air traffic map. You decide!">Dual Maps</a>
       </li>
     </ul>
   </footer>
