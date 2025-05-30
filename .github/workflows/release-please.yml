@@ -1,7 +1,5 @@
 name: Release Please
 
-# Workflow odpowiedzialny za automatyczne generowanie PR z dev do main z nowymi wersjami
-
 on:
   push:
     branches:
@@ -10,18 +8,16 @@ on:
 permissions:
   contents: write
   pull-requests: write
-  issues: write
 
 jobs:
   release-please:
-    name: 📦 Przygotowanie release PR
     runs-on: ubuntu-latest
     steps:
-      - name: 🔄 Uruchom Release Please
-        uses: google-github-actions/release-please-action@v4
+      - uses: googleapis/release-please-action@v4
         id: release
         with:
           release-type: node
-          package-name: map-on-photo
           token: ${{ secrets.GITHUB_TOKEN }}
-          default-branch: main
+          target-branch: main
+          config-file: .release-please-config.json
+  
