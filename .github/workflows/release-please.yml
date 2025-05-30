@@ -17,6 +17,19 @@ jobs:
     name: 📦 Przygotowanie release PR
     runs-on: ubuntu-latest
     steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🔄 Ensure release branch exists
+        run: |
+          git fetch --all
+          if ! git ls-remote --heads origin release | grep release; then
+            git checkout -b release
+            git push -u origin release
+          fi
+            
       - name: 🔄 Uruchom Release Please
         uses: googleapis/release-please-action@v4
         id: release
@@ -25,4 +38,5 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           target-branch: release
           config-file: .release-please-config.json
+          manifest-pr: true
   
