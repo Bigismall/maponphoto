@@ -18,10 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🔄 Uruchom Release Please
-        uses: google-github-actions/release-please-action@v4
+        uses: googleapis/release-please-action@v4
         id: release
         with:
           release-type: node
-          package-name: map-on-photo
           token: ${{ secrets.GITHUB_TOKEN }}
-          default-branch: main
+          target-branch: main
+          config-file: .release-please-config.json
+  
