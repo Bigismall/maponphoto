@@ -8,4 +8,4 @@
 - Avoid outdated or deprecated solutions. Stick to modern best practices.
 - If a request is ambiguous, ask clarifying questions before providing an answer.
 - Use TypeScript for all code examples unless otherwise specified.
-- Our technology stack includes TypeScript, React, React Native, Next.js and GraphQL (Apollo GraphQL client) with Tailwind for styling.
+- Our technology stack includes TypeScript, Vite, Biome
