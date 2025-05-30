@@ -51,6 +51,20 @@ body {
   margin: 0 auto;
 }
 
+dialog {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: $z-index-dialog;
+  background-color: $light-blue;
+  color: $white;
+  border-radius: 1rem;
+  border-width: 0;
+  box-shadow: 0 0 2.5rem 0 $half-white; 
+  padding: 2rem;
+}
+
 .map {
   @extend %center;
   @extend %no-space;

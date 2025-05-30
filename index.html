@@ -19,6 +19,16 @@ Your photo does not have a GPS position? No problem, you can set it manually!  E
 <body>
   <main class="container">
     <canvas class="canvas" height="1200" id="js-main-canvas" width="1600"></canvas>
+    <dialog open>
+      <h1 class="title">Map on photo</h1>
+      <p class="description">
+        Add a map to any photo. Use the GPS position stored in the photo (EXIF data) to apply a thumbnail map image to
+        the
+        photo.
+        Your photo does not have a GPS position? No problem, you can set it manually! Everything is happen directly in
+        browser and no data is stored on page.
+      </p>
+    </dialog>
     <aside class="browser">
       <input accept="image/*" class="browser__input" id="js-browser-input" name="photo-source" type="file" />
       <label for="js-browser-input">Select image</label>
