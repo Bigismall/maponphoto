@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/Bigismall/maponphoto/compare/v1.3.0...v1.4.0) (2025-06-07)
+
+
+### Features
+
+* Add application version to footer ([#91](https://github.com/Bigismall/maponphoto/issues/91)) ([2a47897](https://github.com/Bigismall/maponphoto/commit/2a478972741e33339eb163d2abc40643c0e5c1a1))
+
 ## [1.3.0](https://github.com/Bigismall/maponphoto/compare/v1.2.0...v1.3.0) (2025-05-30)
 
 
