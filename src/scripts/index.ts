@@ -1,6 +1,6 @@
 import "leaflet/dist/leaflet.css";
 import "../styles/styles.scss";
-
+import pkg from "../../package.json";
 import CanvasManager from "./CanvasManager";
 import DownloadManager from "./DownloadManager";
 import ExifManager from "./ExifManager";
@@ -28,6 +28,7 @@ window.addEventListener("load", () => {
     ["share", $("#js-share")],
     ["reset", $$(".js-reset")], // At least 2 elements have this class
     ["mapOptions", $("#js-map-options")],
+    ["appVersion", $("#js-app-version")],
   ]);
 
   // Check if all elements are different from null
@@ -68,4 +69,8 @@ window.addEventListener("load", () => {
   downloadManager.subscribe(browser); // we want to Browser to receive updates from the download manager
   downloadManager.subscribe(canvasManager); // we want to Canvas Manager to receive updates from the download manager
   downloadManager.subscribe(mapManager); // we want to Map Manager to receive updates from the download manager
+
+  // Set the app version in the footer
+  // @ts-ignore
+  $elements.get("appVersion").innerText = `v${pkg.version}`;
 });
