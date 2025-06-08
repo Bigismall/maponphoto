@@ -56,7 +56,13 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
 
     this.selector.width = newWidth;
     this.selector.height = newHeight;
-    log("Resized Canvas", this.width, this.height, this.aspectRatio);
+    log("ResizedFOR Canvas", this.width, this.height, this.aspectRatio);
+  }
+
+  protected resizeBy(width: number, height: number) {
+    this.selector.width += width;
+    this.selector.height += height;
+    log("ResizedBY Canvas", this.width, this.height);
   }
 
   protected draw(image: CanvasImageSource) {
@@ -84,13 +90,21 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
           x: (this.width - image.width) / 2,
           y: (this.height - image.height) / 2,
         };
+      case MapPosition.UNDER:
+        return { x: 0, y: this.height };
     }
   }
 
-  protected drawMap(image: HTMLImageElement, position: MapPosition) {
-    const { x, y } = this.getMapPosition(position, image);
+  protected drawMap(mapImage: HTMLImageElement, position: MapPosition) {
+    const { x, y } = this.getMapPosition(position, mapImage);
 
-    this.context?.drawImage(image, x, y);
+    if (position === MapPosition.UNDER) {
+      // FIXME Canvas resizing is not working properly - image is missing after resizing
+      // this.resizeBy(0, mapImage.height / 2);
+    }
+
+    log("Drawing map in ", x, y, " at position ", position);
+    this.context?.drawImage(mapImage, x, y - 150);
   }
 
   protected drawLabel(

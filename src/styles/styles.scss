@@ -63,6 +63,7 @@ dialog {
   border-width: 0;
   box-shadow: 0 0 2.5rem 0 $half-white;
   padding: 2rem;
+  text-align: center;
 
   p:not(:last-child) {
     margin: 0 0 1rem 0;
@@ -139,6 +140,34 @@ dialog {
     button[data-position="map--bottomright"] {
       @extend %button-hover;
     }
+  }
+
+  @include m(under) {
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: none;
+    flex-direction: column-reverse;
+
+    button[data-position="map--under"] {
+      @extend %button-hover;
+    }
+
+     .map__canvas--small, .map__canvas--medium, .map__canvas--large {
+        width: 100%;
+    }
+
+    &:has(.map__canvas--small) {
+      bottom: -$canvas-small-height;
+    }
+    &:has(.map__canvas--medium) {
+      bottom: -$canvas-medium-height;
+    }
+    &:has(.map__canvas--large) {
+      bottom: -$canvas-large-height;
+    }
+
   }
 
   @include m(hidden) {

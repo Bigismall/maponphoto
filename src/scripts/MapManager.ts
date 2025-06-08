@@ -17,6 +17,7 @@ export enum MapPosition {
   BOTTOM_LEFT = "map--bottomleft",
   BOTTOM_RIGHT = "map--bottomright",
   CENTER = "map--center",
+  UNDER = "map--under",
 }
 
 export default class MapManager extends ObserverPublisher(Publisher) {
@@ -70,6 +71,7 @@ export default class MapManager extends ObserverPublisher(Publisher) {
       MapPosition.BOTTOM_LEFT,
       MapPosition.BOTTOM_RIGHT,
       MapPosition.CENTER,
+      MapPosition.UNDER,
     );
     this.container?.classList.add(position);
   }
@@ -142,8 +144,9 @@ export default class MapManager extends ObserverPublisher(Publisher) {
 
   drawCanvasMap() {
     leafletImage(this.map, (err: Error, canvas: HTMLCanvasElement) => {
-      // TODO deal with error
-      log(err);
+      if (err) {
+        log(err);
+      }
       const img = document.createElement("img");
       const dimensions = this.map.getSize();
 
@@ -151,7 +154,7 @@ export default class MapManager extends ObserverPublisher(Publisher) {
       img.height = dimensions.y;
       img.src = canvas.toDataURL();
       img.onload = () => {
-        log("image is now ready");
+        log("image is now ready", this.position);
         this.publish({
           state: MessageState.MapImageReady,
           data: { image: img, position: this.position },

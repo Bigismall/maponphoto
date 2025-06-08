@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#2c3e50" />
   <meta name="description"
     content="Add a map thumbnail to any photo. Use the GPS position stored in the photo (EXIF data) to apply a thumbnail map image to the photo.
-Your photo does not have a GPS position? No problem, you can set it manually!  Everything is happen directly in browser and no data is stored on page" />
+Does your photo not have a GPS position? No problem! You can set it manually!  Everything is happen directly in browser and no data is stored on page" />
   <meta name="google-site-verification" content="gnuvMvoXU14y3JU8P2d5-2-lDvhffeRayCGOaHY6p9g" />
   <link href="assets/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
   <link href="assets/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
@@ -23,7 +23,8 @@ Your photo does not have a GPS position? No problem, you can set it manually!  E
       <p>
         Add a map thumbnail to any photo. Use the <abbr title="Global Positioning System">GPS</abbr> position stored in the photo (<abbr title="Exchangeable Image File Format">EXIF</abbr> data) to apply a thumbnail map image to
         the photo.</p>
-      <p>Your photo does not have a GPS position? No problem, you can set it manually! Everything is happen directly in browser and <strong>no data is stored</strong> on page.
+      <p>Does your photo not have a GPS position? No problem! You can set it manually!<p>
+      <p>Everything is happen directly in <strong>Your</strong> browser and <strong>no data is stored</strong> on page.
       </p>
     </dialog>
     <aside class="browser">
@@ -47,17 +48,18 @@ Your photo does not have a GPS position? No problem, you can set it manually!  E
       <div class="map__options" id="js-map-options">
         <fieldset>
           <legend>Map position</legend>
-          <button data-position="map--topleft">&#11017;</button>
-          <button data-position="map--topright">&#11016;</button>
-          <button data-position="map--center">&#9737;</button>
-          <button data-position="map--bottomleft">&#11019;</button>
-          <button data-position="map--bottomright">&#11018;</button>
+          <button data-position="map--topleft" title="Top left">&#11017;</button>
+          <button data-position="map--topright" title="Top right">&#11016;</button>
+          <button data-position="map--center" title="Center">&#9737;</button>
+          <button data-position="map--bottomleft" title="Bottom left">&#11019;</button>
+          <button data-position="map--bottomright" title="Bottom right">&#11018;</button>
+          <button data-position="map--under" title="Under">&#8615;</button>
         </fieldset>
         <fieldset>
           <legend>Map size</legend>
-          <button data-size="map__canvas--small">S</button>
-          <button data-size="map__canvas--medium">M</button>
-          <button data-size="map__canvas--large">L</button>
+          <button data-size="map__canvas--small" title="Small">S</button>
+          <button data-size="map__canvas--medium" title="Medium">M</button>
+          <button data-size="map__canvas--large" title="Large">L</button>
         </fieldset>
         <fieldset>
           <legend>Actions</legend>
