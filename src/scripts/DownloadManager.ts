@@ -1,7 +1,7 @@
+import { warn } from "./console.ts";
 import { type Message, MessageState } from "./Message.type";
 import ObserverPublisher from "./ObserverPublisher";
 import Publisher from "./Publisher.class";
-import { warn } from "./console.ts";
 
 export default class DownloadManager extends ObserverPublisher(Publisher) {
   private readonly downloadSelector: HTMLLinkElement;

@@ -1,8 +1,8 @@
 import exifr from "exifr";
+import { log, warn } from "./console.ts";
 import { type Message, MessageState } from "./Message.type";
 import ObserverPublisher from "./ObserverPublisher";
 import Publisher from "./Publisher.class";
-import { log, warn } from "./console.ts";
 
 export default class ExifManager extends ObserverPublisher(Publisher) {
   constructor() {
