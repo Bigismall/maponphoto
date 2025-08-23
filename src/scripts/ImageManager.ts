@@ -1,7 +1,7 @@
+import { fault, log } from "./console.ts";
 import { type Message, MessageState } from "./Message.type";
 import ObserverPublisher from "./ObserverPublisher";
 import Publisher from "./Publisher.class";
-import { fault, log } from "./console.ts";
 
 const MIN_WIDTH = 640;
 const MIN_HEIGHT = 400;

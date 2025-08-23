@@ -1,5 +1,5 @@
-import type { Message } from "./Message.type";
 import { log } from "./console.ts";
+import type { Message } from "./Message.type";
 
 export default abstract class Observer {
   protected constructor() {}
