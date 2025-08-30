@@ -1,9 +1,9 @@
+import { log } from "./console.ts";
+import { DOMAIN_LABEL } from "./constans.ts";
 import { MapPosition } from "./MapManager";
 import { type Message, MessageState } from "./Message.type";
 import ObserverPublisher from "./ObserverPublisher";
 import Publisher from "./Publisher.class";
-import { log } from "./console.ts";
-import { DOMAIN_LABEL } from "./constans.ts";
 
 // 16/9
 const MAX_WIDTH = 1600;

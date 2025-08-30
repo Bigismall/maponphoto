@@ -2,14 +2,14 @@ import "leaflet/dist/leaflet.css";
 import "../styles/styles.scss";
 import pkg from "../../package.json";
 import CanvasManager from "./CanvasManager";
+import { warn } from "./console.ts";
 import DownloadManager from "./DownloadManager";
+import { $, $$ } from "./dom.ts";
 import ExifManager from "./ExifManager";
 import ImageManager from "./ImageManager";
 import MapManager from "./MapManager";
 import MapOptionsManager from "./MapOptionsManager";
 import PhotoBrowser from "./PhotoBrowser";
-import { warn } from "./console.ts";
-import { $, $$ } from "./dom.ts";
 
 let browser: PhotoBrowser;
 let imageManager: ImageManager;
@@ -71,6 +71,6 @@ window.addEventListener("load", () => {
   downloadManager.subscribe(mapManager); // we want to Map Manager to receive updates from the download manager
 
   // Set the app version in the footer
-  // @ts-ignore
+  // @ts-expect-error
   $elements.get("appVersion").innerText = `v${pkg.version}`;
 });
