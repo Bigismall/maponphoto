@@ -11,6 +11,7 @@ export default class ImageManager extends ObserverPublisher(Publisher) {
 
   constructor() {
     super();
+    this.images = [];
   }
 
   async update(publication: Message) {
