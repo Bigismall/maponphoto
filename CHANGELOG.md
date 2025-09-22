@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/Bigismall/maponphoto/compare/v1.4.0...v1.5.0) (2025-09-22)
+
+
+### Features
+
+* Add multiple photos processing ([#98](https://github.com/Bigismall/maponphoto/issues/98)) ([1ef667d](https://github.com/Bigismall/maponphoto/commit/1ef667d1788ad097c7118dff11dc5ab86a2c9e8a))
+
 ## [1.4.0](https://github.com/Bigismall/maponphoto/compare/v1.3.0...v1.4.0) (2025-09-22)
 
 
