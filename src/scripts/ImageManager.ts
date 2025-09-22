@@ -72,7 +72,7 @@ export default class ImageManager extends ObserverPublisher(Publisher) {
         if (newImage.width < MIN_WIDTH || newImage.height < MIN_HEIGHT) {
           reject(
             new Error(
-              `Image ${file.name} is too small. Min dimension is: ${MIN_WIDTH}x${MIN_HEIGHT}`,
+              `Image ${file.name} is too small. Minimum dimensions are: ${MIN_WIDTH}x${MIN_HEIGHT}`,
             ),
           );
           return;
