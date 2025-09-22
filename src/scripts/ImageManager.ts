@@ -42,7 +42,7 @@ export default class ImageManager extends ObserverPublisher(Publisher) {
 
       this.publish({
         state: MessageState.FileReady,
-        data: this.images.pop() as HTMLImageElement,
+        data: this.images.shift() as HTMLImageElement,
       });
     }
 
@@ -54,12 +54,10 @@ export default class ImageManager extends ObserverPublisher(Publisher) {
         return;
       }
 
-      if (this.images.length > 0) {
-        this.publish({
-          state: MessageState.FileReady,
-          data: this.images.pop() as HTMLImageElement,
-        });
-      }
+      this.publish({
+        state: MessageState.FileReady,
+        data: this.images.shift() as HTMLImageElement,
+      });
     }
   }
 
