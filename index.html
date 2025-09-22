@@ -13,7 +13,7 @@ Your photo does not have a GPS position? No problem, you can set it manually!  E
   <link href="assets/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
   <link href="assets/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
   <link href="assets/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
-  <script type="module" crossorigin src="/assets/index-CJ0_1wPx.js"></script>
+  <script type="module" crossorigin src="/assets/index-BsYYW919.js"></script>
   <link rel="stylesheet" crossorigin href="/assets/index-DvwZf_yf.css">
 </head>
 
@@ -28,8 +28,8 @@ Your photo does not have a GPS position? No problem, you can set it manually!  E
       </p>
     </dialog>
     <aside class="browser">
-      <input accept="image/*" class="browser__input" id="js-browser-input" name="photo-source" type="file" />
-      <label for="js-browser-input">Select image</label>
+      <input accept="image/*" class="browser__input" id="js-browser-input" name="photo-source" type="file" multiple />
+      <label for="js-browser-input">Select images</label>
     </aside>
     <aside class="download download--hidden">
       <a class="download__input download__input--action" download href="#" id="js-download">Download image</a>
@@ -70,7 +70,7 @@ Your photo does not have a GPS position? No problem, you can set it manually!  E
   </main>
   <footer>
     <ul>
-      <li><img src="assets/favicon-32x32.png" alt="Map on photo icon" /> Map on photo - supported by:</li>
+      <li><img src="assets/favicon-32x32.png" alt="Map on photo icon" /> Map on photo <span id="js-app-version"></span> - supported by:</li>
       <li>
         <a href="https://schibstedforbusiness.com" title="Schibsted for business">Schibsted SMB</a>
       </li>
