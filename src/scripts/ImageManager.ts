@@ -39,6 +39,7 @@ export default class ImageManager extends ObserverPublisher(Publisher) {
           state: MessageState.FileError,
           data: "No valid images found. Please ensure your images meet the minimum size requirements.",
         });
+        return;
       }
 
       this.publish({
@@ -47,9 +48,8 @@ export default class ImageManager extends ObserverPublisher(Publisher) {
       });
     }
 
-    // if Next file
     if (publication.state === MessageState.NextImage) {
-      //If no images, then reset state
+      // If no images, then reset state
       if (this.images.length === 0) {
         this.publish({ state: MessageState.Reset });
         return;
