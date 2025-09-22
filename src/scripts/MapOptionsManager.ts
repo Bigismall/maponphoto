@@ -12,7 +12,7 @@ export default class MapOptionsManager extends Publisher {
     super();
 
     this.selector = $selector;
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
+    // biome-ignore lint/style/noNonNullAssertion: element is guaranteed to exist in DOM
     this.submit = this.selector.querySelector("button#js-map-options-submit")!;
     this.positionControls = this.selector.querySelectorAll<HTMLButtonElement>(
       "button[data-position]",
