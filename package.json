@@ -12,12 +12,12 @@
     "check": "biome check --write ./src"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.2.0",
+    "@pbr1111/vite-plugin-biome": "^1.1.3",
     "@types/leaflet": "^1.9.13",
     "sass-embedded": "^1.79.5",
     "typescript": "^5.5.4",
-    "vite": "^6.3.5",
-    "vite-plugin-biome": "^1.0.12",
-    "@biomejs/biome": "^2.2.0"
+    "vite": "^6.3.5"
   },
   "dependencies": {
     "exifr": "^7.1.3",
