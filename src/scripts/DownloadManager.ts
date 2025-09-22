@@ -31,6 +31,12 @@ export default class DownloadManager extends ObserverPublisher(Publisher) {
     if (!navigator.canShare()) {
       this.shareSelector.classList.add("download--hidden");
     }
+
+    //When download link is clicked,publish, next image message
+    this.downloadSelector.addEventListener("click", () => {
+      this.hide();
+      this.publish({ state: MessageState.NextImage });
+    });
   }
 
   update(publication: Message) {
