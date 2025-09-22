@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.0](https://github.com/Bigismall/maponphoto/compare/v1.3.0...v1.4.0) (2025-09-22)
+
+
+### Features
+
+* Add application version to footer ([#91](https://github.com/Bigismall/maponphoto/issues/91)) ([2a47897](https://github.com/Bigismall/maponphoto/commit/2a478972741e33339eb163d2abc40643c0e5c1a1))
+
+
+### Bug Fixes
+
+* replace biome plugin to work with biome 2.x ([#96](https://github.com/Bigismall/maponphoto/issues/96)) ([f0dcc08](https://github.com/Bigismall/maponphoto/commit/f0dcc08830d60799ed9567031031e5d20802c200))
+
 ## [1.3.0](https://github.com/Bigismall/maponphoto/compare/v1.2.0...v1.3.0) (2025-05-30)
 
 
