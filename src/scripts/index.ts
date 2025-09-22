@@ -69,6 +69,7 @@ window.addEventListener("load", () => {
   downloadManager.subscribe(browser); // we want to Browser to receive updates from the download manager
   downloadManager.subscribe(canvasManager); // we want to Canvas Manager to receive updates from the download manager
   downloadManager.subscribe(mapManager); // we want to Map Manager to receive updates from the download manager
+  downloadManager.subscribe(imageManager); // We want to Image Manager to receive updates from the download manager
 
   // Set the app version in the footer
   // @ts-expect-error

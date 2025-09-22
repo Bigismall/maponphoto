@@ -1,4 +1,4 @@
-import { fault, log } from "./console.ts";
+import { log } from "./console.ts";
 import { type Message, MessageState } from "./Message.type";
 import ObserverPublisher from "./ObserverPublisher";
 import Publisher from "./Publisher.class";
@@ -7,52 +7,96 @@ const MIN_WIDTH = 640;
 const MIN_HEIGHT = 400;
 
 export default class ImageManager extends ObserverPublisher(Publisher) {
-  private image: HTMLImageElement;
+  private images: HTMLImageElement[] = [];
 
   constructor() {
     super();
-    this.image = document.createElement("img");
+    this.images = [];
   }
 
-  update(publication: Message) {
+  async update(publication: Message) {
     if (publication.state === MessageState.FileChange) {
       const event = publication.data;
-      const reader = new FileReader();
+      const files = Array.from((event.target as HTMLInputElement).files ?? []);
 
-      const file = (event.target as HTMLInputElement).files?.[0] ?? null;
-
-      if (file === null) {
+      if (files.length === 0) {
         return;
       }
 
-      this.image = document.createElement("img");
-      this.image.onload = () => {
-        if (this.image.width < MIN_WIDTH || this.image.height < MIN_HEIGHT) {
-          this.publish({
-            state: MessageState.FileError,
-            data: `Image is to small. Min dimension is: ${MIN_WIDTH}x${MIN_HEIGHT}`,
-          });
+      const processedFiles = await Promise.allSettled(
+        files.map<Promise<HTMLImageElement>>((file) => this.processFile(file)),
+      );
+
+      this.images = processedFiles
+        .filter(
+          (result): result is PromiseFulfilledResult<HTMLImageElement> =>
+            result.status === "fulfilled",
+        )
+        .map((result) => result.value);
+
+      if (this.images.length === 0) {
+        this.publish({
+          state: MessageState.FileError,
+          data: "No valid images found. Please ensure your images meet the minimum size requirements.",
+        });
+        return;
+      }
+
+      this.publish({
+        state: MessageState.FileReady,
+        data: this.images.shift() as HTMLImageElement,
+      });
+    }
+
+    if (publication.state === MessageState.NextImage) {
+      // If no images, then reset state
+      if (this.images.length === 0) {
+        this.publish({ state: MessageState.Reset });
+        return;
+      }
+
+      this.publish({
+        state: MessageState.FileReady,
+        data: this.images.shift() as HTMLImageElement,
+      });
+    }
+  }
+
+  private processFile(file: File): Promise<HTMLImageElement> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      const newImage = document.createElement("img");
+
+      newImage.onload = () => {
+        if (newImage.width < MIN_WIDTH || newImage.height < MIN_HEIGHT) {
+          reject(
+            new Error(
+              `Image ${file.name} is too small. Minimum dimensions are: ${MIN_WIDTH}x${MIN_HEIGHT}`,
+            ),
+          );
           return;
         }
-        this.publish({ state: MessageState.FileReady, data: this.image });
+        resolve(newImage);
+      };
+
+      newImage.onerror = () => {
+        reject(new Error(`Failed to load image: ${file.name}`));
       };
 
       reader.onload = (e: ProgressEvent<FileReader>) => {
-        log("File reader onload");
-
-        this.image.src = (e.target?.result ?? "") as string;
+        log(`File reader onload for: ${file.name}`);
+        newImage.src = (e.target?.result ?? "") as string;
       };
 
-      reader.onerror = (e) => {
-        this.publish({
-          state: MessageState.FileError,
-          data: reader.error?.message ?? "",
-        });
-        fault(reader.error);
-        fault(e);
+      reader.onerror = () => {
+        reject(
+          new Error(
+            `Error reading file ${file.name}: ${reader.error?.message ?? "Unknown error"}`,
+          ),
+        );
       };
 
       reader.readAsDataURL(file);
-    }
+    });
   }
 }

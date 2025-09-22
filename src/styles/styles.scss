@@ -1,9 +1,9 @@
 @import "mixins/bem";
-@import "placeholders/button";
-@import "placeholders/center";
-@import "placeholders/space";
-@import "reset";
 @import "variables";
+@import "button";
+@import "center";
+@import "space";
+@import "reset";
 
 
 body {

@@ -11,10 +11,9 @@ export enum MessageState {
   MapImageReady = "MapImageReady",
   MapSetupReady = "MapSetupReady",
   MoveMap = "MoveMap",
-  // Ready = 'Ready',
   Reset = "Reset",
   ResizeMap = "ResizeMap",
-  // Show = 'Show',
+  NextImage = "NextImage",
 }
 
 export type Message =
@@ -72,4 +71,8 @@ export type Message =
   | {
       state: MessageState.ResizeMap;
       data: string;
+    }
+  | {
+      state: MessageState.NextImage;
+      data?: never;
     };
