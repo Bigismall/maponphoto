@@ -7,14 +7,20 @@ on:
       - main
 
 permissions:
-  contents: write
-  pull-requests: write
-  issues: write
+  contents: read
+
+concurrency:
+  group: release-please-main
+  cancel-in-progress: true
 
 jobs:
   release-please:
     name: 📦 Przygotowanie release PR
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
     steps:
       - name: 🔄 Uruchom Release Please
         uses: googleapis/release-please-action@v4
