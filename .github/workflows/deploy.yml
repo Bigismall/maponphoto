@@ -1,7 +1,6 @@
 name: Deploy to GitHub Pages
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - main
 
@@ -16,7 +15,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    if: "github.event.pull_request.merged == true && contains(github.event.pull_request.title, 'chore(main): release')"
+    if: "contains(github.event.head_commit.message, 'chore(main): release')"
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
@@ -48,7 +47,7 @@ jobs:
     name: Deploy
     needs: build
     runs-on: ubuntu-latest
-    if: "github.event.pull_request.merged == true && contains(github.event.pull_request.title, 'chore(main): release')"
+    if: "contains(github.event.head_commit.message, 'chore(main): release')"
     permissions:
       pages: write
       id-token: write
