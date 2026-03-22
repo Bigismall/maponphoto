@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.6.0](https://github.com/Bigismall/maponphoto/compare/v1.5.0...v1.6.0) (2026-03-22)
+
+
+### Features
+
+* **maintenance:** Update GitHub Actions ([#106](https://github.com/Bigismall/maponphoto/issues/106)) ([624ecdc](https://github.com/Bigismall/maponphoto/commit/624ecdc2e12e81a7d3580a97dbc88916d67c9754))
+
+
+### Bug Fixes
+
+* Update Vite configuration to use 'path' instead of 'files' ([#111](https://github.com/Bigismall/maponphoto/issues/111)) ([46af1d9](https://github.com/Bigismall/maponphoto/commit/46af1d928ceae01e8a4e4b60a28b867abeb8909a))
+
 ## [1.5.0](https://github.com/Bigismall/maponphoto/compare/v1.4.0...v1.5.0) (2025-09-22)
 
 
