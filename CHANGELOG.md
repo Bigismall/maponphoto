@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1](https://github.com/Bigismall/maponphoto/compare/v1.6.0...v1.6.1) (2026-03-22)
+
+
+### Bug Fixes
+
+* Update GitHub Actions workflow to trigger on push instead of pull request ([#112](https://github.com/Bigismall/maponphoto/issues/112)) ([a025e89](https://github.com/Bigismall/maponphoto/commit/a025e89883813e7fce652d741fc21aa634a71e92))
+
 ## [1.6.0](https://github.com/Bigismall/maponphoto/compare/v1.5.0...v1.6.0) (2026-03-22)
 
 
