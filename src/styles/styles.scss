@@ -1,9 +1,9 @@
-@import "mixins/bem";
-@import "variables";
-@import "button";
-@import "center";
-@import "space";
-@import "reset";
+@use "mixins/bem" as bem;
+@use "variables" as vars;
+@use "button" as *;
+@use "center" as *;
+@use "space" as *;
+@use "reset";
 
 
 body {
@@ -11,24 +11,24 @@ body {
   min-height: 100vh;
   height: auto;
   padding: 0.5rem 0 1.5rem 0;
-  font-family: $font-family;
+  font-family: vars.$font-family;
   font-size: 1rem;
   font-weight: 400;
-  color: $text;
+  color: vars.$text;
 
-  background-color: $light-blue;
+  background-color: vars.$light-blue;
   background-image: linear-gradient(
                   to bottom,
-                  $blue,
+                  vars.$blue,
                   #38495a,
                   #445464,
                   #505f6e,
-                  $light-blue
+                  vars.$light-blue
   );
   background-repeat: repeat-x;
 
   -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: $transparent;
+  -webkit-tap-highlight-color: vars.$transparent;
 }
 
 .container {
@@ -44,10 +44,10 @@ body {
   display: block;
   width: auto;
   height: auto;
-  max-width: min($container-width, 100dvw);
-  max-height: $container-height;
-  box-shadow: 0 0 0.5rem 0 $text;
-  background-color: $half-white;
+  max-width: min(vars.$container-width, 100dvw);
+  max-height: vars.$container-height;
+  box-shadow: 0 0 0.5rem 0 vars.$text;
+  background-color: vars.$half-white;
   margin: 0 auto;
 }
 
@@ -56,18 +56,18 @@ dialog {
   top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: $z-index-dialog;
-  background-color: $light-blue;
-  color: $white;
+  z-index: vars.$z-index-dialog;
+  background-color: vars.$light-blue;
+  color: vars.$white;
   border-radius: 1rem;
   border-width: 0;
-  box-shadow: 0 0 2.5rem 0 $half-white;
+  box-shadow: 0 0 2.5rem 0 vars.$half-white;
   padding: 2rem;
 
   p:not(:last-child) {
     margin: 0 0 1rem 0;
-      margin: 0 0 1lh 0;
-      }
+    margin: 0 0 1lh 0;
+  }
 }
 
 .map {
@@ -75,22 +75,21 @@ dialog {
   @extend %no-space;
 
   transform: translate(-50%, -50%);
-  z-index: $z-index-map;
+  z-index: vars.$z-index-map;
   display: flex;
   flex-direction: column;
   width: auto;
   height: auto;
-  background-color: $light-blue-transparent;
-  box-shadow: 0 0 0.5rem 0 $text;
+  background-color: vars.$light-blue-transparent;
+  box-shadow: 0 0 0.5rem 0 vars.$text;
 
-  @include m(center) {
-
+  @include bem.m(center) {
     button[data-position="map--center"] {
       @extend %button-hover;
     }
   }
 
-  @include m(topleft) {
+  @include bem.m(topleft) {
     top: 0;
     left: 0;
     right: auto;
@@ -102,7 +101,7 @@ dialog {
     }
   }
 
-  @include m(topright) {
+  @include bem.m(topright) {
     top: 0;
     left: auto;
     right: 0;
@@ -112,10 +111,9 @@ dialog {
     button[data-position="map--topright"] {
       @extend %button-hover;
     }
-
   }
 
-  @include m(bottomleft) {
+  @include bem.m(bottomleft) {
     top: auto;
     left: 0;
     right: auto;
@@ -128,7 +126,7 @@ dialog {
     }
   }
 
-  @include m(bottomright) {
+  @include bem.m(bottomright) {
     top: auto;
     left: auto;
     right: 0;
@@ -141,39 +139,38 @@ dialog {
     }
   }
 
-  @include m(hidden) {
+  @include bem.m(hidden) {
     visibility: hidden;
     pointer-events: none;
   }
 
-  @include e(canvas) {
+  @include bem.e(canvas) {
     position: static;
     display: block;
-    width: $canvas-default-width;
-    height: $canvas-default-height;
+    width: vars.$canvas-default-width;
+    height: vars.$canvas-default-height;
     margin: 0 auto;
-    background-color: $black;
+    background-color: vars.$black;
 
-    @include m(small) {
-      width: $canvas-small-width;
-      height: $canvas-small-height;
+    @include bem.m(small) {
+      width: vars.$canvas-small-width;
+      height: vars.$canvas-small-height;
 
       & ~ .map__options {
         flex-direction: column;
         button[data-size="map__canvas--small"] {
           @extend %button-hover;
-
         }
       }
 
       & ~ .map__title {
-        width: $canvas-small-width;
+        width: vars.$canvas-small-width;
       }
     }
 
-    @include m(medium) {
-      width: $canvas-medium-width;
-      height: $canvas-medium-height;
+    @include bem.m(medium) {
+      width: vars.$canvas-medium-width;
+      height: vars.$canvas-medium-height;
 
       & ~ .map__options {
         flex-direction: column;
@@ -183,22 +180,20 @@ dialog {
       }
 
       & ~ .map__title {
-        width: $canvas-medium-width;
+        width: vars.$canvas-medium-width;
       }
-
-
     }
 
-    @include m(large) {
-      width: $canvas-large-width;
-      height: $canvas-large-height;
+    @include bem.m(large) {
+      width: vars.$canvas-large-width;
+      height: vars.$canvas-large-height;
       & ~ .map__options button[data-size="map__canvas--large"] {
         @extend %button-hover;
       }
     }
   }
 
-  @include e(title) {
+  @include bem.e(title) {
     display: block;
     width: auto;
 
@@ -208,20 +203,20 @@ dialog {
     line-height: 1;
     font-weight: bolder;
     text-align: center;
-    background-color: $yellow-transparent;
-    color: $black;
+    background-color: vars.$yellow-transparent;
+    color: vars.$black;
 
-    @include m(hidden) {
+    @include bem.m(hidden) {
       display: none;
     }
 
     & a {
-      color: $black;
+      color: vars.$black;
       text-decoration: underline;
     }
   }
 
-  @include e(options) {
+  @include bem.e(options) {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -233,9 +228,9 @@ dialog {
 
 .browser {
   @extend %center;
-  z-index: $z-index-ui;
+  z-index: vars.$z-index-ui;
 
-  @include e(input) {
+  @include bem.e(input) {
     width: 0.1px;
     height: 0.1px;
     opacity: 0;
@@ -253,55 +248,51 @@ dialog {
 
     &:focus + label,
     & + label:hover {
-     @extend %button-hover;
+      @extend %button-hover;
     }
   }
 
-  @include m(hidden) {
+  @include bem.m(hidden) {
     display: none;
   }
 }
 
 .download {
   @extend %center;
-  z-index: $z-index-ui;
+  z-index: vars.$z-index-ui;
 
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
 
-
-  @include e(input) {
+  @include bem.e(input) {
     @extend %button;
     text-decoration: none;
     height: 4rem;
     margin-bottom: 1rem;
 
     &:hover,
-    &:active,
     &:active {
       @extend %button-hover;
     }
 
-    @include m(action) {
-      background-image: $button-active-bg;
+    @include bem.m(action) {
+      background-image: vars.$button-active-bg;
 
       &:hover,
-      &:active,
       &:active {
-        background-image: $button-active-hover-bg;
+        background-image: vars.$button-active-hover-bg;
       }
     }
   }
 
-
-  @include m(hidden) {
+  @include bem.m(hidden) {
     display: none;
   }
 }
 
 fieldset {
-  border: 1px solid $blue;
+  border: 1px solid vars.$blue;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -310,14 +301,13 @@ fieldset {
   gap: 0.25rem;
   border-radius: 0.5rem;
   padding: 0.5rem;
-
 }
 
 legend {
   font-size: 0.75rem;
-  color: $white;
+  color: vars.$white;
   padding: 0.15rem 0.5rem;
-  background-color: $blue;
+  background-color: vars.$blue;
   border-radius: 0.5rem;
 }
 
@@ -328,25 +318,23 @@ fieldset button {
   padding: 1rem;
 
   &:hover,
-  &:active,
   &:active {
     @extend %button-hover;
   }
 
   &.action {
-    background-image: $button-active-bg;
+    background-image: vars.$button-active-bg;
 
     &:hover,
-    &:active,
     &:active {
-      background-image: $button-active-hover-bg;
+      background-image: vars.$button-active-hover-bg;
     }
   }
 }
 
 footer {
   position: fixed;
-  z-index: $z-index-footer;
+  z-index: vars.$z-index-footer;
   bottom: 0;
   left: 0;
   right: 0;
@@ -356,8 +344,8 @@ footer {
   max-height: 2rem;
   margin: 0;
   padding: 0 1rem;
-  background-color: $blue-transparent;
-  color: $white;
+  background-color: vars.$blue-transparent;
+  color: vars.$white;
   font-size: 0.7rem;
   display: flex;
   flex-direction: row;
@@ -371,12 +359,10 @@ footer {
     height: 0.8rem;
     margin-right: 0.5rem;
     margin-top: 0.1rem;
-
   }
 
-
   a {
-    color: $white;
+    color: vars.$white;
     display: inline-block;
   }
 
@@ -393,8 +379,7 @@ footer {
       &:not(:last-child):not(:first-child) {
         &:after {
           margin-left: 0.25rem;
-          content: "|"
-
+          content: "|";
         }
       }
     }

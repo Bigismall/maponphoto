@@ -1,9 +1,9 @@
-@import "variables";
+@use "variables" as vars;
 
 %button {
   align-items: center;
   background-color: #25292e;
-  background-image: $button-bg;
+  background-image: vars.$button-bg;
   border-radius: 0.5rem;
   border-width: 0;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.05);
@@ -36,5 +36,5 @@
 %button-hover {
   background-color: #92a0b3;
   box-shadow: rgba(0, 1, 0, 0.2) 0 2px 8px;
-  background-image: $button-hover-bg;
+  background-image: vars.$button-hover-bg;
 }
