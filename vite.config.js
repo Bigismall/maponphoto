@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [
     biomePlugin({
       mode: "check",
-      files: "./src/",
+      path: "./src/",
       // applyFixes: true, // Disabled due to compatibility issues with current Biome version
     }),
   ],
