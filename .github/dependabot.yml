@@ -11,6 +11,7 @@ updates:
     labels:
       - dependencies
       - github-actions
+      - dependabot
     commit-message:
       prefix: "chore(deps)"
   - package-ecosystem: npm
@@ -24,5 +25,6 @@ updates:
     labels:
       - dependencies
       - npm
+      - dependabot
     commit-message:
       prefix: "chore(deps)"
