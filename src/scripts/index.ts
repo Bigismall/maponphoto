@@ -1,10 +1,10 @@
 import "leaflet/dist/leaflet.css";
-import "../styles/styles.scss";
 import pkg from "../../package.json";
+import "../styles/styles.scss";
 import CanvasManager from "./CanvasManager";
 import { warn } from "./console.ts";
-import DownloadManager from "./DownloadManager";
 import { $, $$ } from "./dom.ts";
+import DownloadManager from "./DownloadManager";
 import ExifManager from "./ExifManager";
 import ImageManager from "./ImageManager";
 import MapManager from "./MapManager";
@@ -18,6 +18,10 @@ let exifManager: ExifManager;
 let mapManager: MapManager;
 let mapOptionsManager: MapOptionsManager;
 let downloadManager: DownloadManager;
+
+const supportsShareFiles =
+  typeof navigator.share === "function" &&
+  typeof navigator.canShare === "function";
 
 window.addEventListener("load", () => {
   const $elements = new Map<string, Element | NodeListOf<HTMLElement> | null>([
@@ -38,7 +42,7 @@ window.addEventListener("load", () => {
     }
   });
 
-  if (!navigator.canShare()) {
+  if (!supportsShareFiles) {
     console.log("Web Share API not supported :(");
   }
 

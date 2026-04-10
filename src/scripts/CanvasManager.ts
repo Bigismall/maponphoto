@@ -6,142 +6,357 @@ import ObserverPublisher from "./ObserverPublisher";
 import Publisher from "./Publisher.class";
 
 // 16/9
-const MAX_WIDTH = 1600;
-const MAX_HEIGHT = 1200;
+const UI_MAX_WIDTH = 1600;
+const UI_MAX_HEIGHT = 1200;
+const EXPORT_MAX_WIDTH = 2560;
+const EXPORT_MAX_HEIGHT = 1920;
+const DEFAULT_EXPORT_WIDTH = UI_MAX_WIDTH;
+const DEFAULT_EXPORT_HEIGHT = UI_MAX_HEIGHT;
 
 export interface Point {
   x: number;
   y: number;
 }
 
+interface CanvasSize {
+  width: number;
+  height: number;
+}
+
+type ExportCanvas = OffscreenCanvas | HTMLCanvasElement;
+
+interface ExportTarget {
+  canvas: ExportCanvas;
+  context: OffscreenCanvasRenderingContext2D | CanvasRenderingContext2D | null;
+}
+
 export default class CanvasManager extends ObserverPublisher(Publisher) {
-  private readonly selector: HTMLCanvasElement;
-  private readonly context: CanvasRenderingContext2D | null;
+  private readonly uiCanvas: HTMLCanvasElement;
+  private readonly uiContext: CanvasRenderingContext2D | null;
+  private readonly exportTarget: ExportTarget;
+  private exportGeneration: number;
 
   constructor($selector: HTMLCanvasElement) {
     super();
-    this.selector = $selector;
-    this.context = this.selector.getContext("2d");
+    this.uiCanvas = $selector;
+    this.uiContext = this.uiCanvas.getContext("2d");
+    this.exportTarget = this.createExportTarget();
+    this.exportGeneration = 0;
     log("Canvas", this.width, this.height, this.aspectRatio);
   }
 
   get height(): number {
-    return this.selector.height;
+    return this.uiCanvas.height;
   }
 
   get width(): number {
-    return this.selector.width;
+    return this.uiCanvas.width;
   }
 
   get aspectRatio(): number {
     return this.width / this.height;
   }
 
-  protected clear() {
-    this.context?.clearRect(0, 0, this.width, this.height);
-  }
+  private createExportTarget(): ExportTarget {
+    if (typeof OffscreenCanvas !== "undefined") {
+      const canvas = new OffscreenCanvas(1, 1);
+      const context = canvas.getContext("2d");
 
-  protected resizeFor(width: number, height: number) {
-    const ratio = width / height;
-    let newWidth = 0;
-    let newHeight = 0;
+      if (context) {
+        return {
+          canvas,
+          context,
+        };
+      }
 
-    if (ratio > 1) {
-      newWidth = Math.min(MAX_WIDTH, width);
-      newHeight = newWidth / ratio;
-    } else {
-      newHeight = Math.min(MAX_HEIGHT, height);
-      newWidth = newHeight * ratio;
+      log(
+        "Canvas",
+        "OffscreenCanvas 2D context is unavailable, falling back to HTMLCanvasElement for export.",
+      );
     }
 
-    this.selector.width = newWidth;
-    this.selector.height = newHeight;
+    // Fallback keeps feature working when OffscreenCanvas is not available.
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+      log(
+        "Canvas",
+        "HTMLCanvasElement 2D context is unavailable, export will be disabled.",
+      );
+    }
+
+    return {
+      canvas,
+      context,
+    };
+  }
+
+  private setCanvasSize(
+    canvas: ExportCanvas | HTMLCanvasElement,
+    size: CanvasSize,
+  ) {
+    canvas.width = size.width;
+    canvas.height = size.height;
+  }
+
+  private getUiSizeFor(width: number, height: number): CanvasSize {
+    const ratio = width / height;
+
+    if (ratio > 1) {
+      const newWidth = Math.min(UI_MAX_WIDTH, width);
+      return {
+        width: Math.max(1, Math.round(newWidth)),
+        height: Math.max(1, Math.round(newWidth / ratio)),
+      };
+    }
+
+    const newHeight = Math.min(UI_MAX_HEIGHT, height);
+    return {
+      width: Math.max(1, Math.round(newHeight * ratio)),
+      height: Math.max(1, Math.round(newHeight)),
+    };
+  }
+
+  private nextExportGeneration(): number {
+    this.exportGeneration += 1;
+    return this.exportGeneration;
+  }
+
+  private getExportSizeFor(width: number, height: number): CanvasSize {
+    const scale = Math.min(
+      1,
+      EXPORT_MAX_WIDTH / width,
+      EXPORT_MAX_HEIGHT / height,
+    );
+
+    return {
+      width: Math.max(1, Math.round(width * scale)),
+      height: Math.max(1, Math.round(height * scale)),
+    };
+  }
+
+  private resizeForExport(width: number, height: number) {
+    const exportSize = this.getExportSizeFor(width, height);
+    this.setCanvasSize(this.exportTarget.canvas, exportSize);
+  }
+
+  private getSize(canvas: ExportCanvas | HTMLCanvasElement): CanvasSize {
+    return {
+      width: canvas.width,
+      height: canvas.height,
+    };
+  }
+
+  private drawOn(
+    context:
+      | OffscreenCanvasRenderingContext2D
+      | CanvasRenderingContext2D
+      | null,
+    image: CanvasImageSource,
+    targetSize: CanvasSize,
+  ) {
+    context?.drawImage(image, 0, 0, targetSize.width, targetSize.height);
+  }
+
+  protected clear() {
+    this.uiContext?.clearRect(0, 0, this.width, this.height);
+
+    const exportSize = this.getSize(this.exportTarget.canvas);
+    this.exportTarget.context?.clearRect(
+      0,
+      0,
+      exportSize.width,
+      exportSize.height,
+    );
+  }
+
+  protected resizeForUi(width: number, height: number) {
+    const uiSize = this.getUiSizeFor(width, height);
+    this.setCanvasSize(this.uiCanvas, uiSize);
     log("Resized Canvas", this.width, this.height, this.aspectRatio);
   }
 
-  protected draw(image: CanvasImageSource) {
+  protected draw(image: HTMLImageElement) {
     const { width, height } = image as HTMLImageElement;
-    this.resizeFor(width, height);
+    const uiSize = this.getUiSizeFor(width, height);
+    const exportSize = this.getExportSizeFor(width, height);
 
-    this.context?.drawImage(image, 0, 0, this.width, this.height);
+    this.setCanvasSize(this.uiCanvas, uiSize);
+    this.setCanvasSize(this.exportTarget.canvas, exportSize);
+
+    this.drawOn(this.uiContext, image, uiSize);
+    this.drawOn(this.exportTarget.context, image, exportSize);
   }
 
-  protected getMapPosition(
+  private getMapPosition(
     position: MapPosition,
-    image: HTMLImageElement,
+    canvasSize: CanvasSize,
+    imageSize: CanvasSize,
   ): Point {
     switch (position) {
       case MapPosition.TOP_LEFT:
         return { x: 0, y: 0 };
       case MapPosition.TOP_RIGHT:
-        return { x: this.width - image.width, y: 0 };
+        return { x: canvasSize.width - imageSize.width, y: 0 };
       case MapPosition.BOTTOM_LEFT:
-        return { x: 0, y: this.height - image.height };
+        return { x: 0, y: canvasSize.height - imageSize.height };
       case MapPosition.BOTTOM_RIGHT:
-        return { x: this.width - image.width, y: this.height - image.height };
+        return {
+          x: canvasSize.width - imageSize.width,
+          y: canvasSize.height - imageSize.height,
+        };
       case MapPosition.CENTER:
         return {
-          x: (this.width - image.width) / 2,
-          y: (this.height - image.height) / 2,
+          x: (canvasSize.width - imageSize.width) / 2,
+          y: (canvasSize.height - imageSize.height) / 2,
         };
     }
   }
 
-  protected drawMap(image: HTMLImageElement, position: MapPosition) {
-    const { x, y } = this.getMapPosition(position, image);
-
-    this.context?.drawImage(image, x, y);
-  }
-
-  protected drawLabel(
-    label: string,
+  private drawMapOn(
+    context:
+      | OffscreenCanvasRenderingContext2D
+      | CanvasRenderingContext2D
+      | null,
+    canvasSize: CanvasSize,
     image: HTMLImageElement,
     position: MapPosition,
+    scale: number,
+  ): CanvasSize {
+    const targetImageSize = {
+      width: image.width * scale,
+      height: image.height * scale,
+    };
+
+    const { x, y } = this.getMapPosition(position, canvasSize, targetImageSize);
+
+    context?.drawImage(
+      image,
+      x,
+      y,
+      targetImageSize.width,
+      targetImageSize.height,
+    );
+
+    return targetImageSize;
+  }
+
+  private drawLabelOn(
+    context:
+      | OffscreenCanvasRenderingContext2D
+      | CanvasRenderingContext2D
+      | null,
+    canvasSize: CanvasSize,
+    imageSize: CanvasSize,
+    position: MapPosition,
+    scale: number,
   ) {
-    const { x, y } = this.getMapPosition(position, image);
-    const fontSize = 16;
-    const font = `${fontSize}px sans-serif`;
-    const barHeight = fontSize * 2;
-    const bawWidth = image.width;
-
-    const labelX = x;
-    const labelY = y + image.height - barHeight;
-    const padding = fontSize / 2;
-
-    if (!this.context) {
+    if (!context) {
       return;
     }
 
-    this.context.fillStyle = "#2c3e50";
-    this.context.fillRect(labelX, labelY, bawWidth, barHeight);
-    this.context.fillStyle = "white";
-    this.context.font = font;
-    this.context.fillText(label, labelX + padding, labelY + fontSize * 1.25);
+    const { x, y } = this.getMapPosition(position, canvasSize, imageSize);
+    const fontSize = Math.max(16 * scale, 12);
+    const font = `${fontSize}px sans-serif`;
+    const barHeight = fontSize * 2;
+    const barWidth = imageSize.width;
+
+    const labelX = x;
+    const labelY = y + imageSize.height - barHeight;
+    const padding = fontSize / 2;
+
+    context.fillStyle = "#2c3e50";
+    context.fillRect(labelX, labelY, barWidth, barHeight);
+    context.fillStyle = "white";
+    context.font = font;
+    context.fillText(DOMAIN_LABEL, labelX + padding, labelY + fontSize * 1.25);
+  }
+
+  private async exportAsBlob(): Promise<Blob | null> {
+    if (!this.exportTarget.context) {
+      return null;
+    }
+
+    if (this.exportTarget.canvas instanceof OffscreenCanvas) {
+      return this.exportTarget.canvas.convertToBlob({
+        type: "image/jpeg",
+        quality: 0.95,
+      });
+    }
+
+    const htmlCanvas = this.exportTarget.canvas as HTMLCanvasElement;
+
+    return new Promise((resolve) => {
+      htmlCanvas.toBlob(
+        (blob: Blob | null) => resolve(blob),
+        "image/jpeg",
+        0.95,
+      );
+    });
+  }
+
+  private async publishExportCanvas(generation: number) {
+    const blob = await this.exportAsBlob();
+
+    if (!blob || generation !== this.exportGeneration) {
+      return;
+    }
+
+    this.publish({
+      state: MessageState.CanvasWithMapReady,
+      data: blob,
+    });
+  }
+
+  private drawMap(image: HTMLImageElement, position: MapPosition) {
+    const uiSize = this.getSize(this.uiCanvas);
+    const exportSize = this.getSize(this.exportTarget.canvas);
+    const mapScale = exportSize.width / uiSize.width;
+
+    const uiMapSize = this.drawMapOn(
+      this.uiContext,
+      uiSize,
+      image,
+      position,
+      1,
+    );
+    const exportMapSize = this.drawMapOn(
+      this.exportTarget.context,
+      exportSize,
+      image,
+      position,
+      mapScale,
+    );
+
+    this.drawLabelOn(this.uiContext, uiSize, uiMapSize, position, 1);
+    this.drawLabelOn(
+      this.exportTarget.context,
+      exportSize,
+      exportMapSize,
+      position,
+      mapScale,
+    );
   }
 
   update(publication: Message) {
     if (publication.state === MessageState.Reset) {
-      this.resizeFor(MAX_WIDTH, MAX_HEIGHT);
+      this.nextExportGeneration();
+      this.resizeForUi(UI_MAX_WIDTH, UI_MAX_HEIGHT);
+      this.resizeForExport(DEFAULT_EXPORT_WIDTH, DEFAULT_EXPORT_HEIGHT);
       this.clear();
     }
 
     if (publication.state === MessageState.FileReady) {
+      this.nextExportGeneration();
       this.clear();
-      this.draw(publication.data);
+      this.draw(publication.data as HTMLImageElement);
     }
 
     if (publication.state === MessageState.MapImageReady) {
+      const generation = this.nextExportGeneration();
       this.drawMap(publication.data.image, publication.data.position);
-      this.drawLabel(
-        DOMAIN_LABEL,
-        publication.data.image,
-        publication.data.position,
-      );
-
-      this.publish({
-        state: MessageState.CanvasWithMapReady,
-        data: this.selector,
-      });
+      void this.publishExportCanvas(generation);
     }
   }
 }

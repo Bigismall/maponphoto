@@ -5,13 +5,22 @@ import Publisher from "./Publisher.class";
 
 export default class DownloadManager extends ObserverPublisher(Publisher) {
   private readonly downloadSelector: HTMLLinkElement;
-  private readonly shareSelector: HTMLLinkElement;
+  private readonly shareSelector: HTMLElement;
   private readonly resetSelector: NodeListOf<HTMLElement>;
   private readonly container: HTMLElement | null;
+  private downloadBlob: Blob | null;
+  private blobUrl: string | null;
+
+  private get canShareFiles(): boolean {
+    return (
+      typeof navigator.share === "function" &&
+      typeof navigator.canShare === "function"
+    );
+  }
 
   constructor(
     $downloadElement: HTMLLinkElement,
-    $shareElement: HTMLLinkElement,
+    $shareElement: HTMLElement,
     $resetElement: NodeListOf<HTMLElement>,
   ) {
     super();
@@ -19,6 +28,8 @@ export default class DownloadManager extends ObserverPublisher(Publisher) {
     this.shareSelector = $shareElement;
     this.resetSelector = $resetElement;
     this.container = $downloadElement.parentElement;
+    this.downloadBlob = null;
+    this.blobUrl = null;
 
     Array.from(this.resetSelector).map((element) => {
       element.addEventListener("click", () => {
@@ -28,22 +39,43 @@ export default class DownloadManager extends ObserverPublisher(Publisher) {
       return element;
     });
 
-    if (!navigator.canShare()) {
+    if (!this.canShareFiles) {
       this.shareSelector.classList.add("download--hidden");
+    } else {
+      this.shareSelector.addEventListener("click", (event) => {
+        void this.share(event);
+      });
     }
 
     //When download link is clicked,publish, NextImage message
     this.downloadSelector.addEventListener("click", () => {
-      this.hide();
-      this.publish({ state: MessageState.NextImage });
+      setTimeout(() => {
+        this.hide();
+        this.publish({ state: MessageState.NextImage });
+      }, 0);
     });
   }
 
   update(publication: Message) {
     if (publication.state === MessageState.CanvasWithMapReady) {
       this.show();
-      this.prepareDownload();
+      this.prepareDownload(publication.data);
     }
+  }
+
+  private revokeBlobUrl() {
+    if (this.blobUrl === null) {
+      return;
+    }
+
+    URL.revokeObjectURL(this.blobUrl);
+    this.blobUrl = null;
+  }
+
+  private clearDownloadState() {
+    this.revokeBlobUrl();
+    this.downloadBlob = null;
+    this.downloadSelector.removeAttribute("href");
   }
 
   protected numberWithPadding(number: number) {
@@ -55,38 +87,48 @@ export default class DownloadManager extends ObserverPublisher(Publisher) {
     return `map-on-photo-${today.getFullYear()}-${this.numberWithPadding(today.getMonth() + 1)}-${this.numberWithPadding(today.getDate())}-${this.numberWithPadding(today.getHours())}-${this.numberWithPadding(today.getMinutes())}-${this.numberWithPadding(today.getSeconds())}.jpg`;
   }
 
-  prepareDownload() {
-    const $canvas: HTMLElement | null =
-      document.getElementById("js-main-canvas");
+  prepareDownload(blob: Blob) {
+    this.revokeBlobUrl();
+    this.downloadBlob = blob;
+    this.blobUrl = URL.createObjectURL(blob);
 
-    if ($canvas == null) {
-      warn("Canvas not found");
+    this.downloadSelector.setAttribute("download", this.generateFilename());
+    this.downloadSelector.setAttribute("href", this.blobUrl);
+  }
+
+  private async share(event: Event) {
+    event.preventDefault();
+
+    if (!this.downloadBlob) {
+      warn("No image ready to share");
       return;
     }
 
-    const dataURL = ($canvas as HTMLCanvasElement).toDataURL(
-      "image/jpeg",
-      0.95,
-    );
-    this.downloadSelector.setAttribute("download", this.generateFilename());
-    this.downloadSelector.setAttribute("href", dataURL);
+    const file = new File([this.downloadBlob], this.generateFilename(), {
+      type: "image/jpeg",
+    });
 
-    if (navigator.canShare()) {
-      this.shareSelector.addEventListener("click", (event) => {
-        event.preventDefault();
-        navigator.share({
-          title: "See my photo with the embedded map",
-          files: [
-            new File([dataURL], this.generateFilename(), {
-              type: "image/jpeg",
-            }),
-          ],
-        });
+    if (!this.canShareFiles || !navigator.canShare({ files: [file] })) {
+      warn("Sharing files is not supported in this browser");
+      return;
+    }
+
+    try {
+      await navigator.share({
+        title: "See my photo with the embedded map",
+        files: [file],
       });
+    } catch (error: unknown) {
+      if (error instanceof DOMException && error.name === "AbortError") {
+        return;
+      }
+
+      warn("Failed to share image");
     }
   }
 
   hide() {
+    this.clearDownloadState();
     this.container?.classList.add("download--hidden");
   }
 

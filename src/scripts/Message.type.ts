@@ -19,7 +19,7 @@ export enum MessageState {
 export type Message =
   | {
       state: MessageState.CanvasWithMapReady;
-      data: HTMLCanvasElement;
+      data: Blob;
     }
   | {
       state: MessageState.ExifMissing;
