@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.7.0](https://github.com/Bigismall/maponphoto/compare/v1.6.1...v1.7.0) (2026-04-10)
+
+
+### Features
+
+* Add Offcanvas as an data source. ([#126](https://github.com/Bigismall/maponphoto/issues/126)) ([b06a736](https://github.com/Bigismall/maponphoto/commit/b06a736807ac2c061fc2d8346791590eb22f378b))
+
+
+### Bug Fixes
+
+* Add 'dependabot' label to GitHub Actions and npm updates in dependabot configuration ([#120](https://github.com/Bigismall/maponphoto/issues/120)) ([857e1e3](https://github.com/Bigismall/maponphoto/commit/857e1e3e942e6d989201a5355d3463ea3078fc51))
+
 ## [1.6.1](https://github.com/Bigismall/maponphoto/compare/v1.6.0...v1.6.1) (2026-03-22)
 
 
