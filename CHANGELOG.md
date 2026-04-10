@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.1](https://github.com/Bigismall/maponphoto/compare/v1.7.0...v1.7.1) (2026-04-10)
+
+
+### Bug Fixes
+
+* Update linting scripts and import order in index.ts ([#128](https://github.com/Bigismall/maponphoto/issues/128)) ([4441ab5](https://github.com/Bigismall/maponphoto/commit/4441ab5d1907010151e941fc847ab5c95abf67f1))
+
 ## [1.7.0](https://github.com/Bigismall/maponphoto/compare/v1.6.1...v1.7.0) (2026-04-10)
 
 
