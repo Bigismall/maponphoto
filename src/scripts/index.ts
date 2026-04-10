@@ -64,16 +64,19 @@ window.addEventListener("load", () => {
   exifManager = new ExifManager();
 
   browser.subscribe(imageManager); // we want to Image Manager to receive updates from the file browser
-  imageManager.subscribe(canvasManager); // we want to Canvas Manager to receive updates from the image manager
-  imageManager.subscribe(exifManager); // we want to Exif Manager to receive updates from the image manager
-  exifManager.subscribe(mapManager); // we want to Map Manager to receive updates from the exif manager
-  mapManager.subscribe(canvasManager); // we want to Canvas Manager to receive updates from the map manager
-  mapOptionsManager.subscribe(mapManager); // we want to Map Manager to receive updates from the map options manager
   canvasManager.subscribe(downloadManager); // we want to Download Manager to receive updates from the canvas manager
+  canvasManager.subscribe(imageManager); // we want Image Manager to receive updates from the canvas manager
   downloadManager.subscribe(browser); // we want to Browser to receive updates from the download manager
   downloadManager.subscribe(canvasManager); // we want to Canvas Manager to receive updates from the download manager
-  downloadManager.subscribe(mapManager); // we want to Map Manager to receive updates from the download manager
   downloadManager.subscribe(imageManager); // We want to Image Manager to receive updates from the download manager
+  downloadManager.subscribe(mapManager); // we want to Map Manager to receive updates from the download manager
+  exifManager.subscribe(mapManager); // we want to Map Manager to receive updates from the exif manager
+  imageManager.subscribe(browser); // we want to Browser to receive updates from the image manager (to hide browser when image is loaded)
+  imageManager.subscribe(canvasManager); // we want to Canvas Manager to receive updates from the image manager
+  imageManager.subscribe(exifManager); // we want to Exif Manager to receive updates from the image manager
+  imageManager.subscribe(mapManager); // we want to Map Manager to receive updates from the image manager
+  mapManager.subscribe(canvasManager); // we want to Canvas Manager to receive updates from the map manager
+  mapOptionsManager.subscribe(mapManager); // we want to Map Manager to receive updates from the map options manager
 
   // Set the app version in the footer
   // @ts-expect-error
