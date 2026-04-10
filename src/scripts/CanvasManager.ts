@@ -10,6 +10,8 @@ const UI_MAX_WIDTH = 1600;
 const UI_MAX_HEIGHT = 1200;
 const EXPORT_MAX_WIDTH = 2560;
 const EXPORT_MAX_HEIGHT = 1920;
+const DEFAULT_EXPORT_WIDTH = UI_MAX_WIDTH;
+const DEFAULT_EXPORT_HEIGHT = UI_MAX_HEIGHT;
 
 export interface Point {
   x: number;
@@ -102,10 +104,16 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
       EXPORT_MAX_WIDTH / width,
       EXPORT_MAX_HEIGHT / height,
     );
+
     return {
-      width: width * scale,
-      height: height * scale,
+      width: Math.max(1, Math.round(width * scale)),
+      height: Math.max(1, Math.round(height * scale)),
     };
+  }
+
+  private resizeForExport(width: number, height: number) {
+    const exportSize = this.getExportSizeFor(width, height);
+    this.setCanvasSize(this.exportTarget.canvas, exportSize);
   }
 
   private getSize(canvas: ExportCanvas | HTMLCanvasElement): CanvasSize {
@@ -305,6 +313,7 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
   update(publication: Message) {
     if (publication.state === MessageState.Reset) {
       this.resizeForUi(UI_MAX_WIDTH, UI_MAX_HEIGHT);
+      this.resizeForExport(DEFAULT_EXPORT_WIDTH, DEFAULT_EXPORT_HEIGHT);
       this.clear();
     }
 

@@ -42,8 +42,10 @@ export default class DownloadManager extends ObserverPublisher(Publisher) {
 
     //When download link is clicked,publish, NextImage message
     this.downloadSelector.addEventListener("click", () => {
-      this.hide();
-      this.publish({ state: MessageState.NextImage });
+      setTimeout(() => {
+        this.hide();
+        this.publish({ state: MessageState.NextImage });
+      }, 0);
     });
   }
 
@@ -61,6 +63,12 @@ export default class DownloadManager extends ObserverPublisher(Publisher) {
 
     URL.revokeObjectURL(this.blobUrl);
     this.blobUrl = null;
+  }
+
+  private clearDownloadState() {
+    this.revokeBlobUrl();
+    this.downloadBlob = null;
+    this.downloadSelector.removeAttribute("href");
   }
 
   protected numberWithPadding(number: number) {
@@ -105,6 +113,7 @@ export default class DownloadManager extends ObserverPublisher(Publisher) {
   }
 
   hide() {
+    this.clearDownloadState();
     this.container?.classList.add("download--hidden");
   }
 
