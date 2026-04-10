@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://github.com/Bigismall/maponphoto/compare/v1.7.1...v1.8.0) (2026-04-10)
+
+
+### Features
+
+* fix the issue with reset state after photo download ([#130](https://github.com/Bigismall/maponphoto/issues/130)) ([621e856](https://github.com/Bigismall/maponphoto/commit/621e856046f3a82953c04e2a91be43fa64300977))
+
 ## [1.7.1](https://github.com/Bigismall/maponphoto/compare/v1.7.0...v1.7.1) (2026-04-10)
 
 
