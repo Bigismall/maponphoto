@@ -2,6 +2,7 @@ import { log } from "./console.ts";
 import { type Message, MessageState } from "./Message.type";
 import ObserverPublisher from "./ObserverPublisher";
 import Publisher from "./Publisher.class";
+import { isEmptyArray } from "./utils.ts";
 
 const MIN_WIDTH = 640;
 const MIN_HEIGHT = 400;
@@ -19,7 +20,7 @@ export default class ImageManager extends ObserverPublisher(Publisher) {
       const event = publication.data;
       const files = Array.from((event.target as HTMLInputElement).files ?? []);
 
-      if (files.length === 0) {
+      if (isEmptyArray(files)) {
         return;
       }
 
@@ -34,7 +35,7 @@ export default class ImageManager extends ObserverPublisher(Publisher) {
         )
         .map((result) => result.value);
 
-      if (this.images.length === 0) {
+      if (isEmptyArray(this.images)) {
         this.publish({
           state: MessageState.FileError,
           data: "No valid images found. Please ensure your images meet the minimum size requirements.",
@@ -50,7 +51,8 @@ export default class ImageManager extends ObserverPublisher(Publisher) {
 
     if (publication.state === MessageState.NextImage) {
       // If no images, then reset state
-      if (this.images.length === 0) {
+
+      if (isEmptyArray(this.images)) {
         this.publish({ state: MessageState.Reset });
         return;
       }

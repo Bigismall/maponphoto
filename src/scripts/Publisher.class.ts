@@ -1,3 +1,4 @@
+import { log } from "./console";
 import type { Message } from "./Message.type";
 import type Observer from "./Observer.class";
 
@@ -13,6 +14,7 @@ export default abstract class Publisher {
   }
 
   publish(publication: Message) {
+    log("Publishing message:", publication);
     this.subscribers.map((s) => {
       s.update(publication);
       return s;
