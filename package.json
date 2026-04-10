@@ -10,8 +10,7 @@
     "types": "tsc --noEmit",
     "format": "biome format --write ./src",
     "lint": "biome check ./src",
-    "lint:fix": "biome check --write ./src",
-    "check": "pnpm run lint:fix"
+    "check": "biome check --write ./src"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.11",
