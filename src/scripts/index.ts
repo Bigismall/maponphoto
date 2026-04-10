@@ -65,7 +65,7 @@ window.addEventListener("load", () => {
 
   browser.subscribe(imageManager); // we want to Image Manager to receive updates from the file browser
   canvasManager.subscribe(downloadManager); // we want to Download Manager to receive updates from the canvas manager
-  canvasManager.subscribe(imageManager); // we want to Map Manager to receive updates from the canvas manager (to hide map when canvas is hidden)
+  canvasManager.subscribe(imageManager); // we want Image Manager to receive updates from the canvas manager
   downloadManager.subscribe(browser); // we want to Browser to receive updates from the download manager
   downloadManager.subscribe(canvasManager); // we want to Canvas Manager to receive updates from the download manager
   downloadManager.subscribe(imageManager); // We want to Image Manager to receive updates from the download manager
