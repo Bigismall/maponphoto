@@ -34,12 +34,14 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
   private readonly uiCanvas: HTMLCanvasElement;
   private readonly uiContext: CanvasRenderingContext2D | null;
   private readonly exportTarget: ExportTarget;
+  private exportGeneration: number;
 
   constructor($selector: HTMLCanvasElement) {
     super();
     this.uiCanvas = $selector;
     this.uiContext = this.uiCanvas.getContext("2d");
     this.exportTarget = this.createExportTarget();
+    this.exportGeneration = 0;
     log("Canvas", this.width, this.height, this.aspectRatio);
   }
 
@@ -58,17 +60,35 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
   private createExportTarget(): ExportTarget {
     if (typeof OffscreenCanvas !== "undefined") {
       const canvas = new OffscreenCanvas(1, 1);
-      return {
-        canvas,
-        context: canvas.getContext("2d"),
-      };
+      const context = canvas.getContext("2d");
+
+      if (context) {
+        return {
+          canvas,
+          context,
+        };
+      }
+
+      log(
+        "Canvas",
+        "OffscreenCanvas 2D context is unavailable, falling back to HTMLCanvasElement for export.",
+      );
     }
 
     // Fallback keeps feature working when OffscreenCanvas is not available.
     const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+      log(
+        "Canvas",
+        "HTMLCanvasElement 2D context is unavailable, export will be disabled.",
+      );
+    }
+
     return {
       canvas,
-      context: canvas.getContext("2d"),
+      context,
     };
   }
 
@@ -86,16 +106,21 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
     if (ratio > 1) {
       const newWidth = Math.min(UI_MAX_WIDTH, width);
       return {
-        width: newWidth,
-        height: newWidth / ratio,
+        width: Math.max(1, Math.round(newWidth)),
+        height: Math.max(1, Math.round(newWidth / ratio)),
       };
     }
 
     const newHeight = Math.min(UI_MAX_HEIGHT, height);
     return {
-      width: newHeight * ratio,
-      height: newHeight,
+      width: Math.max(1, Math.round(newHeight * ratio)),
+      height: Math.max(1, Math.round(newHeight)),
     };
+  }
+
+  private nextExportGeneration(): number {
+    this.exportGeneration += 1;
+    return this.exportGeneration;
   }
 
   private getExportSizeFor(width: number, height: number): CanvasSize {
@@ -249,6 +274,10 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
   }
 
   private async exportAsBlob(): Promise<Blob | null> {
+    if (!this.exportTarget.context) {
+      return null;
+    }
+
     if (this.exportTarget.canvas instanceof OffscreenCanvas) {
       return this.exportTarget.canvas.convertToBlob({
         type: "image/jpeg",
@@ -267,10 +296,10 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
     });
   }
 
-  private async publishExportCanvas() {
+  private async publishExportCanvas(generation: number) {
     const blob = await this.exportAsBlob();
 
-    if (!blob) {
+    if (!blob || generation !== this.exportGeneration) {
       return;
     }
 
@@ -312,19 +341,22 @@ export default class CanvasManager extends ObserverPublisher(Publisher) {
 
   update(publication: Message) {
     if (publication.state === MessageState.Reset) {
+      this.nextExportGeneration();
       this.resizeForUi(UI_MAX_WIDTH, UI_MAX_HEIGHT);
       this.resizeForExport(DEFAULT_EXPORT_WIDTH, DEFAULT_EXPORT_HEIGHT);
       this.clear();
     }
 
     if (publication.state === MessageState.FileReady) {
+      this.nextExportGeneration();
       this.clear();
       this.draw(publication.data as HTMLImageElement);
     }
 
     if (publication.state === MessageState.MapImageReady) {
+      const generation = this.nextExportGeneration();
       this.drawMap(publication.data.image, publication.data.position);
-      void this.publishExportCanvas();
+      void this.publishExportCanvas(generation);
     }
   }
 }

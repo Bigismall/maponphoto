@@ -11,6 +11,13 @@ export default class DownloadManager extends ObserverPublisher(Publisher) {
   private downloadBlob: Blob | null;
   private blobUrl: string | null;
 
+  private get canShareFiles(): boolean {
+    return (
+      typeof navigator.share === "function" &&
+      typeof navigator.canShare === "function"
+    );
+  }
+
   constructor(
     $downloadElement: HTMLLinkElement,
     $shareElement: HTMLElement,
@@ -32,7 +39,7 @@ export default class DownloadManager extends ObserverPublisher(Publisher) {
       return element;
     });
 
-    if (!navigator.canShare()) {
+    if (!this.canShareFiles) {
       this.shareSelector.classList.add("download--hidden");
     } else {
       this.shareSelector.addEventListener("click", (event) => {
@@ -101,15 +108,23 @@ export default class DownloadManager extends ObserverPublisher(Publisher) {
       type: "image/jpeg",
     });
 
-    if (!navigator.canShare({ files: [file] })) {
+    if (!this.canShareFiles || !navigator.canShare({ files: [file] })) {
       warn("Sharing files is not supported in this browser");
       return;
     }
 
-    await navigator.share({
-      title: "See my photo with the embedded map",
-      files: [file],
-    });
+    try {
+      await navigator.share({
+        title: "See my photo with the embedded map",
+        files: [file],
+      });
+    } catch (error: unknown) {
+      if (error instanceof DOMException && error.name === "AbortError") {
+        return;
+      }
+
+      warn("Failed to share image");
+    }
   }
 
   hide() {
