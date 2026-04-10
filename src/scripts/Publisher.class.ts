@@ -1,4 +1,4 @@
-import { log } from "./console";
+import { log } from "./console.ts";
 import type { Message } from "./Message.type";
 import type Observer from "./Observer.class";
 
