@@ -4,6 +4,7 @@ import { usePublish, useSubscribe } from "../../lib/MessageBroker/useMessageBrok
 import { Listener } from "../../lib/MessageBroker/Publisher.class.ts";
 
 
+
 export const Browser = () => {
   const [visible, setVisible] = useState<boolean>(true);
     const publish = usePublish();
@@ -17,10 +18,8 @@ export const Browser = () => {
 
   useSubscribe(listener); //FIXME - check how many times this is called, it should be only once
 
-
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-        console.log("Browser handleChange", event.nativeEvent);
       publish({ state: MessageState.FileChange, data: event.nativeEvent });
       setVisible(false);
     },

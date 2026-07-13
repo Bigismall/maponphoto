@@ -44,7 +44,7 @@ body {
   display: block;
   width: auto;
   height: auto;
-  max-width: min(vars.$container-width, 100dvw);
+max-width: min(#{vars.$container-width}, 100dvw);
   max-height: vars.$container-height;
   box-shadow: 0 0 0.5rem 0 vars.$text;
   background-color: vars.$half-white;
@@ -65,7 +65,6 @@ dialog {
   padding: 2rem;
 
   p:not(:last-child) {
-    margin: 0 0 1rem 0;
     margin: 0 0 1lh 0;
   }
 }
