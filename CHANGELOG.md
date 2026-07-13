@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/Bigismall/maponphoto/compare/v1.8.0...v1.9.0) (2026-07-13)
+
+
+### Features
+
+* optimize loading performance and clean up code ([#147](https://github.com/Bigismall/maponphoto/issues/147)) ([09800ec](https://github.com/Bigismall/maponphoto/commit/09800ec6421502bfce291b932e9dbfbb83b8c9ce))
+
 ## [1.8.0](https://github.com/Bigismall/maponphoto/compare/v1.7.1...v1.8.0) (2026-04-10)
 
 
