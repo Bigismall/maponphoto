@@ -1,4 +1,4 @@
-import type { MapPosition } from "./MapManager";
+import type { MapPosition } from "./MapManager.ts";
 
 export enum MessageState {
   CanvasWithMapReady = "CanvasWithMapReady",

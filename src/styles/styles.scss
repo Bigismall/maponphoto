@@ -74,7 +74,6 @@ dialog {
   @extend %center;
   @extend %no-space;
 
-  transform: translate(-50%, -50%);
   z-index: vars.$z-index-map;
   display: flex;
   flex-direction: column;
@@ -84,6 +83,12 @@ dialog {
   box-shadow: 0 0 0.5rem 0 vars.$text;
 
   @include bem.m(center) {
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+
     button[data-position="map--center"] {
       @extend %button-hover;
     }

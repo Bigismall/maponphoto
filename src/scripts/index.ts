@@ -7,7 +7,7 @@ import DownloadManager from "./DownloadManager";
 import { $, $$ } from "./dom.ts";
 import ExifManager from "./ExifManager";
 import ImageManager from "./ImageManager";
-import MapManager from "./MapManager";
+import MapManager from "./MapManager.ts";
 import MapOptionsManager from "./MapOptionsManager";
 import PhotoBrowser from "./PhotoBrowser";
 
@@ -23,7 +23,7 @@ const supportsShareFiles =
   typeof navigator.share === "function" &&
   typeof navigator.canShare === "function";
 
-window.addEventListener("load", () => {
+window.addEventListener("DOMContentLoaded", () => {
   const $elements = new Map<string, Element | NodeListOf<HTMLElement> | null>([
     ["browser", $("#js-browser-input")],
     ["photo", $("#js-map")],

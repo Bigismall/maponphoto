@@ -10,10 +10,10 @@
     content="Add a map thumbnail to any photo. Use the GPS position stored in the photo (EXIF data) to apply a thumbnail map image to the photo.
 Your photo does not have a GPS position? No problem, you can set it manually!  Everything is happen directly in browser and no data is stored on page" />
   <meta name="google-site-verification" content="gnuvMvoXU14y3JU8P2d5-2-lDvhffeRayCGOaHY6p9g" />
-  <link href="assets/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
-  <link href="assets/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
-  <link href="assets/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
-  <script type="module" src="/src/scripts/index.ts"></script>
+  <link href="assets/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" fetchpriority="low" />
+  <link href="assets/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" fetchpriority="low" />
+  <link href="assets/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" fetchpriority="low" />
+  <script type="module" src="/src/scripts/index.ts" fetchpriority="high"></script>
 </head>
 
 <body>
@@ -104,6 +104,6 @@ Compare satellite views with 3D buildings layer, railroads with Bing maps, typog
   </footer>
 </body>
 <!-- 100% privacy-first analytics -->
-<script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+<script async fetchpriority="low" src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 
 </html>

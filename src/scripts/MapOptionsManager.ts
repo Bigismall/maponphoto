@@ -1,4 +1,4 @@
-import type { MapPosition } from "./MapManager";
+import type { MapPosition } from "./MapManager.ts";
 import { MessageState } from "./Message.type";
 import Publisher from "./Publisher.class";
 
