@@ -1,4 +1,4 @@
-import type { MapPosition } from "../../scripts/MapManager.ts";
+import type { MapPosition } from "../scripts/MapManager.ts";
 
 export enum MessageState {
   CanvasWithMapReady = "CanvasWithMapReady",
@@ -76,3 +76,4 @@ export type Message =
       state: MessageState.NextImage;
       data?: never;
     };
+export type MessageListener = (message: Message) => void;

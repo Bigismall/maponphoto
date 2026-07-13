@@ -1,5 +1,5 @@
-import { MessageState } from "../lib/MessageBroker/Message.type.ts";
 import { Publisher } from "../lib/MessageBroker/Publisher.class.ts";
+import { MessageState } from "../types/Message.type.ts";
 import type { MapPosition } from "./MapManager.ts";
 
 export default class MapOptionsManager extends Publisher {

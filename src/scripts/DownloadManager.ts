@@ -1,8 +1,5 @@
-import {
-  type Message,
-  MessageState,
-} from "../lib/MessageBroker/Message.type.ts";
 import { Publisher } from "../lib/MessageBroker/Publisher.class.ts";
+import { type Message, MessageState } from "../types/Message.type.ts";
 import { warn } from "./console.ts";
 import ObserverPublisher from "./ObserverPublisher";
 

@@ -1,22 +1,21 @@
 import { useEffect } from "react";
 import { Canvas } from "./components/Canvas/Canvas.tsx";
 import { Footer } from "./components/Footer/Footer.tsx";
+
 import { Info } from "./components/Info/Info.tsx";
-
-import {Browser} from "./components/Browser/Browser.tsx";
-
+import { PhotoBrowser } from "./components/PhotoBrowser/PhotoBrowser.tsx";
+import { useImageManager } from "./hooks/useImageManager.ts";
 export default function App() {
+  useImageManager();
 
   useEffect(() => {
     const supportsShareFiles =
-        typeof navigator.share === "function" &&
-        typeof navigator.canShare === "function";
+      typeof navigator.share === "function" &&
+      typeof navigator.canShare === "function";
 
     if (!supportsShareFiles) {
       console.log("Web Share API not supported :(");
     }
-
-
   }, []);
 
   return (
@@ -24,7 +23,7 @@ export default function App() {
       <main className="container">
         <Canvas />
         <Info />
-        <Browser/>
+        <PhotoBrowser />
 
         <aside className="download download--hidden">
           <a
