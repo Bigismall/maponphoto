@@ -1,7 +1,10 @@
+import {
+  type Message,
+  MessageState,
+} from "../lib/MessageBroker/Message.type.ts";
+import { Publisher } from "../lib/MessageBroker/Publisher.class.ts";
 import { log } from "./console.ts";
-import { type Message, MessageState } from "./Message.type";
 import ObserverPublisher from "./ObserverPublisher";
-import Publisher from "./Publisher.class";
 import { isEmptyArray } from "./utils.ts";
 
 const MIN_WIDTH = 640;

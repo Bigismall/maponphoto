@@ -1,6 +1,6 @@
+import type { Message } from "../lib/MessageBroker/Message.type.ts";
+import type { Publisher } from "../lib/MessageBroker/Publisher.class.ts";
 import { log } from "./console.ts";
-import type { Message } from "./Message.type";
-import type Publisher from "./Publisher.class";
 
 const ObserverPublisher = (superclass: typeof Publisher) =>
   class extends superclass {

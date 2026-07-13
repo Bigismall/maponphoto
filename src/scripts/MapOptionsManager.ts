@@ -1,6 +1,6 @@
+import { MessageState } from "../lib/MessageBroker/Message.type.ts";
+import { Publisher } from "../lib/MessageBroker/Publisher.class.ts";
 import type { MapPosition } from "./MapManager.ts";
-import { MessageState } from "./Message.type";
-import Publisher from "./Publisher.class";
 
 export default class MapOptionsManager extends Publisher {
   private readonly selector: HTMLDivElement;

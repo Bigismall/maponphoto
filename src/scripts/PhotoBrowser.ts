@@ -1,6 +1,9 @@
-import { type Message, MessageState } from "./Message.type";
+import {
+  type Message,
+  MessageState,
+} from "../lib/MessageBroker/Message.type.ts";
+import { Publisher } from "../lib/MessageBroker/Publisher.class.ts";
 import ObserverPublisher from "./ObserverPublisher";
-import Publisher from "./Publisher.class";
 
 export default class PhotoBrowser extends ObserverPublisher(Publisher) {
   private readonly selector: HTMLInputElement;

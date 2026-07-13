@@ -1,9 +1,12 @@
+import {
+  type Message,
+  MessageState,
+} from "../lib/MessageBroker/Message.type.ts";
+import { Publisher } from "../lib/MessageBroker/Publisher.class.ts";
 import { log } from "./console.ts";
 import { DOMAIN_LABEL } from "./constans.ts";
 import { MapPosition } from "./MapManager.ts";
-import { type Message, MessageState } from "./Message.type";
 import ObserverPublisher from "./ObserverPublisher";
-import Publisher from "./Publisher.class";
 
 // 16/9
 const UI_MAX_WIDTH = 1600;

@@ -215,9 +215,18 @@ dialog {
       display: none;
     }
 
-    & a {
+    & a,
+    & button.js-reset {
       color: vars.$black;
       text-decoration: underline;
+    }
+
+    & button.js-reset {
+      background: none;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+      font: inherit;
     }
   }
 

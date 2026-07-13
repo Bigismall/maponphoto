@@ -2,11 +2,14 @@ import type { Map as LeafLetMap, Marker } from "leaflet";
 import * as L from "leaflet";
 // @ts-expect-error
 import leafletImage from "leaflet-image";
+import {
+  type Message,
+  MessageState,
+} from "../lib/MessageBroker/Message.type.ts";
+import { Publisher } from "../lib/MessageBroker/Publisher.class.ts";
 import { fault, log } from "./console.ts";
-import { type Message, MessageState } from "./Message.type";
 import { markerIcon } from "./marker.ts";
 import ObserverPublisher from "./ObserverPublisher";
-import Publisher from "./Publisher.class";
 
 const DEFAULT_CENTER: [number, number] = [54.403397, 18.570665];
 const DEFAULT_ZOOM: number = 14;
