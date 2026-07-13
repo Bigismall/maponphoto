@@ -1,6 +1,6 @@
 import { log } from "./console.ts";
 import { DOMAIN_LABEL } from "./constans.ts";
-import { MapPosition } from "./MapManager";
+import { MapPosition } from "./MapManager.ts";
 import { type Message, MessageState } from "./Message.type";
 import ObserverPublisher from "./ObserverPublisher";
 import Publisher from "./Publisher.class";
