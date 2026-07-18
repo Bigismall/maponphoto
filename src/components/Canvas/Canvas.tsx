@@ -17,7 +17,7 @@ import {
 } from "@components/Canvas/Canvas.utils.ts";
 import { useMessageBroker } from "@providers/MessageBrokerProvider.ts";
 import { log } from "@utils/console.ts";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 const UI_MAX_WIDTH = 1600;
 const UI_MAX_HEIGHT = 1200;
@@ -201,7 +201,9 @@ export const Canvas = () => {
     ],
   );
 
-  registerListener(listener, "Canvas");
+  useEffect(() => {
+    return registerListener(listener, "Canvas");
+  }, [registerListener, listener]);
 
   return (
     <canvas

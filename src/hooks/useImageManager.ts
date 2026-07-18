@@ -6,7 +6,7 @@ import {
 import { useMessageBroker } from "@providers/MessageBrokerProvider.ts";
 import { log } from "@utils/console.ts";
 import { isEmptyArray } from "@utils/utils.ts";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 const MIN_WIDTH = 640;
 const MIN_HEIGHT = 400;
@@ -111,5 +111,7 @@ export const useImageManager = () => {
     }
   }, []);
 
-  registerListener(listener, "useImageManager");
+  useEffect(() => {
+    return registerListener(listener, "useImageManager");
+  }, [registerListener, listener]);
 };

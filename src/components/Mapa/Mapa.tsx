@@ -15,7 +15,6 @@ const DEFAULT_ZOOM: number = 14;
 
 export const Mapa = () => {
   const [visible, setVisible] = useState<boolean>(false);
-  const [position, setPosition] = useState<MapPosition>(MapPosition.CENTER);
   const { notify, registerListener } = useMessageBroker();
   const mapElementRef = useRef<HTMLDivElement | null>(null);
   const mapParentRef = useRef<HTMLDivElement | null>(null);
@@ -33,7 +32,6 @@ export const Mapa = () => {
   }, []);
 
   const moveMap = useCallback((position: MapPosition) => {
-    setPosition(position);
     mapParentRef.current?.classList.remove(
       MapPosition.TOP_LEFT,
       MapPosition.TOP_RIGHT,
@@ -136,6 +134,9 @@ export const Mapa = () => {
       center: [54.4, 18.57],
       zoom: 14,
     });
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "&copy; OpenStreetMap contributors",
+    }).addTo(mapa.current);
 
     marker.current = L.marker(mapa.current.getCenter(), {
       title: "Drag to change location",
@@ -149,7 +150,14 @@ export const Mapa = () => {
   }, []);
 
   useEffect(() => {
-    registerListener(listener, "Mapa");
+    if (!visible) return;
+    requestAnimationFrame(() => {
+      mapa.current?.invalidateSize();
+    });
+  }, [visible]);
+
+  useEffect(() => {
+    return registerListener(listener, "Mapa");
   }, [registerListener, listener]);
 
   return (

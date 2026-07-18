@@ -6,10 +6,9 @@ import {
 import { useMessageBroker } from "@providers/MessageBrokerProvider.ts";
 import { log, warn } from "@utils/console.ts";
 import exifr from "exifr";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 
 export const useExifManager = () => {
-  // biome-ignore lint/correctness/useExhaustiveDependencies: notify is stable in message broker context
   const listener = useCallback<MessageListener>((message: Message) => {
     if (message.state === MessageState.FileReady) {
       log("We can now deal with Exif data");
@@ -44,5 +43,7 @@ export const useExifManager = () => {
   }, []);
 
   const { notify, registerListener } = useMessageBroker();
-  registerListener(listener, "use ExifManager");
+  useEffect(() => {
+    return registerListener(listener, "use ExifManager");
+  }, [registerListener, listener]);
 };
