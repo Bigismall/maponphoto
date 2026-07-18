@@ -111,5 +111,5 @@ export const useImageManager = () => {
     }
   }, []);
 
-  registerListener(listener);
+  registerListener(listener, "useImageManager");
 };

@@ -201,7 +201,7 @@ export const Canvas = () => {
     ],
   );
 
-  registerListener(listener);
+  registerListener(listener, "Canvas");
 
   return (
     <canvas

@@ -11,12 +11,15 @@ import {
 } from "react";
 
 export type MessageBrokerContextValue = {
-  registerListener: (listener: MessageListener) => () => void;
+  registerListener: (
+    listener: MessageListener,
+    listenerName: string,
+  ) => () => void;
   notify: (message: Message) => void;
 };
 
 const MessageBrokerContext = createContext<MessageBrokerContextValue>({
-  registerListener: (_listener: MessageListener) => {
+  registerListener: (_listener: MessageListener, _listenerName: string) => {
     throw new Error("registerListener is not implemented yet.");
   },
   notify: (_message: Message) => {
@@ -46,8 +49,11 @@ export const MessageBrokerProvider = ({
   }, []);
 
   const registerListener = useCallback(
-    (_listener: MessageListener): (() => void) => {
-      log("registerListener");
+    (
+      _listener: MessageListener,
+      listenerName: string = "Unknown",
+    ): (() => void) => {
+      log("REGISTER LISTENER: ", listenerName);
 
       subscribe(_listener);
       return () => {
@@ -73,17 +79,18 @@ export const MessageBrokerProvider = ({
 
 export const useMessageBroker = ({
   listener,
+  listenerName,
 }: {
   listener?: MessageListener;
+  listenerName?: string;
 } = {}): MessageBrokerContextValue => {
   const context = useContext(MessageBrokerContext);
 
+  // MessageBrokerProvider.ts
   useEffect(() => {
-    if (listener == null) {
-      return;
-    }
-    return context.registerListener(listener);
-  }, [context.registerListener, listener]);
+    if (listener == null) return;
+    return context.registerListener(listener, listenerName ?? "Unknown");
+  }, [context.registerListener, listener, listenerName]);
 
   return context;
 };

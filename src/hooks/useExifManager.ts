@@ -44,5 +44,5 @@ export const useExifManager = () => {
   }, []);
 
   const { notify, registerListener } = useMessageBroker();
-  registerListener(listener);
+  registerListener(listener, "use ExifManager");
 };

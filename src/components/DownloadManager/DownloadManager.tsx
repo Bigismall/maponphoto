@@ -100,6 +100,7 @@ export const DownloadManager = () => {
         prepareDownload(message.data);
       }
     },
+    listenerName: "DownloadManager",
   });
 
   if (!visible) {

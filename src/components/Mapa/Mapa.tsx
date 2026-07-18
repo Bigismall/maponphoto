@@ -44,29 +44,32 @@ export const Mapa = () => {
     mapParentRef.current?.classList.add(position);
   }, []);
 
-  const drawCanvasMap = useCallback(() => {
-    leafletImage(mapa.current, (err: Error, canvas: HTMLCanvasElement) => {
-      // TODO deal with error
-      log(err);
-      const img = document.createElement("img");
-      const dimensions = mapa.current!.getSize();
+  const drawCanvasMap = useCallback(
+    (position: MapPosition) => {
+      leafletImage(mapa.current, (err: Error, canvas: HTMLCanvasElement) => {
+        // TODO deal with error
+        log(err);
+        const img = document.createElement("img");
+        const dimensions = mapa.current!.getSize();
 
-      img.width = dimensions.x;
-      img.height = dimensions.y;
-      img.src = canvas.toDataURL();
-      img.onload = () => {
-        log("image is now ready");
-        notify({
-          state: MessageState.MapImageReady,
-          data: { image: img, position: position },
-        });
-        setVisible(false);
-      };
-      img.onerror = (e) => {
-        fault("MAP image is not ready", e);
-      };
-    });
-  }, [notify, position]);
+        img.width = dimensions.x;
+        img.height = dimensions.y;
+        img.src = canvas.toDataURL();
+        img.onload = () => {
+          log("image is now ready");
+          notify({
+            state: MessageState.MapImageReady,
+            data: { image: img, position: position },
+          });
+          setVisible(false);
+        };
+        img.onerror = (e) => {
+          fault("MAP image is not ready", e);
+        };
+      });
+    },
+    [notify],
+  );
 
   const listener = useCallback(
     (message: Message) => {
@@ -111,7 +114,7 @@ export const Mapa = () => {
       if (message.state === MessageState.MapSetupReady) {
         if (marker.current) {
           mapa.current?.setView(marker.current.getLatLng());
-          drawCanvasMap();
+          drawCanvasMap(MapPosition.CENTER);
         }
       }
 
@@ -145,7 +148,9 @@ export const Mapa = () => {
     };
   }, []);
 
-  registerListener(listener);
+  useEffect(() => {
+    registerListener(listener, "Mapa");
+  }, [registerListener, listener]);
 
   return (
     <aside

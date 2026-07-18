@@ -4,13 +4,14 @@ import { type ChangeEvent, useCallback, useState } from "react";
 
 export const PhotoBrowser = () => {
   const [visible, setVisible] = useState<boolean>(true);
-  const { notify, registerListener } = useMessageBroker();
-
-  const listener = useCallback((message: Message) => {
-    if (message.state === MessageState.Reset) {
-      setVisible(true);
-    }
-  }, []);
+  const { notify } = useMessageBroker({
+    listener: useCallback((message: Message) => {
+      if (message.state === MessageState.Reset) {
+        setVisible(true);
+      }
+    }, []),
+    listenerName: "Photo Browser",
+  });
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -20,14 +21,8 @@ export const PhotoBrowser = () => {
     [notify],
   );
 
-  registerListener(listener);
-
-  if (!visible) {
-    return null;
-  }
-
   return (
-    <aside className="browser">
+    <aside className="browser" style={{ display: visible ? "block" : "none" }}>
       <input
         accept="image/*"
         className="browser__input"

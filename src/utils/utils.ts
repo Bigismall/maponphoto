@@ -19,6 +19,9 @@ export function isEmpty(value: unknown): boolean {
   return isEmptyArray(value) || isEmptyObject(value) || isEmptyString(value);
 }
 
+export const isNullOrUndefined = (value: unknown): boolean =>
+  value === null || value === undefined;
+
 export const numberWithPadding = (digit: number) =>
   digit.toString().padStart(2, "0");
 
