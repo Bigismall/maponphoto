@@ -1,3 +1,5 @@
+import type { Message, MessageListener } from "@app-types/Message.type.ts";
+import { log } from "@utils/console.ts";
 import {
   createContext,
   createElement,
@@ -7,8 +9,6 @@ import {
   useEffect,
   useRef,
 } from "react";
-import type { Message, MessageListener } from "../types/Message.type.ts";
-import { log } from "../utils/console.ts";
 
 export type MessageBrokerContextValue = {
   registerListener: (listener: MessageListener) => () => void;

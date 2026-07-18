@@ -1,12 +1,12 @@
-import exifr from "exifr";
-import { useCallback } from "react";
-import { useMessageBroker } from "../providers/MessageBrokerProvider.ts";
 import {
   type Message,
   type MessageListener,
   MessageState,
-} from "../types/Message.type.ts";
-import { log, warn } from "../utils/console.ts";
+} from "@app-types/Message.type.ts";
+import { useMessageBroker } from "@providers/MessageBrokerProvider.ts";
+import { log, warn } from "@utils/console.ts";
+import exifr from "exifr";
+import { useCallback } from "react";
 
 export const useExifManager = () => {
   // biome-ignore lint/correctness/useExhaustiveDependencies: notify is stable in message broker context

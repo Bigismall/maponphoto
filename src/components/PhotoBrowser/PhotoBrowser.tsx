@@ -1,6 +1,6 @@
+import { type Message, MessageState } from "@app-types/Message.type.ts";
+import { useMessageBroker } from "@providers/MessageBrokerProvider.ts";
 import { type ChangeEvent, useCallback, useState } from "react";
-import { useMessageBroker } from "../../providers/MessageBrokerProvider.ts";
-import { type Message, MessageState } from "../../types/Message.type.ts";
 
 export const PhotoBrowser = () => {
   const [visible, setVisible] = useState<boolean>(true);

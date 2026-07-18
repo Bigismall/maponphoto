@@ -1,12 +1,12 @@
-import { useCallback, useRef } from "react";
-import { useMessageBroker } from "../providers/MessageBrokerProvider.ts";
 import {
   type Message,
   type MessageListener,
   MessageState,
-} from "../types/Message.type.ts";
-import { log } from "../utils/console.ts";
-import { isEmptyArray } from "../utils/utils.ts";
+} from "@app-types/Message.type.ts";
+import { useMessageBroker } from "@providers/MessageBrokerProvider.ts";
+import { log } from "@utils/console.ts";
+import { isEmptyArray } from "@utils/utils.ts";
+import { useCallback, useRef } from "react";
 
 const MIN_WIDTH = 640;
 const MIN_HEIGHT = 400;

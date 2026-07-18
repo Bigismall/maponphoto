@@ -6,15 +6,23 @@
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
 
-    /* Bundler mode */
     "moduleResolution": "bundler",
+    "paths": {
+      "*": ["./*"],
+      "@components/*": ["./src/components/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@providers/*": ["./src/providers/*"],
+      "@scripts/*": ["./src/scripts/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@app-types/*": ["./src/types/*"],
+      "@utils/*": ["./src/utils/*"]
+    },
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "jsx": "react-jsx",
     "isolatedModules": true,
     "noEmit": true,
 
-    /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,

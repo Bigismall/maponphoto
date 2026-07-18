@@ -1,8 +1,8 @@
 import "leaflet/dist/leaflet.css";
-import "./styles/styles.scss";
+import "@styles/styles.scss";
+import { MessageBrokerProvider } from "@providers/MessageBrokerProvider.ts";
 import { createRoot } from "react-dom/client";
 import App from "./App";
-import { MessageBrokerProvider } from "./providers/MessageBrokerProvider.ts";
 
 const rootElement = document.querySelector("#root");
 

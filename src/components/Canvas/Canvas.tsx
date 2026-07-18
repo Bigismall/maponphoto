@@ -1,11 +1,9 @@
-import { useCallback, useRef } from "react";
-import { useMessageBroker } from "../../providers/MessageBrokerProvider.ts";
-import type { MapPosition } from "../../types/Map.type.ts";
+import type { MapPosition } from "@app-types/Map.type.ts";
 import {
   type Message,
   type MessageListener,
   MessageState,
-} from "../../types/Message.type.ts";
+} from "@app-types/Message.type.ts";
 import {
   createExportTarget,
   drawLabelOn,
@@ -16,7 +14,10 @@ import {
   getSize,
   getUiSizeFor,
   setCanvasSize,
-} from "./Canvas.utils.ts";
+} from "@components/Canvas/Canvas.utils.ts";
+import { useMessageBroker } from "@providers/MessageBrokerProvider.ts";
+import { log } from "@utils/console.ts";
+import { useCallback, useRef } from "react";
 
 const UI_MAX_WIDTH = 1600;
 const UI_MAX_HEIGHT = 1200;
@@ -159,7 +160,7 @@ export const Canvas = () => {
       if (!blob || generation !== exportGenerationRef.current) {
         return;
       }
-
+      log("Canvas ready");
       notify({
         state: MessageState.CanvasWithMapReady,
         data: blob,

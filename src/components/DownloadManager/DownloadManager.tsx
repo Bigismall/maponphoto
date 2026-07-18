@@ -1,8 +1,8 @@
+import { type Message, MessageState } from "@app-types/Message.type.ts";
+import { useMessageBroker } from "@providers/MessageBrokerProvider.ts";
+import { warn } from "@utils/console.ts";
+import { generateFilename, isEmptyString } from "@utils/utils.ts";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { useMessageBroker } from "../../providers/MessageBrokerProvider.ts";
-import { type Message, MessageState } from "../../types/Message.type.ts";
-import { warn } from "../../utils/console.ts";
-import { generateFilename, isEmptyString } from "../../utils/utils.ts";
 
 export const DownloadManager = () => {
   const [visible, setVisible] = useState<boolean>(false);

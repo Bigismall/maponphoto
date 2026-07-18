@@ -1,7 +1,7 @@
-import { MapPosition } from "../../types/Map.type.ts";
-import type { Point } from "../../types/Point.type.ts";
-import { log } from "../../utils/console.ts";
-import { DOMAIN_LABEL } from "../../utils/constans.ts";
+import { MapPosition } from "@app-types/Map.type.ts";
+import type { Point } from "@app-types/Point.type.ts";
+import { log } from "@utils/console.ts";
+import { DOMAIN_LABEL } from "@utils/constans.ts";
 
 export interface CanvasSize {
   width: number;

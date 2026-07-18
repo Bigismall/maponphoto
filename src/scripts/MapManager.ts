@@ -1,12 +1,10 @@
+import { type Message, MessageState } from "@app-types/Message.type.ts";
+import { fault, log } from "@utils/console.ts";
+import { markerIcon } from "@utils/marker.ts";
 import type { Map as LeafLetMap, Marker } from "leaflet";
 import * as L from "leaflet";
 // @ts-expect-error
 import leafletImage from "leaflet-image";
-import { Publisher } from "../lib/MessageBroker/Publisher.class.ts";
-import { type Message, MessageState } from "../types/Message.type.ts";
-import { fault, log } from "../utils/console.ts";
-import { markerIcon } from "../utils/marker.ts";
-import ObserverPublisher from "./ObserverPublisher";
 
 const DEFAULT_CENTER: [number, number] = [54.403397, 18.570665];
 const DEFAULT_ZOOM: number = 14;
@@ -19,7 +17,7 @@ export enum MapPosition {
   CENTER = "map--center",
 }
 
-export default class MapManager extends ObserverPublisher(Publisher) {
+export default class MapManager {
   private readonly selector: HTMLDivElement;
   private readonly container: HTMLElement | null;
   protected title: HTMLDivElement | null;
