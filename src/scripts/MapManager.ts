@@ -4,8 +4,8 @@ import * as L from "leaflet";
 import leafletImage from "leaflet-image";
 import { Publisher } from "../lib/MessageBroker/Publisher.class.ts";
 import { type Message, MessageState } from "../types/Message.type.ts";
-import { fault, log } from "./console.ts";
-import { markerIcon } from "./marker.ts";
+import { fault, log } from "../utils/console.ts";
+import { markerIcon } from "../utils/marker.ts";
 import ObserverPublisher from "./ObserverPublisher";
 
 const DEFAULT_CENTER: [number, number] = [54.403397, 18.570665];

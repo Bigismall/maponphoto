@@ -1,23 +1,13 @@
-import { useEffect } from "react";
 import { Canvas } from "./components/Canvas/Canvas.tsx";
+import { DownloadManager } from "./components/DownloadManager/DownloadManager.tsx";
 import { Footer } from "./components/Footer/Footer.tsx";
-
 import { Info } from "./components/Info/Info.tsx";
-import { DownloadManager } from "./components/PhotoBrowser/DownloadManager.tsx";
 import { PhotoBrowser } from "./components/PhotoBrowser/PhotoBrowser.tsx";
+import { useExifManager } from "./hooks/useExifManager.ts";
 import { useImageManager } from "./hooks/useImageManager.ts";
 export default function App() {
   useImageManager();
-
-  useEffect(() => {
-    const supportsShareFiles =
-      typeof navigator.share === "function" &&
-      typeof navigator.canShare === "function";
-
-    if (!supportsShareFiles) {
-      console.log("Web Share API not supported :(");
-    }
-  }, []);
+  useExifManager();
 
   return (
     <>

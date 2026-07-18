@@ -1,7 +1,7 @@
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useMessageBroker } from "../../providers/MessageBrokerProvider.ts";
-import { warn } from "../../scripts/console.ts";
 import { type Message, MessageState } from "../../types/Message.type.ts";
+import { warn } from "../../utils/console.ts";
 import { generateFilename, isEmptyString } from "../../utils/utils.ts";
 
 export const DownloadManager = () => {
@@ -16,34 +16,37 @@ export const DownloadManager = () => {
     );
   }, []);
 
-  const revokeBlobUrl = async () => {
+  const revokeBlobUrl = useCallback(async () => {
     if (isEmptyString(blobUrl)) {
       return;
     }
 
     URL.revokeObjectURL(blobUrl);
     setBlobUrl("");
-  };
+  }, [blobUrl]);
 
-  const clearDownloadState = () => {
+  const clearDownloadState = useCallback(() => {
     revokeBlobUrl();
     setDownloadBlob(null);
     if (downloadRef.current) {
       downloadRef.current.removeAttribute("href");
     }
-  };
+  }, [revokeBlobUrl]);
 
-  const prepareDownload = async (blob: Blob) => {
-    await revokeBlobUrl();
-    setDownloadBlob(blob);
-    const blobUrl = URL.createObjectURL(blob);
-    setBlobUrl(blobUrl);
+  const prepareDownload = useCallback(
+    async (blob: Blob) => {
+      await revokeBlobUrl();
+      setDownloadBlob(blob);
+      const blobUrl = URL.createObjectURL(blob);
+      setBlobUrl(blobUrl);
 
-    if (downloadRef.current) {
-      downloadRef.current.setAttribute("download", generateFilename());
-      downloadRef.current.setAttribute("href", blobUrl);
-    }
-  };
+      if (downloadRef.current) {
+        downloadRef.current.setAttribute("download", generateFilename());
+        downloadRef.current.setAttribute("href", blobUrl);
+      }
+    },
+    [revokeBlobUrl],
+  );
 
   const share = async (event: Event) => {
     event.preventDefault();

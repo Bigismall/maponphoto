@@ -1,11 +1,11 @@
 import { useCallback, useRef } from "react";
 import { useMessageBroker } from "../providers/MessageBrokerProvider.ts";
-import { log } from "../scripts/console.ts";
 import {
   type Message,
   type MessageListener,
   MessageState,
 } from "../types/Message.type.ts";
+import { log } from "../utils/console.ts";
 import { isEmptyArray } from "../utils/utils.ts";
 
 const MIN_WIDTH = 640;
@@ -51,6 +51,7 @@ const processFile = (file: File): Promise<HTMLImageElement> => {
 
 export const useImageManager = () => {
   const imagesRef = useRef<HTMLImageElement[]>([]);
+  const { notify, registerListener } = useMessageBroker();
 
   const fileChange = useCallback(
     async (
@@ -91,7 +92,7 @@ export const useImageManager = () => {
     [],
   );
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <Order issue>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: notify is stable in message broker context
   const listener = useCallback<MessageListener>(async (message: Message) => {
     if (message.state === MessageState.FileChange) {
       fileChange(message, notify);
@@ -110,5 +111,5 @@ export const useImageManager = () => {
     }
   }, []);
 
-  const { notify } = useMessageBroker({ listener: listener });
+  registerListener(listener);
 };

@@ -4,13 +4,13 @@ import { type Message, MessageState } from "../../types/Message.type.ts";
 
 export const PhotoBrowser = () => {
   const [visible, setVisible] = useState<boolean>(true);
-  const { notify } = useMessageBroker({
-    listener: (message: Message) => {
-      if (message.state === MessageState.Reset) {
-        setVisible(true);
-      }
-    },
-  });
+  const { notify, registerListener } = useMessageBroker();
+
+  const listener = useCallback((message: Message) => {
+    if (message.state === MessageState.Reset) {
+      setVisible(true);
+    }
+  }, []);
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -19,6 +19,8 @@ export const PhotoBrowser = () => {
     },
     [notify],
   );
+
+  registerListener(listener);
 
   if (!visible) {
     return null;

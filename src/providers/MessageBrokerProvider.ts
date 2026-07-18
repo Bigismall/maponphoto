@@ -5,22 +5,19 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useState,
+  useRef,
 } from "react";
 import type { Message, MessageListener } from "../types/Message.type.ts";
+import { log } from "../utils/console.ts";
 
 export type MessageBrokerContextValue = {
-  subscribe: (listener: MessageListener) => void;
-  unsubscribe: (listener: MessageListener) => void;
+  registerListener: (listener: MessageListener) => () => void;
   notify: (message: Message) => void;
 };
 
 const MessageBrokerContext = createContext<MessageBrokerContextValue>({
-  subscribe: (_listener: MessageListener) => {
-    throw new Error("subscribe is not implemented yet.");
-  },
-  unsubscribe: (_listener: MessageListener) => {
-    throw new Error("unsubscribe is not implemented yet.");
+  registerListener: (_listener: MessageListener) => {
+    throw new Error("registerListener is not implemented yet.");
   },
   notify: (_message: Message) => {
     throw new Error("notify is not implemented yet.");
@@ -34,31 +31,42 @@ type MessageBrokerProviderProps = {
 export const MessageBrokerProvider = ({
   children,
 }: MessageBrokerProviderProps) => {
-  const [subscribers, setSubscribers] = useState<MessageListener[]>([]);
+  const subscribersRef = useRef<MessageListener[]>([]);
 
   const subscribe = useCallback((_listener: MessageListener): void => {
-    setSubscribers((prevSubscribers) => [...prevSubscribers, _listener]);
+    subscribersRef.current = subscribersRef.current.includes(_listener)
+      ? subscribersRef.current
+      : [...subscribersRef.current, _listener];
   }, []);
 
   const unsubscribe = useCallback((_listener: MessageListener): void => {
-    setSubscribers((prevSubscribers) =>
-      prevSubscribers.filter((listener) => listener !== _listener),
+    subscribersRef.current = subscribersRef.current.filter(
+      (listener) => listener !== _listener,
     );
   }, []);
 
-  const notify = useCallback(
-    (_message: Message): void => {
-      console.log("Notify listeners: ", _message.state);
-      subscribers.forEach((listener) => {
-        listener(_message);
-      });
+  const registerListener = useCallback(
+    (_listener: MessageListener): (() => void) => {
+      log("registerListener");
+
+      subscribe(_listener);
+      return () => {
+        unsubscribe(_listener);
+      };
     },
-    [subscribers],
+    [subscribe, unsubscribe],
   );
+
+  const notify = useCallback((_message: Message): void => {
+    console.log("Notify listeners: ", _message.state);
+    subscribersRef.current.forEach((listener) => {
+      listener(_message);
+    });
+  }, []);
 
   return createElement(
     MessageBrokerContext.Provider,
-    { value: { subscribe, unsubscribe, notify } },
+    { value: { registerListener, notify } },
     children,
   );
 };
@@ -67,17 +75,15 @@ export const useMessageBroker = ({
   listener,
 }: {
   listener?: MessageListener;
-}): MessageBrokerContextValue => {
+} = {}): MessageBrokerContextValue => {
   const context = useContext(MessageBrokerContext);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <I know better>
   useEffect(() => {
-    if (listener) {
-      context.subscribe(listener);
-      return () => {
-        context.unsubscribe(listener);
-      };
+    if (listener == null) {
+      return;
     }
-  }, [context.subscribe, context.unsubscribe]);
+    return context.registerListener(listener);
+  }, [context.registerListener, listener]);
+
   return context;
 };
