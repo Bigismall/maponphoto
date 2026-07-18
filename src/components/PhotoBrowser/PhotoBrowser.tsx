@@ -26,13 +26,13 @@ export const PhotoBrowser = () => {
       <input
         accept="image/*"
         className="browser__input"
-        id="js-browser-input"
+        id="browser-input"
         name="photo-source"
         onChange={handleChange}
         type="file"
         multiple
       />
-      <label htmlFor="js-browser-input">Select images</label>
+      <label htmlFor="browser-input">Select images</label>
     </aside>
   );
 };

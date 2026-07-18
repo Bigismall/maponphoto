@@ -59,13 +59,16 @@ dialog {
   z-index: vars.$z-index-dialog;
   background-color: vars.$light-blue;
   color: vars.$white;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   border-width: 0;
   box-shadow: 0 0 2.5rem 0 vars.$half-white;
   padding: 2rem;
 
-  p:not(:last-child) {
+  p {
     margin: 0 0 1lh 0;
+  }
+  p:is(:last-of-type) {
+    margin: 0;
   }
 }
 
@@ -215,12 +218,12 @@ dialog {
     }
 
     & a,
-    & button.js-reset {
+    & button.reset {
       color: vars.$black;
       text-decoration: underline;
     }
 
-    & button.js-reset {
+    & button.reset {
       background: none;
       border: 0;
       padding: 0;

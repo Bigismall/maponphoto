@@ -171,7 +171,7 @@ export const Mapa = () => {
         Unable to read <abbr title="Exchangeable Image File Format">EXIF</abbr>{" "}
         data from the photo. Drag the marker to set{" "}
         <abbr title="Global Positioning System">GPS</abbr> position manually, or{" "}
-        <button className="js-reset" type="button">
+        <button type="button" className="reset">
           load another photo
         </button>
         .

@@ -12,16 +12,7 @@ export const MapOptions = () => {
   };
 
   const onReset = () => {
-    // FIXME - it should reset the application state!
-
-    notify({
-      state: MessageState.MoveMap,
-      data: MapPosition.CENTER,
-    });
-    notify({
-      state: MessageState.ResizeMap,
-      data: "map__canvas--medium",
-    });
+    notify({ state: MessageState.Reset });
   };
 
   const setPosition = (mapPosition: MapPosition) => {
