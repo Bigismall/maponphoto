@@ -44,11 +44,14 @@ export const Mapa = () => {
 
   const drawCanvasMap = useCallback(
     (position: MapPosition) => {
-      leafletImage(mapa.current, (err: Error, canvas: HTMLCanvasElement) => {
+      const map = mapa.current;
+      if (!map) return;
+
+      leafletImage(map, (err: Error, canvas: HTMLCanvasElement) => {
         // TODO deal with error
         log(err);
         const img = document.createElement("img");
-        const dimensions = mapa.current!.getSize();
+        const dimensions = map.getSize();
 
         img.width = dimensions.x;
         img.height = dimensions.y;
@@ -90,9 +93,9 @@ export const Mapa = () => {
           dir: number;
         };
         log("Sett coordinates map to ", { lat, lng, dir });
-        mapa.current!.setView(L.latLng(lat, lng), DEFAULT_ZOOM);
-        marker.current!.setLatLng(L.latLng(lat, lng));
-        marker.current!.setIcon(
+        mapa.current?.setView(L.latLng(lat, lng), DEFAULT_ZOOM);
+        marker.current?.setLatLng(L.latLng(lat, lng));
+        marker.current?.setIcon(
           L.icon({
             iconUrl: markerIcon(dir),
             iconSize: [64, 64], // size of the icon
@@ -120,7 +123,10 @@ export const Mapa = () => {
         mapa.current?.setView(DEFAULT_CENTER, DEFAULT_ZOOM);
         resizeMap("map__canvas--medium");
         moveMap(MapPosition.CENTER);
-        marker.current?.setLatLng(mapa.current!.getCenter());
+        const map = mapa.current;
+        if (map) {
+          marker.current?.setLatLng(map.getCenter());
+        }
         setVisible(false);
       }
     },
