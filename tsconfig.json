@@ -12,7 +12,6 @@
       "@components/*": ["./src/components/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@providers/*": ["./src/providers/*"],
-      "@scripts/*": ["./src/scripts/*"],
       "@styles/*": ["./src/styles/*"],
       "@app-types/*": ["./src/types/*"],
       "@utils/*": ["./src/utils/*"]
