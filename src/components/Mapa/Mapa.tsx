@@ -18,6 +18,7 @@ export const Mapa = () => {
   const [position, setPosition] = useState<MapPosition>(MapPosition.CENTER);
   const { notify, registerListener } = useMessageBroker();
   const mapElementRef = useRef<HTMLDivElement | null>(null);
+  const mapParentRef = useRef<HTMLDivElement | null>(null);
   const mapa = useRef<LeafLetMap>(null);
   const marker = useRef<Marker>(null);
 
@@ -33,14 +34,14 @@ export const Mapa = () => {
 
   const moveMap = useCallback((position: MapPosition) => {
     setPosition(position);
-    mapElementRef.current?.classList.remove(
+    mapParentRef.current?.classList.remove(
       MapPosition.TOP_LEFT,
       MapPosition.TOP_RIGHT,
       MapPosition.BOTTOM_LEFT,
       MapPosition.BOTTOM_RIGHT,
       MapPosition.CENTER,
     );
-    mapElementRef.current?.classList.add(position);
+    mapParentRef.current?.classList.add(position);
   }, []);
 
   const drawCanvasMap = useCallback(() => {
@@ -150,6 +151,7 @@ export const Mapa = () => {
     <aside
       className="map map--center"
       style={{ display: visible ? "block" : "none" }}
+      ref={mapParentRef}
     >
       <div className="map__canvas map__canvas--medium" ref={mapElementRef} />
       <div className="map__title map__title--hidden">
