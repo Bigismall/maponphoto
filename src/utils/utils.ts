@@ -18,3 +18,11 @@ export function isEmptyString(value: unknown): boolean {
 export function isEmpty(value: unknown): boolean {
   return isEmptyArray(value) || isEmptyObject(value) || isEmptyString(value);
 }
+
+export const numberWithPadding = (digit: number) =>
+  digit.toString().padStart(2, "0");
+
+export const generateFilename = () => {
+  const today = new Date();
+  return `map-on-photo-${today.getFullYear()}-${numberWithPadding(today.getMonth() + 1)}-${numberWithPadding(today.getDate())}-${numberWithPadding(today.getHours())}-${numberWithPadding(today.getMinutes())}-${numberWithPadding(today.getSeconds())}.jpg`;
+};

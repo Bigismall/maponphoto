@@ -3,6 +3,7 @@ import { Canvas } from "./components/Canvas/Canvas.tsx";
 import { Footer } from "./components/Footer/Footer.tsx";
 
 import { Info } from "./components/Info/Info.tsx";
+import { DownloadManager } from "./components/PhotoBrowser/DownloadManager.tsx";
 import { PhotoBrowser } from "./components/PhotoBrowser/PhotoBrowser.tsx";
 import { useImageManager } from "./hooks/useImageManager.ts";
 export default function App() {
@@ -24,27 +25,7 @@ export default function App() {
         <Canvas />
         <Info />
         <PhotoBrowser />
-
-        <aside className="download download--hidden">
-          <a
-            className="download__input download__input--action"
-            download
-            href="about:blank"
-            id="js-download"
-          >
-            Download image
-          </a>
-          <button
-            className="download__input download__input--share"
-            id="js-share"
-            type="button"
-          >
-            Share image
-          </button>
-          <button className="download__input js-reset" type="button">
-            Try another image
-          </button>
-        </aside>
+        <DownloadManager />
         <aside className="map map--hidden map--center">
           <div className="map__canvas map__canvas--medium" id="js-map" />
           <div className="map__title map__title--hidden">

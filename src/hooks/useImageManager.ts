@@ -1,110 +1,114 @@
 import { useCallback, useRef } from "react";
 import { useMessageBroker } from "../providers/MessageBrokerProvider.ts";
 import { log } from "../scripts/console.ts";
-import { isEmptyArray } from "../scripts/utils.ts";
 import {
   type Message,
   type MessageListener,
   MessageState,
 } from "../types/Message.type.ts";
+import { isEmptyArray } from "../utils/utils.ts";
 
 const MIN_WIDTH = 640;
 const MIN_HEIGHT = 400;
 
-export const useImageManager = () => {
-  const processFile = useCallback((file: File): Promise<HTMLImageElement> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      const newImage = document.createElement("img");
+const processFile = (file: File): Promise<HTMLImageElement> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    const newImage = document.createElement("img");
 
-      newImage.onload = () => {
-        if (newImage.width < MIN_WIDTH || newImage.height < MIN_HEIGHT) {
-          reject(
-            new Error(
-              `Image ${file.name} is too small. Minimum dimensions are: ${MIN_WIDTH}x${MIN_HEIGHT}`,
-            ),
-          );
-          return;
-        }
-        resolve(newImage);
-      };
-
-      newImage.onerror = () => {
-        reject(new Error(`Failed to load image: ${file.name}`));
-      };
-
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        log(`File reader onload for: ${file.name}`);
-        newImage.src = (e.target?.result ?? "") as string;
-      };
-
-      reader.onerror = () => {
+    newImage.onload = () => {
+      if (newImage.width < MIN_WIDTH || newImage.height < MIN_HEIGHT) {
         reject(
           new Error(
-            `Error reading file ${file.name}: ${reader.error?.message ?? "Unknown error"}`,
+            `Image ${file.name} is too small. Minimum dimensions are: ${MIN_WIDTH}x${MIN_HEIGHT}`,
           ),
         );
-      };
+        return;
+      }
+      resolve(newImage);
+    };
 
-      reader.readAsDataURL(file);
-    });
-  }, []);
+    newImage.onerror = () => {
+      reject(new Error(`Failed to load image: ${file.name}`));
+    };
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <Order issue>
-  const listener = useCallback<MessageListener>(
-    async (message: Message) => {
-      if (message.state === MessageState.FileChange) {
-        const event = message.data;
-        const files = Array.from(
-          (event.target as HTMLInputElement).files ?? [],
-        );
+    reader.onload = (e: ProgressEvent<FileReader>) => {
+      log(`File reader onload for: ${file.name}`);
+      newImage.src = (e.target?.result ?? "") as string;
+    };
 
-        if (isEmptyArray(files)) {
-          return;
-        }
+    reader.onerror = () => {
+      reject(
+        new Error(
+          `Error reading file ${file.name}: ${reader.error?.message ?? "Unknown error"}`,
+        ),
+      );
+    };
 
-        const processedFiles = await Promise.allSettled(
-          files.map<Promise<HTMLImageElement>>((file) => processFile(file)),
-        );
+    reader.readAsDataURL(file);
+  });
+};
 
-        const images = processedFiles
-          .filter(
-            (result): result is PromiseFulfilledResult<HTMLImageElement> =>
-              result.status === "fulfilled",
-          )
-          .map((result) => result.value);
+export const useImageManager = () => {
+  const imagesRef = useRef<HTMLImageElement[]>([]);
 
-        imagesRef.current = images;
+  const fileChange = useCallback(
+    async (
+      message: Message & { state: MessageState.FileChange },
+      notify: ReturnType<typeof useMessageBroker>["notify"],
+    ) => {
+      const event = message.data;
+      const files = Array.from((event.target as HTMLInputElement).files ?? []);
 
-        if (isEmptyArray(imagesRef.current)) {
-          notify({
-            state: MessageState.FileError,
-            data: "No valid images found. Please ensure your images meet the minimum size requirements.",
-          });
-          return;
-        }
-
-        notify({
-          state: MessageState.FileReady,
-          data: imagesRef.current.shift() as HTMLImageElement,
-        });
+      if (isEmptyArray(files)) {
+        return;
       }
 
-      if (message.state === MessageState.NextImage) {
-        if (isEmptyArray(imagesRef.current)) {
-          notify({ state: MessageState.Reset });
-          return;
-        }
+      const processedFiles = await Promise.allSettled(
+        files.map<Promise<HTMLImageElement>>((file) => processFile(file)),
+      );
 
+      imagesRef.current = processedFiles
+        .filter(
+          (result): result is PromiseFulfilledResult<HTMLImageElement> =>
+            result.status === "fulfilled",
+        )
+        .map((result) => result.value);
+
+      if (isEmptyArray(imagesRef.current)) {
         notify({
-          state: MessageState.FileReady,
-          data: imagesRef.current.shift() as HTMLImageElement,
+          state: MessageState.FileError,
+          data: "No valid images found. Please ensure your images meet the minimum size requirements.",
         });
+        return;
       }
+
+      notify({
+        state: MessageState.FileReady,
+        data: imagesRef.current.shift() as HTMLImageElement,
+      });
     },
-    [processFile],
+    [],
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <Order issue>
+  const listener = useCallback<MessageListener>(async (message: Message) => {
+    if (message.state === MessageState.FileChange) {
+      fileChange(message, notify);
+    }
+
+    if (message.state === MessageState.NextImage) {
+      if (isEmptyArray(imagesRef.current)) {
+        notify({ state: MessageState.Reset });
+        return;
+      }
+
+      notify({
+        state: MessageState.FileReady,
+        data: imagesRef.current.shift() as HTMLImageElement,
+      });
+    }
+  }, []);
+
   const { notify } = useMessageBroker({ listener: listener });
-  const imagesRef = useRef<HTMLImageElement[]>([]);
 };
