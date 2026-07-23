@@ -20,6 +20,9 @@ export const Mapa = () => {
   const mapParentRef = useRef<HTMLDivElement | null>(null);
   const mapa = useRef<LeafLetMap>(null);
   const marker = useRef<Marker>(null);
+  const [mapPosition, setMapPosition] = useState<MapPosition>(
+    MapPosition.CENTER,
+  );
 
   const resizeMap = useCallback((size: string) => {
     log(size);
@@ -41,6 +44,8 @@ export const Mapa = () => {
     );
     mapParentRef.current?.classList.add(position);
   }, []);
+
+  // everytime map is changed we should change the classnames
 
   const drawCanvasMap = useCallback(
     (position: MapPosition) => {
@@ -109,20 +114,20 @@ export const Mapa = () => {
       }
 
       if (message.state === MessageState.MoveMap) {
-        moveMap(message.data);
+        setMapPosition(message.data); //this will trigger map moveMap
       }
 
       if (message.state === MessageState.MapSetupReady) {
         if (marker.current) {
           mapa.current?.setView(marker.current.getLatLng());
-          drawCanvasMap(MapPosition.CENTER);
+          drawCanvasMap(mapPosition);
         }
       }
 
       if (message.state === MessageState.Reset) {
         mapa.current?.setView(DEFAULT_CENTER, DEFAULT_ZOOM);
         resizeMap("map__canvas--medium");
-        moveMap(MapPosition.CENTER);
+        setMapPosition(MapPosition.CENTER); //this will trigger moveMap
         const map = mapa.current;
         if (map) {
           marker.current?.setLatLng(map.getCenter());
@@ -130,7 +135,7 @@ export const Mapa = () => {
         setVisible(false);
       }
     },
-    [drawCanvasMap, moveMap, resizeMap],
+    [drawCanvasMap, resizeMap, mapPosition],
   );
 
   useEffect(() => {
@@ -161,6 +166,10 @@ export const Mapa = () => {
       mapa.current?.invalidateSize();
     });
   }, [visible]);
+
+  useEffect(() => {
+    moveMap(mapPosition);
+  }, [mapPosition, moveMap]);
 
   useEffect(() => {
     return registerListener(listener, "Mapa");
