@@ -11,14 +11,26 @@ $text: #212529;
 $yellow-transparent: #e6bf0080;
 $transparent: transparent;
 
-$font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-family:
+  system-ui,
+  -apple-system,
+  "Segoe UI",
+  Roboto,
+  "Helvetica Neue",
+  Arial,
+  "Noto Sans",
+  "Liberation Sans",
+  sans-serif,
+  "Apple Color Emoji",
+  "Segoe UI Emoji",
+  "Segoe UI Symbol",
+  "Noto Color Emoji";
 $half-white: rgba(255, 255, 255, 0.5);
 
 $z-index-map: 10;
 $z-index-ui: 20;
 $z-index-footer: 30;
 $z-index-dialog: 100;
-
 
 $button-bg: linear-gradient($semi-blue, #25292e);
 $button-hover-bg: linear-gradient(rgba(63, 73, 84, 0.7), rgba(32, 38, 46, 0.8));
@@ -40,5 +52,3 @@ $canvas-medium-height: 360px;
 
 $canvas-large-width: 640px;
 $canvas-large-height: 480px;
-
-
