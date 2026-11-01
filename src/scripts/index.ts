@@ -80,5 +80,5 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Set the app version in the footer
   // @ts-expect-error
-  $elements.get("appVersion").innerText = `v${pkg.version}`;
+  $elements.get("appVersion").textContent = `v${pkg.version}`;
 });

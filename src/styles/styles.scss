@@ -5,7 +5,6 @@
 @use "space" as *;
 @use "reset";
 
-
 body {
   width: 100%;
   min-height: 100vh;
@@ -18,12 +17,12 @@ body {
 
   background-color: vars.$light-blue;
   background-image: linear-gradient(
-                  to bottom,
-                  vars.$blue,
-                  #38495a,
-                  #445464,
-                  #505f6e,
-                  vars.$light-blue
+    to bottom,
+    vars.$blue,
+    #38495a,
+    #445464,
+    #505f6e,
+    vars.$light-blue
   );
   background-repeat: repeat-x;
 
@@ -65,7 +64,6 @@ dialog {
   padding: 2rem;
 
   p:not(:last-child) {
-    margin: 0 0 1rem 0;
     margin: 0 0 1lh 0;
   }
 }
